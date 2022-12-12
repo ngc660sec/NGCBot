@@ -206,7 +206,7 @@ ICP_URL: 'https://v.api.aa1.cn/api/icp/index.php?url={}'
 THREATBOOK_URL: 'https://api.threatbook.cn/v3/scene/ip_reputation'
 
 # 微步社区KEY
-THREATBOOK_KEY: '6518ffbfade84bc1a01718f595cefedb23fa2924b51842978b7e0b5a13b02827'
+THREATBOOK_KEY: ''
 
 # ========================== 配置各类API接口信息  END========================== #
 
@@ -223,11 +223,11 @@ ANQUANKE_URL: 'https://www.anquanke.com/knowledge'
 
 # ========================== 天行API通用配置 ========================== #
 # 全局通用APPID
-APPID: '45279436'
+APPID: ''
 # 全局通用APPSECRET
-APPSECRET: 'lohAjD4R'
+APPSECRET: ''
 # 全局通用KEY
-KEY: 'e8409cd6401b93d170297440ace30f27'
+KEY: ''
 # 天气查询接口
 WEATHER_URL: 'https://www.tianqiapi.com/free/day?appid={}&appsecret={}&city={}'
 # 舔狗日记接口
