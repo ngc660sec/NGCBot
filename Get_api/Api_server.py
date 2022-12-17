@@ -276,16 +276,19 @@ class Api_server:
         output("[*] >> 正在调用摸鱼日历接口... ...")
         try:
             resp = requests.get(url=self.touch_fish_calendar_url, timeout=10)
-            path = os.path.abspath("./file/touch_fish/")
-            touch_fish_name = int(time.time() * 1000)
-            # 以时间轴的形式给图片命名
-            with open(f"{path}\\{touch_fish_name}.png", "wb+") as f:
-                # 写入文件夹
-                f.write(resp.content)
-                # 关闭文件夹
-                f.close()
-            video_path = os.path.abspath(f"{path}\\{touch_fish_name}.png")
-            msg = video_path.replace("\\", "\\\\")
+            if resp.status_code != 200:
+                msg = '[ERROR] >> 摸鱼日历接口访问异常！'
+            else:
+                path = os.path.abspath("./file/touch_fish/")
+                touch_fish_name = int(time.time() * 1000)
+                # 以时间轴的形式给图片命名
+                with open(f"{path}\\{touch_fish_name}.png", "wb+") as f:
+                    # 写入文件夹
+                    f.write(resp.content)
+                    # 关闭文件夹
+                    f.close()
+                video_path = os.path.abspath(f"{path}\\{touch_fish_name}.png")
+                msg = video_path.replace("\\", "\\\\")
         except Exception as e:
             msg = "[ERROR] >> 摸鱼日历接口调用超时，错误信息：{}".format(e)
             output(msg)
@@ -371,7 +374,6 @@ class Api_server:
     # 扩展名查询调用
     def get_extensions(self, keyword):
         output("[*] >> 正在调用扩展名查询接口... ...")
-        msg = ''
         try:
             word = keyword.split(' ')[1]
             url = self.extensions_url.format(self.key, word)
@@ -382,13 +384,15 @@ class Api_server:
                     return msg
                 if resp['code'] == 200 and resp['msg'] == 'success':
                     msg = f'\n=== 查询后缀 {resp["result"]["targa"].upper()} ===\n {resp["result"]["notes"]}'
+                    return msg
             except Exception as e:
                 msg = "[ERROR] >> 接口调用超时，错误信息：{}".format(e)
                 output(msg)
+                return msg
         except Exception as e:
             msg = "语法格式: \n [+] >>> 后缀查询 后缀名"
             output("[ERROR] >> 扩展名接口调用出错，错误信息：{}".format(e))
-        return msg
+            return msg
 
     # 小爱AI对话调用
     def get_xiaoai_msg(self, keyword):

@@ -45,6 +45,9 @@ config = yaml.load(open(current_path + '/config/config.yaml', encoding='UTF-8'),
 integral_key_response = config['INTEGRAL_CONFIG']
 # 归属地积分查询配置
 attribution_integral = integral_key_response['ATTRIBUTION_POINT']
+
+TOOLS = config['MONITOR_LIST']
+print(TOOLS)
 # print(type(attribution_integral))
 # mes = re.findall(f'[查看|查询|查找]')
 

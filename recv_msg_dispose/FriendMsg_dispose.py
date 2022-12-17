@@ -55,6 +55,11 @@ class FriendMsg_dispose:
         # 获取清除缓存关键词
         self.refresh_cache_keys = self.admin_key_response['REFRESH_CACHE']
 
+        # 获取系统消息配置
+        self.system_messages = config['MESSAGE_CONFIGURATION']
+        # 获取帮助菜单信息
+        self.help_messages = self.system_messages['FUNCTION_MENUS']
+
     def get_information(self, msgJson, senderid, ws):
         self.senderid = senderid
         self.nickname = self.Ss.get_member_nick(wxid=senderid, roomid=self.roomid)
@@ -102,13 +107,17 @@ class FriendMsg_dispose:
         if self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.refresh_cache_keys, ):
             msg = self.Fs.delete_file()
             ws.send(self.Ss.send_msg(msg=msg, wxid=self.senderid, ))
+            return
 
     # 配置普通用户功能
     def ordinary_user_function(self, ws):
         # 功能菜单回复
-        if self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.help_keys, ):
-            msg = '\tNGCBot功能菜单\t\n'
-            ws.send(self.Ss.send_msg(msg=msg, wxid=self.senderid, ))
+        if self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.help_keys, and_bool=True):
+            messages = self.help_messages.split('\\n')
+            msg = ''
+            for s in messages:
+                msg += s + '\n'
+            ws.send(self.Ss.send_msg(msg=msg.strip(), wxid=self.senderid))
         # AI回复
         elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.keyword, ai_bool=True):
             msg = self.As.get_xiaoai_msg(keyword=self.keyword)

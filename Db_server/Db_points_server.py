@@ -85,6 +85,8 @@ class Db_points_server:
                 # 不存在该用户就执行签到
                 msg = self.sign_points(wx_id=wx_id, wx_name=wx_name, sign_integral=self.sign_point)
                 return msg
+            else:
+                return ''
         # 其余积分操作
         else:
             # 判断积分表中是否存在该用户

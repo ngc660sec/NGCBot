@@ -1,3 +1,4 @@
+from Get_api.Api_github_cve_monitor import Api_github_cve_monitor
 from recv_msg_dispose.FriendMsg_dispose import FriendMsg_dispose
 from recv_msg_dispose.RoomMsg_dispose import RoomMsg_disposes
 from DailyPush.Push_main_server import Push_main_server
@@ -59,6 +60,9 @@ class MainServers:
         # 实例化定时推送服务类
         self.Pms = Push_main_server(ws=self.ws, )
 
+        # 实例化Github监控类
+        self.Agcm = Api_github_cve_monitor(ws=self.ws)
+
         # 实例化用户数据类
         self.Dus = Db_user_server()
 
@@ -83,7 +87,7 @@ class MainServers:
         # 初始化
         pool = ThreadPoolExecutor(10)
         pool.submit(self.get_personal_info)
-        pool.submit(self.Ss.get_memberid())
+        pool.submit(self.Ss.get_memberid)
         pool.submit(self.get_wx_user_list)
 
         # 创建文件夹
@@ -97,6 +101,8 @@ class MainServers:
 
         # 执行定时任务
         pool.submit(self.Pms.auto_push)
+        # 执行实时监控
+        pool.submit(self.Agcm.run)
 
     # Robot 启动函数
     def Robot_start(self, ):
@@ -241,7 +247,11 @@ class MainServers:
             roomid = msgJson["content"]["id1"]
             nickname = msgJson["content"]["content"].split('"')[-2]
             if roomid in self.privilege_rooms:
-                self.ws.send(self.Ss.send_msg(self.join_room_mes.format(nickname), roomid=roomid, wxid='null', nickname=nickname))
+                msg = ''
+                for s in self.join_room_mes.split('\\n'):
+                    msg += s
+                self.ws.send(self.Ss.send_msg(self.join_room_mes.format(nickname), roomid=roomid, wxid='null',
+                                              nickname=nickname))
 
     # 消息接收函数
     def handle_recv_msg(self, msgJson):

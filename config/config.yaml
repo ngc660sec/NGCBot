@@ -4,7 +4,8 @@ PORT: 5555
 
 ## 超级管理员配置
 ADMINISTRATOR:
-  - 'wxid_7bizfilssbwi22'
+  - ''
+  - ''
 
 # ========================== 关键词配置信息 ========================== #
 ADMIN_KEY_RESPONSE:         # 管理员关键词配置
@@ -82,6 +83,7 @@ KEY_RESPONSE:               # 功能关键词回复配置
   GIRL_PIC:                   # 配置美女图片关键词回复列表
     - '照片'
     - '图片'
+    - '美女图片'
   GIRL_VIDEO:                 # 配置美女视频关键词回复列表
     - '视频'
     - '美女视频'
@@ -157,9 +159,44 @@ INTEGRAL_CONFIG:              # 积分相关配置
   THREATBOOK_POINT: 5         # 微步情报查询积分配置
 
 MESSAGE_CONFIGURATION:        # 系统消息配置
-  JOIN_ROOM_MESSAGE: '欢迎{}加入群聊'            # 新人入群消息配置
+  JOIN_ROOM_MESSAGE: '\n欢迎{}加入群聊'            # 新人入群消息配置
   COPYRIGHT_MESSAGE: 'NGC660安全实验室'         # 配置版权信息
-  OFF_WORK_MESSAGE: '各部门请注意，下班时间已到！！！请滚，不要浪费电费，记得发日报！\n[Doge] over'     # 配置下班通知
+  OFF_WORK_MESSAGE: '下班时间已到，速滚！！！\n[Doge] Over'     # 配置下班通知
+  FUNCTION_MENUS: 'NGCBot功能菜单\n【积分功能】\n【1】、手机号归属地查询\n【2】、WHOIS信息查询\n【3】、备案查询\n【4】、后缀名查询\n【5】、微步威胁IP查询\n\n您可在群内发送信息【WHOIS查询 qq.com】不需要@本Bot哦\n\n【娱乐功能】\n【1】、美女图片\n【2】、美女视频\n【3】、舔狗日记\n【4】、摸鱼日历\n【5】、星座查询\n【6】、AI对话\n\n您可以在群内发送消息【查询白羊运势】进行查询，或@本Bot进行AI对话哦\n\n需要调出帮助菜单，请回复【帮助】\n\nBy #NGC660安全实验室'
+
+# ========================== GITHUB_CVE监控配置 ========================== #
+GITHUB_CVE_CONFIGURATION:     # Github_Cve监控配置
+  AUTHORIZATION: ''           # GitHub认证令牌
+MONITOR_LIST:                 # 监控列表
+  TOOLS_LIST:                 # 大佬工具列表
+    - https://api.github.com/repos/BeichenDream/Godzilla
+    - https://api.github.com/repos/rebeyond/Behinder
+    - https://api.github.com/repos/AntSwordProject/antSword
+    - https://api.github.com/repos/j1anFen/shiro_attack
+    - https://api.github.com/repos/yhy0/github-cve-monitor
+    - https://api.github.com/repos/gentilkiwi/mimikatz
+    - https://api.github.com/repos/ehang-io/nps
+    - https://api.github.com/repos/chaitin/xray
+    - https://api.github.com/repos/FunnyWolf/pystinger
+    - https://api.github.com/repos/L-codes/Neo-reGeorg
+    - https://api.github.com/repos/shadow1ng/fscan
+    - https://api.github.com/repos/SafeGroceryStore/MDUT
+    - https://api.github.com/repos/EdgeSecurityTeam/Vulnerability
+  KEYWORD_LIST:                # 关键词监控列表
+    - Sql注入
+    - cnvd
+    - 未授权
+  USER_LIST:                  # 用户监控列表
+    - yhy0
+    - su18
+    - BeichenDream
+    - phith0n
+    - zhzyker
+    - lijiejie
+    - projectdiscovery
+    - HavocFramework
+
+# ========================== GITHUB_CVE监控配置 END ========================== #
 
 # ========================== 关键词配置信息 END========================== #
 

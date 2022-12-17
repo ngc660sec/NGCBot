@@ -83,6 +83,8 @@ class RoomMsg_disposes:
         self.morning_paper_keys = self.Key_Response['MORNING_PAPER']
         # 获取晚报关键词回复列表
         self.evening_paper_keys = self.Key_Response['EVENING_PAGE']
+        # 获取帮助菜单关键词回复列表
+        self.help_keys = self.Key_Response['HELP']
 
         # 获取管理关键词
         self.admin_key_response = config['ADMIN_KEY_RESPONSE']
@@ -103,6 +105,11 @@ class RoomMsg_disposes:
         self.custom_keyword_reply = config['CUSTOM_KEYWORD_REPLY']
         # 获取自定义问题列表
         self.custom_problem_list = list(self.custom_keyword_reply.keys())
+
+        # 获取系统消息配置
+        self.system_messages = config['MESSAGE_CONFIGURATION']
+        # 获取帮助菜单信息
+        self.help_messages = self.system_messages['FUNCTION_MENUS']
 
         # 获取积分管理关键词
         self.integral_key_response = config['INTEGRAL_CONFIG']
@@ -159,12 +166,12 @@ class RoomMsg_disposes:
     # 处理接收到的信息
     def process_information(self, ws):
         # 测试专用
-        if 'OK' == self.keyword:
-            msg = 'OOOk'
-            ws.send(self.Ss.send_msg(msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
-        if 'ok' == self.keyword:
-            msg = 'OOK'
-            ws.send(self.Ss.send_msg(msg, wxid=self.roomid))
+        # if 'OK' == self.keyword:
+        #    msg = 'OOOk'
+        #    ws.send(self.Ss.send_msg(msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
+        # if 'ok' == self.keyword:
+        #    msg = 'OOK'
+        #    ws.send(self.Ss.send_msg(msg, wxid=self.roomid))
         # print(self.at_wxid, self.at_nickname, self.room_name)
         # 超级管理员功能
         if self.senderid in self.Administrators:
@@ -243,6 +250,13 @@ class RoomMsg_disposes:
             msg = self.As.get_xiaoai_msg(keyword=keyword) if keyword else False
             if msg:
                 ws.send(self.Ss.send_msg(msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
+        # 帮助菜单
+        elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.help_keys, and_bool=True):
+            messages = self.help_messages.split('\\n')
+            msg = ''
+            for s in messages:
+                msg += s + '\n'
+            ws.send(self.Ss.send_msg(msg=msg.strip(), wxid=self.roomid))
 
     # 管理员功能
     def administrator_function(self, ws):
@@ -264,17 +278,32 @@ class RoomMsg_disposes:
             ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
         # 添加积分
         elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.add_integral_keys, in_bool=True):
-            integral = int(re.findall(f'\d+', self.keyword.replace(self.at_nickname, ''))[0])
-            msg = self.Dps.main_judge(integral=integral, wx_id=self.at_wxid, wx_name=self.at_nickname, add_bool=True)
-            ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.at_wxid, nickname=self.at_nickname))
+            try:
+                integral = int(re.findall(f'\d+', self.keyword.replace(self.at_nickname, ''))[0])
+                # 优化多人增加积分
+                for wxid in self.at_wxid.split(','):
+                    nickname = self.Ss.get_member_nick(wxid=wxid, roomid=self.roomid)
+                    msg = self.Dps.main_judge(integral=integral, wx_id=wxid, wx_name=nickname, add_bool=True)
+                    ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=wxid, nickname=nickname))
+            except IndexError as e:
+                pass
+
         # 扣除积分
         elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.del_integral_keys, in_bool=True):
-            integral = int(re.findall(f'\d+', self.keyword.replace(self.at_nickname, ''))[0])
-            msg = self.Dps.main_judge(integral=integral, wx_id=self.at_wxid, wx_name=self.at_nickname, del_bool=True)
-            ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.at_wxid, nickname=self.at_nickname))
+            try:
+                integral = int(re.findall(f'\d+', self.keyword.replace(self.at_nickname, ''))[0])
+                for wxid in self.at_wxid.split(','):
+                    nickname = self.Ss.get_member_nick(wxid=wxid, roomid=self.roomid)
+                    msg = self.Dps.main_judge(integral=integral, wx_id=wxid, wx_name=nickname,
+                                              del_bool=True)
+                    ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=wxid, nickname=nickname))
+            except IndexError as e:
+                pass
+        # 获取早报功能
         elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.morning_paper_keys, and_bool=True):
             msg = self.Ans.get_freebuf_news()
             ws.send(self.Ss.send_msg(msg=msg, wxid=self.roomid))
+        # 获取晚间新闻
         elif self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.evening_paper_keys, and_bool=True):
             msg = self.Ans.get_safety_news()
             ws.send(self.Ss.send_msg(msg=msg, wxid=self.roomid))
@@ -299,7 +328,7 @@ class RoomMsg_disposes:
         # 后缀名查询
         if self.Ss.judge_key_word(receive_keyword=self.keyword, key1=self.suffix_dicts['KEY1'],
                                   key2=self.suffix_dicts['KEY2'], and_bool=True, in_bool=True):
-            msg = self.As.get_extensions(self.keyword)
+            msg = self.As.get_extensions(keyword=self.keyword)
             ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
         # 微步情报查询
         if self.Ss.judge_key_word(receive_keyword=self.keyword, key1=self.threatbook_dicts['KEY1'],
@@ -309,7 +338,8 @@ class RoomMsg_disposes:
         # 签到功能
         if self.Ss.judge_key_word(receive_keyword=self.keyword, keyword=self.sign_key, and_bool=True):
             msg = self.Dps.main_judge(wx_id=self.senderid, wx_name=self.nickname, sign_bool=True)
-            ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
+            if msg != '':
+                ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
         elif self.keyword == '签到':
             msg = f'签到口令已改为：{self.sign_key[0]}'
             ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
@@ -383,5 +413,6 @@ class RoomMsg_disposes:
         # 签到功能
         elif self.keyword == '签到':
             self.integral_function(ws, )
+        # 帮助菜单功能
         if msg:
             ws.send(self.Ss.send_msg(msg=msg, roomid=self.roomid, wxid=self.senderid, nickname=self.nickname))
