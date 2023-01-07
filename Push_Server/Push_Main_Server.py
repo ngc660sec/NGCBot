@@ -57,7 +57,7 @@ class Push_Main_Server:
         roomid_list = self.Dus.show_white_room()
         msg = self.Asm.get_fish()
         for roomid in roomid_list:
-            self.Ss.send_msg(msg=msg, wxid=roomid)
+            self.Ss.send_img_room(msg=msg, roomid=roomid)
 
     def push_clear_sign(self):
         output('[+]:定时签到表清空')

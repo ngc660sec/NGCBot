@@ -14,5 +14,3 @@ def output(msg):
     time_now = time.strftime("%Y-%m-%d %X")
     cprint(f"[{time_now}]:{msg}", color)
 
-
-output('')

@@ -185,8 +185,8 @@ class RoomMsg_disposes:
             if self.judge_point(wxid=self.senderid, point=self.threatbook_point):
                 msg = self.Asm.get_threatbook_ip(keyword=self.keyword)
                 if len(msg) > 20:
-                    point_msg = f'\n您使用了IP查询功能，扣除对应积分 {self.threatbook_point}分\n当前可用积分：{self.Dps.query_point(wx_id=self.senderid)}'
                     self.Dps.del_point(wx_id=self.senderid, point=self.threatbook_point)
+                    point_msg = f'\n您使用了IP查询功能，扣除对应积分 {self.threatbook_point}分\n当前可用积分：{self.Dps.query_point(wx_id=self.senderid)}'
                     ws.send(
                         self.Ss.send_msg(msg=point_msg, wxid=self.senderid, roomid=self.roomid, nickname=self.nickname))
                 ws.send(self.Ss.send_msg(msg=msg, wxid=self.senderid, roomid=self.roomid, nickname=self.nickname))
@@ -335,13 +335,12 @@ class RoomMsg_disposes:
                 output(f'[+]:小报错，问题不大：{e}')
                 return
             msg = ''
-            # print(operation, point)
             give_bool = False
-            # 赠送积分
+            # 增加积分
             if self.judge_keyword(keyword=operation, custom_keyword=self.add_point_words):
                 if list_bool:
                     for wxid, wx_name in zip(at_wxid_list, at_wx_nickname_list):
-                        msg = self.Dps.judge_main(wx_id=self.at_wxid, wx_name=self.at_nickname, point=point,
+                        msg = self.Dps.judge_main(wx_id=wxid, wx_name=wx_name, point=point,
                                                   add_bool=True)
                         ws.send(
                             self.Ss.send_msg(msg=msg, wxid=wxid, nickname=wx_name, roomid=self.roomid))
@@ -351,7 +350,7 @@ class RoomMsg_disposes:
             if self.judge_keyword(keyword=operation, custom_keyword=self.del_point_words):
                 if list_bool:
                     for wxid, wx_name in zip(at_wxid_list, at_wx_nickname_list):
-                        msg = self.Dps.judge_main(wx_id=self.at_wxid, wx_name=self.at_nickname, point=point,
+                        msg = self.Dps.judge_main(wx_id=wxid, wx_name=wx_name, point=point,
                                                   del_bool=True)
                         ws.send(
                             self.Ss.send_msg(msg=msg, wxid=wxid, nickname=wx_name, roomid=self.roomid))
@@ -368,6 +367,7 @@ class RoomMsg_disposes:
                             self.Ss.send_msg(msg=msg, wxid=self.senderid, nickname=self.nickname, roomid=self.roomid))
                 else:
                     msg, give_bool = self.Dps.give_point(wx_id=self.senderid, wx_name=self.nickname, at_wx_id=self.at_wxid, at_wx_name=self.at_nickname, point=point)
+
             if msg and not list_bool and ',' not in self.at_wxid:
                 if give_bool:
                     self.at_wxid = self.senderid

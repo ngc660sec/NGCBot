@@ -103,10 +103,10 @@ Key_Word:
 ## API接口服务配置
 Api_Server:
   Api_Config:
-    Appid: '45279436'
-    Appsecret: 'lohAjD4R'
-    Key: 'e8409cd6401b93d170297440ace30f27'
-    ThreatBook_Key: '6518ffbfade84bc1a01718f595cefedb23fa2924b51842978b7e0b5a13b02827'
+    Appid: ''
+    Appsecret: ''
+    Key: ''
+    ThreatBook_Key: ''
   # 扩展名查询API
   Extensions_Api: 'https://apis.tianapi.com/targa/index?key={}&word={}'
   # 天气查询API
@@ -176,7 +176,7 @@ Timed_Push:
 ## 实时监控配置
 Monitor_Server:
   # Github令牌
-  Github_Token: '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'
+  Github_Token: ''
   # 工具监控
   tools_list:
     - 'https://api.github.com/repos/BeichenDream/Godzilla'

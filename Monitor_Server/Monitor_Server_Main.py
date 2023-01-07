@@ -499,35 +499,33 @@ class Monitor_Server_Main:
 
     # main函数
     def main(self, ):
-        while True:
-            output("[*]:Cve 、Github 工具 和 大佬仓库 监控中... ...")
-            tools_data = self.get_pushed_at_time(self.tools_list)
-            self.tools_insert_into_sqlite3(tools_data)  # 获取文件中的工具列表，并从 github 获取相关信息，存储下来
+        output("[*]:Cve 、Github 工具 和 大佬仓库 监控中... ...")
+        tools_data = self.get_pushed_at_time(self.tools_list)
+        self.tools_insert_into_sqlite3(tools_data)  # 获取文件中的工具列表，并从 github 获取相关信息，存储下来
+        for user in self.user_list:
+            self.getUserRepos(user)
+        # CVE部分
+        cve_data = self.getNews()
+        if len(cve_data) > 0:
+            today_cve_data = self.get_today_cve_info(cve_data)
+            self.sendNews(today_cve_data)
+            self.cve_insert_into_sqlite3(today_cve_data)
+        # 关键字监控 , 最好不要太多关键字，防止 github 次要速率限制  https://docs.github.com/en/rest/overview/resources-in-the-rest-api#secondary-rate-limits=
+        for keyword in self.keyword_list:
+            time.sleep(1)  # 每个关键字停 1s ，防止关键字过多导致速率限制
+            keyword_data = self.getKeywordNews(keyword)
 
-            for user in self.user_list:
-                self.getUserRepos(user)
-            # CVE部分
-            cve_data = self.getNews()
-            if len(cve_data) > 0:
-                today_cve_data = self.get_today_cve_info(cve_data)
-                self.sendNews(today_cve_data)
-                self.cve_insert_into_sqlite3(today_cve_data)
-            # 关键字监控 , 最好不要太多关键字，防止 github 次要速率限制  https://docs.github.com/en/rest/overview/resources-in-the-rest-api#secondary-rate-limits=
-            for keyword in self.keyword_list:
-                time.sleep(1)  # 每个关键字停 1s ，防止关键字过多导致速率限制
-                keyword_data = self.getKeywordNews(keyword)
+            if len(keyword_data) > 0:
+                today_keyword_data = self.get_today_keyword_info(keyword_data)
+                if len(today_keyword_data) > 0:
+                    self.sendKeywordNews(keyword, today_keyword_data)
+                    self.keyword_insert_into_sqlite3(today_keyword_data)
 
-                if len(keyword_data) > 0:
-                    today_keyword_data = self.get_today_keyword_info(keyword_data)
-                    if len(today_keyword_data) > 0:
-                        self.sendKeywordNews(keyword, today_keyword_data)
-                        self.keyword_insert_into_sqlite3(today_keyword_data)
-            time.sleep(1)
-            data2 = self.get_pushed_at_time(self.tools_list)  # 再次从文件中获取工具列表，并从 github 获取相关信息,
-            data3 = self.get_tools_update_list(data2)  # 与 3 分钟前数据进行对比，如果在三分钟内有新增工具清单或者工具有更新则通知一下用户
-            for i in range(len(data3)):
-                try:
-                    self.send_body(data3[i]['api_url'], data3[i]['pushed_at'], data3[i]['tag_name'])
-                except Exception as e:
-                    output(f"[ERROR]:main函数 try循环 遇到错误-->{e}")
-            output('OK')
+        data2 = self.get_pushed_at_time(self.tools_list)  # 再次从文件中获取工具列表，并从 github 获取相关信息,
+        data3 = self.get_tools_update_list(data2)  # 与 3 分钟前数据进行对比，如果在三分钟内有新增工具清单或者工具有更新则通知一下用户
+        for i in range(len(data3)):
+            try:
+                self.send_body(data3[i]['api_url'], data3[i]['pushed_at'], data3[i]['tag_name'])
+            except Exception as e:
+                output(f"[ERROR]:main函数 try循环 遇到错误-->{e}")
+
