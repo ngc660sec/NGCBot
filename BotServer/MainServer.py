@@ -212,7 +212,8 @@ class MainServers:
             roomid = msgJson["content"]["id1"]
             nickname = msgJson["content"]["content"].split('"')[-2]
             msg = '\n欢迎新进群的小可爱[烟花]'
-            if roomid in self.Dus.show_white_room():
+            roomid_list, room_names = self.Dus.show_white_room()
+            if roomid in roomid_list:
                 self.ws.send(self.Ss.send_msg(msg=msg, roomid=roomid, wxid='null',
                                               nickname=nickname))
 
