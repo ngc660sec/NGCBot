@@ -70,7 +70,7 @@ class Push_Main_Server:
             roomid_list, room_name_list = self.Dus.show_white_room()
             msg = '各部门请注意，下班时间已到！！！请使用你最快的速度火速离开，\n不要浪费电费，记得打卡发日报！\n[旺财]over'
             for roomid in roomid_list:
-                self.Ss.send_msg(msg=msg, roomid=roomid)
+                self.ws.send(self.Ss.send_msg(msg=msg, roomid=roomid))
 
     # 签到表清空
     def push_clear_sign(self):
