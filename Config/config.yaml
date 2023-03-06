@@ -1,0 +1,195 @@
+## 机器人服务配置
+BotServer:
+  IP: 127.0.0.1
+  PORT: 5555
+
+## 超级管理员配置
+Administrators:
+  - ''
+
+## 关键词配置
+Key_Word:
+  # 触发美女图片关键词
+  Pic_Word:
+    - '图片'
+    - '美女图片'
+  # 触发美女视频关键词
+  Video_Word:
+    - '视频'
+    - '美女视频'
+  # 触发备案查询关键词
+  Icp_Word:
+    - '备案查询'
+    - 'ICP查询'
+    - 'icp查询'
+  # 触发后缀名查询关键词
+  Suffix_Word:
+    - '后缀名查询'
+    - '后缀查询'
+  # 触发归属查询关键词
+  Attribution_Word:
+    - '归属查询'
+    - '归属地查询'
+  # 触发WHOIS查询关键词
+  Whois_Word:
+    - 'whois查询'
+    - 'WHOIS查询'
+  # 触发摸鱼日记关键词
+  Fish_Word:
+    - '摸鱼日记'
+    - '摸鱼日历'
+  # 触发天气查询关键词
+  Weather_Word:
+    - '天气查询'
+    - '查询天气'
+  # 触发舔狗日记关键词
+  Dog_Word:
+    - '舔狗日记'
+    - '舔我'
+  # 触发星座查询关键词
+  Constellation_Word:
+    - '星座查询'
+    - '查询星座'
+    - '运势查询'
+    - '查询运势'
+  # 触发早安寄语关键词
+  Morning_Word:
+    - '早安'
+  # 触发微步IP查询关键词
+  ThreatBook_Word:
+    - 'ip查询'
+    - 'IP查询'
+    - '查询ip'
+    - '查询IP'
+    - '微步查询'
+  # 新增管理员关键词
+  Add_Admin_Word:
+    - '添加管理员'
+    - '添加管理'
+    - '新增管理员'
+  # 删除管理员关键词
+  Del_Admin_Word:
+    - '删除管理员'
+    - '删除管理'
+    - '移除管理员'
+  # 新增黑名单群聊关键词
+  Add_BlackRoom_Word:
+    - '拉黑群聊'
+    - '添加黑名单'
+  # 移出黑名单群聊关键词
+  Del_BlackRoom_Word:
+    - '解除拉黑'
+    - '移出黑名单'
+  # 查看白名单群聊关键词
+  Show_WhiteRoom_Word:
+    - '查看群聊'
+    - '查看推送群聊'
+  # 新增白名单群聊关键词
+  Add_WhiteRoom_Word:
+    - '拉白'
+    - '添加白名单'
+    - '开启推送服务'
+    - '开启推送功能'
+  # 移出白名单群聊关键词
+  Del_WhiteRoom_Word:
+    - '关闭推送服务'
+    - '关闭推送功能'
+    - '移出白名单'
+  # 触发早报关键词
+  Morning_Page:
+    - '早报'
+    - '早间咨询'
+  # 触发晚报关键词
+  Evening_Page:
+    - '晚报'
+    - '晚间咨询'
+
+## API接口服务配置
+Api_Server:
+  Api_Config:
+    Appid: '45279436'
+    Appsecret: 'lohAjD4R'
+    Key: ''
+    ThreatBook_Key: ''
+  # 扩展名查询API
+  Extensions_Api: 'https://apis.tianapi.com/targa/index?key={}&word={}'
+  # 天气查询API
+  Wether_Api: 'https://www.tianqiapi.com/free/day?appid={}&appsecret={}&city={}'
+  # 舔狗日记API
+  Dog_Api: 'http://api.tianapi.com/tiangou/index?key={}'
+  # 星座查询API
+  Constellation_Api: 'http://api.tianapi.com/star/index?key={}&astro={}'
+  # 早安寄语API
+  Morning_Api: 'https://apis.tianapi.com/zaoan/index?key={}'
+  # 微步查询API
+  ThreatBook_Api: 'https://api.threatbook.cn/v3/scene/ip_reputation'
+
+  # 摸鱼日记API
+  Fish_Api: 'https://api.vvhan.com/api/moyu'
+  # Whois查询API
+  Whois_Api: 'https://v.api.aa1.cn/api/whois/index.php?domain={}'
+  # 归属地查询API
+  Attribution_Api: 'https://v.api.aa1.cn/api/phone/guishu-api.php?phone={}'
+  # 备案查询API配置
+  Icp_Api: 'https://v.api.aa1.cn/api/icp/index.php?url={}'
+  # 图片API配置
+  Pic_Api:
+    - 'https://api.vvhan.com/api/girl'
+    - 'https://v.api.aa1.cn/api/pc-girl_bz/index.php?wpon=ro38d57y8rhuwur3788y3rd'
+    - 'https://api.vvhan.com/api/mobil.girl'
+  # 视频API配置
+  Video_Api:
+    - 'https://tucdn.wpon.cn/api-girl/'
+    - 'https://v.api.aa1.cn/api/api-dy-girl/index.php?aa1=json'
+    - 'https://v.api.aa1.cn/api/api-girl-11-02/index.php?type=json'
+    - 'https://zj.v.api.aa1.cn/api/video_dyv2/'
+
+## 积分功能配置
+Point_Function:
+  # 签到口令
+  Sign_Keyword: '签到：NGC660安全实验室祝大家天天得0day!'
+  # 签到积分配置
+  Sign_Point: 10
+  # 积分功能配置
+  Function:
+    ThreatBook_Point: 8
+  # 增加积分关键词
+  Add_Point_Word:
+    - '加'
+    - '+'
+  # 扣除积分关键词
+  Del_Point_Word:
+    - '减'
+    - '-'
+  # 赠送积分关键词
+  Give_Point_Word:
+    - '送'
+  # 查看积分关键词
+  Query_Point:
+    - '查看积分'
+    - '积分查询'
+
+## 定时推送配置
+Timed_Push:
+  # 早报推送时间
+  Morning_Page_Time: '08:00'
+  # 晚报推送时间
+  Evening_Page_Time: '17:00'
+  # 摸鱼日记推送时间
+  Fish_Time: '10:00'
+  # 下班消息推送时间
+  Off_Work_Time: '18:00'
+
+## 系统相关配置
+System_Config:
+  # 缓存清除关键词配置
+  Cache_Config_Word:
+    - '清除缓存'
+    - '清空缓存'
+  # 版权信息配置
+  System_Copyright: 'NGC660安全实验室'
+  # 帮助菜单关键词配置
+  Help_Menu:
+    - '帮助菜单'
+    - 'help'
+    - 'HELP'
