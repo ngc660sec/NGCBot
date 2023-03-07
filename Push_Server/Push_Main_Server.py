@@ -68,9 +68,9 @@ class Push_Main_Server:
         if is_workday(datetime.date.today()):
             output('[+]:下班消息推送')
             roomid_list, room_name_list = self.Dus.show_white_room()
-            msg = '各部门请注意，下班时间已到！！！请使用你最快的速度火速离开，\n不要浪费电费，记得打卡发日报！\n[旺财]over'
+            msg = '各部门请注意，下班时间已到！！！请使用你最快的速度火速离开，\n不要浪费电费，记得打卡发日报！\n[旺柴]over'
             for roomid in roomid_list:
-                self.ws.send(self.Ss.send_msg(msg=msg, roomid=roomid))
+                self.ws.send(self.Ss.send_msg(msg=msg, wxid=roomid))
 
     # 签到表清空
     def push_clear_sign(self):
