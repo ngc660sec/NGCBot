@@ -1,10 +1,10 @@
 # -*- encoding=UTF-8 -*-
 from Output.output import output
-from urllib.parse import quote
 import feedparser
 import requests
 import urllib3
 import random
+import openai
 import time
 import yaml
 import os
@@ -13,6 +13,9 @@ import re
 
 class Api_Server_Main:
     def __init__(self):
+
+
+
         # 全局header头
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
@@ -37,6 +40,9 @@ class Api_Server_Main:
         # 初始化读取配置文件
         config = yaml.load(open(current_path + '/../Config/config.yaml', encoding='UTF-8'), yaml.Loader)
         self.system_copyright = config['System_Config']['System_Copyright']
+        openai.api_key = config['Api_Server']['Api_Config']['OpenAi_Key']
+        self.http_proxy = config['System_Config']['HTTP_PROXY']
+        self.https_proxy = config['System_Config']['HTTPS_PROXY']
 
         # 配置文章变量
         self.news_list = ''
@@ -63,13 +69,17 @@ class Api_Server_Main:
 
     # AI对话接口
     def get_ai(self, keyword):
-        output('[-]:正在调用AI对话API接口... ...')
-        url = 'https://v1.apigpt.cn/?q={keyword}&apitype=sql'.format(keyword=keyword.replace(' ', ''))
-        try:
-            resp = requests.get(url=url, timeout=120).json()
-            msg = resp['ChatGPT_Answer'].strip()
-        except Exception as e:
-            msg = f'[ERROR]:AI对话接口错误，错误信息：{e}'
+        os.environ["HTTP_PROXY"] = self.http_proxy
+        os.environ["HTTPS_PROXY"] = self.https_proxy
+        rsp = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": keyword}
+            ]
+        )
+        msg = rsp.get("choices")[0]["message"]["content"]
+        os.environ["HTTP_PROXY"] = ""
+        os.environ["HTTPS_PROXY"] = ""
         return msg
 
     # 美女图片接口
