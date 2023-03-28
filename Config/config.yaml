@@ -5,7 +5,7 @@ BotServer:
 
 ## 超级管理员配置
 Administrators:
-  - ''
+  - 'wxid_7bizfilssbwi22'
 
 ## 关键词配置
 Key_Word:
@@ -107,10 +107,11 @@ Key_Word:
 ## API接口服务配置
 Api_Server:
   Api_Config:
-    Appid: '45279436'
-    Appsecret: 'lohAjD4R'
+    Appid: ''
+    Appsecret: ''
     Key: ''
     ThreatBook_Key: ''
+    OpenAi_Key: ''
   # 扩展名查询API
   Extensions_Api: 'https://apis.tianapi.com/targa/index?key={}&word={}'
   # 天气查询API
@@ -139,10 +140,8 @@ Api_Server:
     - 'https://api.vvhan.com/api/mobil.girl'
   # 视频API配置
   Video_Api:
-    - 'https://tucdn.wpon.cn/api-girl/'
     - 'https://v.api.aa1.cn/api/api-dy-girl/index.php?aa1=json'
     - 'https://v.api.aa1.cn/api/api-girl-11-02/index.php?type=json'
-    - 'https://zj.v.api.aa1.cn/api/video_dyv2/'
 
 ## 积分功能配置
 Point_Function:
@@ -182,6 +181,10 @@ Timed_Push:
 
 ## 系统相关配置
 System_Config:
+  # ChatGpt 代理服务器，如不使用代理也能访问openai,不填即可
+  HTTP_PROXY: ''
+  HTTPS_PROXY: ''
+
   # 缓存清除关键词配置
   Cache_Config_Word:
     - '清除缓存'
