@@ -32,8 +32,8 @@ NGCBot
 #### 如果你觉得此项目不错，可以给个Star或给个赞赏 关注一下公众号
 
 <div style="display: flex;">
-  <img src="./NGCBot.assets/赞赏码.jpg" alt="Image 1" style="width: 450px; height: auto; margin: 5px;">
-  <img src="./NGCBot.assets/公众号.jpg" alt="Image 2" style="width: 500px; height: auto; margin: 5px;">
+  <img src="./NGCBot.assets/赞赏码.jpg" alt="Image 1" style="width: 300px; height: auto; margin: 5px;">
+  <img src="./NGCBot.assets/公众号.jpg" alt="Image 2" style="width: 300px; height: auto; margin: 5px;">
 </div>
 
 
