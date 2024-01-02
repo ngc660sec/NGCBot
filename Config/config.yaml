@@ -1,0 +1,351 @@
+## 超级管理员配置
+Administrators:
+  - 'wxid_7bizfilssbwi22'
+
+## 系统配置
+System_Config:
+  # 版权信息
+  System_Copyright: 'NGC660安全实验室'
+  # 好友Ai开关 1开/0关
+  Ai_Lock: 0
+
+## 定时发送配置
+Push_Config:
+  # 早安寄语发送时间
+  Morning_Push_Time: '08:00'
+  # 早报推送时间
+  Morning_Page_Time: '08:30'
+  # 晚报发送时间设置
+  Evening_Page_Time: '17:00'
+  # 下班推送时间设置
+  Off_Work_Time: '18:00'
+  # 摸鱼日记推送时间设置
+  Fish_Time: '10:00'
+  # KFC文案发送时间设置 每周四发送
+  Kfc_Time: '11:50'
+  # 定时功能回复配置
+  Key_Word:
+    # 下班消息 换行用\n 支持微信表情
+    Off_Work_Msg: '下班时间到！我要下班 我要下班 我要下班 下下下！\n到点即刻下班，给老板省去水电，给自己来套保健，给老板来句操蛋，出自: #NGC660安全实验室\n速速下班！！！[旺柴]'
+
+## 进群关键词配置
+Room_Key_Word:
+  进群:
+    - '43064515504@chatroom'
+  Bot交流群:
+    - '47442567074@chatroom'
+    - ''
+
+## 自定义关键词回复
+Custom_KeyWord:
+  # 设置关键词
+  回复内容1:
+    - '关键词1'
+    - '关键词2'
+  回复内容2:
+    - '关键词3'
+    - '关键词4'
+
+## 自定义各种消息 \n换行
+Custom_Msg:
+  # 加好友后回复
+  AcceptFriend_Msg: '你好, 我是NGC660安全实验室开发的微信机器人, 你可以叫我NGCBot! 私聊我即可进行智能对话哦[爱心]~~~ ~~~'
+
+
+## 管理功能关键词配置
+Admin_Function_Word:
+  # 新增管理员关键词
+  Add_Admin_Word:
+    - '添加管理员'
+    - '添加管理'
+    - '新增管理员'
+  # 删除管理员关键词
+  Del_Admin_Word:
+    - '删除管理员'
+    - '删除管理'
+    - '移除管理员'
+  # 新增黑名单群聊关键词
+  Add_BlackRoom_Word:
+    - '拉黑群聊'
+    - '拉黑'
+    - '添加黑名单'
+  # 移出黑名单群聊关键词
+  Del_BlackRoom_Word:
+    - '解除拉黑'
+    - '移出黑名单'
+  # 查看白名单群聊关键词
+  Show_WhiteRoom_Word:
+    - '查看群聊'
+    - '查看白名单群聊'
+  # 新增白名单群聊关键词
+  Add_WhiteRoom_Word:
+    - '拉白'
+    - '加白'
+    - '添加白名单'
+  # 移出白名单群聊关键词
+  Del_WhiteRoom_Word:
+    - '移出白名单'
+    - '移除白名单'
+    - '去白'
+  # 新增推送群聊关键词
+  Add_White_Word:
+    - '开启推送服务'
+    - '开启推送'
+  # 移除推送群聊关键词
+  Del_White_Word:
+    - '关闭推送服务'
+    - '关闭推送'
+  # 移除白名单公众号关键词
+  Del_WhiteGh_Word:
+    - '取消加白'
+    - '广告号'
+    - '这是广告'
+    - '广告'
+  # 踢人关键词
+  Del_User_Word:
+    - '滚蛋'
+    - '滚'
+    - '踢出'
+    - '踢'
+    - '滚出去'
+    - '移出'
+
+## 积分功能关键词配置
+Point_Config:
+  # 签到功能
+  Sign:
+    # 签到口令
+    Word: '签到: 新年新气象，NGC660安全实验室祝大家龙年大吉！'
+    # 签到积分
+    Point: '10'
+  # 功能积分配置
+  Function_Point:
+    # Md5积分配置
+    Md5: '10'
+    # IP查询积分配置
+    IP: '10'
+    # 端口查询积分配置
+    Port_Scan: '10'
+    # Ai对话积分配置
+    Ai_point: '10'
+  # 增加积分关键词
+  Add_Point_Word:
+    - '加'
+    - '+'
+    - '加积分'
+    - '增'
+  # 减少积分关键词
+  Del_Point_Word:
+    - '减'
+    - '-'
+    - '扣除'
+    - '扣'
+  # 赠送积分关键词
+  Send_Point_Word:
+    - '送'
+    - '赠送'
+    - '赠'
+  # 积分查询关键词
+  Query_Point_Word:
+    - '积分查询'
+    - '查询积分'
+
+## 娱乐功能关键词配置
+Function_Key_Word:
+  # 触发美女图片关键词
+  Pic_Word:
+    - '图片'
+    - '美女图片'
+    - '妹子'
+    - '色图'
+    - '色色'
+  # 触发美女视频关键词
+  Video_Word:
+    - '视频'
+    - '美女视频'
+    - '成人视频'
+    - '18禁'
+  # 触发备案查询关键词
+  Icp_Word:
+    - '备案查询'
+    - 'ICP查询'
+    - 'icp查询'
+  # 触发归属查询关键词
+  Attribution_Word:
+    - '归属查询'
+    - '归属地查询'
+  # 触发WHOIS查询关键词
+  Whois_Word:
+    - 'whois查询'
+    - 'WHOIS查询'
+  # 触发摸鱼日记关键词
+  Fish_Word:
+    - '摸鱼日记'
+    - '摸鱼日历'
+  # 触发疯狂星期四文案关键词
+  Kfc_Word:
+    - 'Kfc'
+    - '疯狂星期四'
+    - '星期四'
+    - '今天星期四'
+    - 'KFC'
+    - 'kfc'
+    - 'v我50'
+    - '明天星期四'
+  # 周公解梦
+  Dream_Word:
+    - '周公解梦'
+    - '解梦'
+  # 触发天气查询关键词
+  Weather_Word:
+    - '天气查询'
+    - '查询天气'
+  # 触发舔狗日记关键词
+  Dog_Word:
+    - '舔狗日记'
+    - '舔我'
+  # 触发星座查询关键词
+  Constellation_Word:
+    - '星座查询'
+    - '查询星座'
+    - '运势查询'
+    - '查询运势'
+  # 触发早安寄语关键词
+  Morning_Word:
+    - '早安'
+    - '早上好'
+    - '早'
+  # 触发微步IP查询关键词
+  ThreatBook_Word:
+    - 'ip查询'
+    - 'IP查询'
+    - '查询ip'
+    - '查询IP'
+    - '微步查询'
+  # 端口查询关键词
+  Port_Scan_Word:
+    - '端口查询'
+    - '端口扫描'
+  # 触发早报关键词
+  Morning_Page_Word:
+    - '早报'
+    - '早间咨询'
+  # 触发晚报关键词
+  Evening_Page_Word:
+    - '晚报'
+    - '晚间咨询'
+  # MD5解密关键词
+  Md5_Words:
+    - 'md5解密'
+    - 'MD5解密'
+    - 'md5查询'
+    - 'Md5查询'
+    - 'MD5查询'
+  # 帮助菜单
+  Help_Menu:
+    - '帮助'
+    - 'help'
+    - 'Help'
+    - 'HELP'
+    - '帮助菜单'
+    - '菜单'
+  # 进群欢迎词配置 换行用\n 支持微信表情
+  JoinRoom_Msg: '欢迎新进群的小可爱\n群主正在床上等你哦[爱心]~~~ ~~~'
+
+## API接口服务配置
+Api_Server:
+  Api_Config:
+    # 天行Key
+    Key: ''
+    # Somd5 Key
+    Somd5_Key: ''
+    # 微步Key
+    ThreatBook_Key: ''
+  Ai_Config:
+    # 星火大模型
+    SparkApi:
+      # 模型Url
+      Spark_url: 'ws://spark-api.xf-yun.com/v3.1/chat'
+      # 模型Secret
+      ApiSecret: ''
+      # 模型版本
+      Domain: 'generalv3'
+      # 模型Key
+      ApiKey: ''
+      # 模型Appid
+      Appid: ''
+    # OpenAi
+    Open_Ai:
+      # Open_Ai接口
+      OpenAi_Api: 'https://proxy2.chatbox.run/v1/chat/completions'
+      # OpenAi Key
+      OpenAi_Key: 'Bearer sk-'
+      # 初始化OpenAi角色
+      OpenAi_Role: '你叫NGCBot, 是一名网络安全专家, 你的主人是云山'
+    # 千帆大模型
+    QianFan:
+      # 应用中的Api Key
+      Qf_Access_Key: ''
+      # 应用中的Secret Key
+      Qf_Secret_Key: ''
+      # 应用中的应用ID
+      Qf_Appid: ''
+
+
+  # 天气查询API
+  Weather_Api: 'https://apis.tianapi.com/tianqi/index?key={}&city={}&type=1'
+  # 舔狗日记API
+  Dog_Api: 'https://apis.tianapi.com/tiangou/index?key={}'
+  # 星座查询API
+  Constellation_Api: 'https://apis.tianapi.com/star/index?key={}&astro={}'
+  # 早安寄语API
+  Morning_Api: 'https://apis.tianapi.com/zaoan/index?key={}'
+  # 微步查询API
+  ThreatBook_Api: 'https://api.threatbook.cn/v3/scene/ip_reputation'
+  # 端口查询API
+  Port_Scan_Api: 'https://amap.fofa.info/host/{}'
+
+  # 摸鱼日记API
+  Fish_Api: 'https://api.vvhan.com/api/moyu'
+  # 疯狂星期四文案Api
+  Kfc_Api: 'https://api.pearktrue.cn/api/kfc'
+  # Whois查询API
+  Whois_Api: 'https://v.api.aa1.cn/api/whois/index.php?domain={}'
+  # 归属地查询API
+  Attribution_Api: 'https://v.api.aa1.cn/api/phone/guishu-api.php?phone={}'
+  # 备案查询API配置
+  Icp_Api: 'https://v.api.aa1.cn/api/icp/index.php?url={}'
+  # 周公解梦Api配置
+  Dream_Api: 'https://apis.tianapi.com/dream/index?key={}&num=10&word={}'
+  # SOMD5解密API配置
+  Somd5_Md5_Api: 'https://www.somd5.com/ss.php?api={}&hash={}'
+  # Cmd5解密Api配置
+  Cmd5_Md5_Api:
+  # 图片API配置
+  Pic_Api:
+    - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
+    - 'https://api.vvhan.com/api/girl'
+    - 'https://tpapi.cysir.cn/img/beautyPhoto/api.php'
+    - 'http://3650000.xyz/api/'
+    - 'https://cdn.seovx.com/?mom=302'
+    - 'https://v.api.aa1.cn/api/pc-girl_bz/index.php?wpon=ro38d57y8rhuwur3788y3rd'
+    - 'https://api.vvhan.com/api/mobil.girl'
+    - 'https://free.wqwlkj.cn/wqwlapi/ks_xjj.php'
+    - 'https://api.vvhan.com/api/girl'
+    - 'https://tuapi.eees.cc/api.php?category=meinv&px=m&type=302'
+    - 'http://lx.linxi.icu/API/meitui.php'
+  # 视频API配置
+  Video_Api:
+    - 'http://api.yujn.cn/api/heisis.php'
+    - 'http://api.yujn.cn/api/xjj.php'
+    - 'http://api.yujn.cn/api/zzxjj.php'
+    - 'https://api.yujn.cn/api/manzhan.php'
+    - 'http://lx.linxi.icu/API/xjj.php'
+    - 'https://api.8uid.cn/qc.php?type=video'
+    - 'https://api.8uid.cn/cd.php?type=video'
+    - 'https://api.8uid.cn/tm.php?type=video'
+    - 'https://api.8uid.cn/dd.php?type=video'
+    - 'http://lx.linxi.icu/API/xjj.php'
+
+
+
