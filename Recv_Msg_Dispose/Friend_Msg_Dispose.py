@@ -16,6 +16,7 @@ class Friend_Msg_Dispose:
         self.Room_Key_Word = config['Room_Key_Word']
         self.Administrators = config['Administrators']
         self.Ai_Lock = config['System_Config']['Ai_Lock']
+        self.Custom_Key_Words = config['Custom_KeyWord']
 
         # 实例化数据库服务类
         self.Dms = Db_Main_Server(wcf=self.wcf)
@@ -33,7 +34,7 @@ class Friend_Msg_Dispose:
         elif msg.type == 10000 and '收到红包，请在手机上查看' in msg.content.strip():
             Thread(target=self.Forward_Msg, name="转发红包消息", args=(msg,)).start()
         # 转发公众号消息到推送群聊
-        elif msg.type == 49 and msg.sender in self.Administrators and '转账' not in msg.content:
+        elif msg.type == 49 and msg.sender in self.Administrators and '转账' not in msg.content and 'gh_' in msg.content:
             Thread(target=self.ForWard_Gh, name="转发公众号消息", args=(msg,)).start()
         # 自动接收转账
         elif msg.type == 49 and '转账' in msg.content:
@@ -41,6 +42,13 @@ class Friend_Msg_Dispose:
         # Ai对话forward_msg
         elif msg.type == 1:
             Thread(target=self.get_ai, name="Ai对话", args=(msg,)).start()
+        # 消息转发给主人
+        Thread(target=self.forward_msg, name='转发消息给主人', args=(msg, )).start()
+
+    def forward_msg(self, msg):
+        if msg.type == 1:
+            for administrator in self.Administrators:
+                self.wcf.forward_msg(id=msg.id, receiver=administrator)
 
     # Ai对话实现
     def get_ai(self, msg):
@@ -48,6 +56,17 @@ class Friend_Msg_Dispose:
             ai_msg = self.Ams.get_ai(question=msg.content.strip())
             print(ai_msg)
             self.wcf.send_text(msg=ai_msg, receiver=msg.sender)
+
+    # 自定义回复
+    def custom_get(self, msg):
+        for key, values in self.Custom_Key_Words.items():
+            for value in values:
+                if value == msg.content.strip():
+                    OutPut.outPut(f'[+]: 调用自定义回复成功！！！')
+                    self.wcf.send_text(
+                        msg=f'{key}',
+                        receiver=msg.sender)
+                    return
 
     # 好友转账处理
     def Accept_Money(self, msg):

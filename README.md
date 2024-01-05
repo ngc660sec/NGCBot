@@ -329,7 +329,7 @@ pip install -r .\requirements.txt
 
 **机器人微信：**
 
-![image-20240102144805775](./README.assets/image-20240102144805775.png)
+![113191704454837_.pic](./README.assets/113191704454837_.pic.jpg)
 
 ## 6、更新日志
 

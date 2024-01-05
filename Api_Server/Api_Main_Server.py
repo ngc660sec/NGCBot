@@ -74,9 +74,14 @@ class Api_Main_Server:
         self.messages = [{"role": "system", "content": f"{self.OpenAi_Initiating_Message}"}]
         self.system_copyright = config['System_Config']['System_Copyright']
         # 千帆配置
-        self.chat_comp = qianfan.ChatCompletion(ak=config['Api_Server']['Ai_Config']['QianFan']['Qf_Access_Key'],
-                                                sk=config['Api_Server']['Ai_Config']['QianFan']['Qf_Secret_Key'])
-        self.chat_mess = qianfan.Messages()
+        self.qf_ak = config['Api_Server']['Ai_Config']['QianFan']['Qf_Access_Key']
+        self.qf_sk = config['Api_Server']['Ai_Config']['QianFan']['Qf_Secret_Key']
+        if self.qf_ak:
+            self.chat_comp = qianfan.ChatCompletion(ak=self.qf_ak,
+                                                    sk=self.qf_sk)
+            self.chat_mess = qianfan.Messages()
+        else:
+            OutPut.outPut(f'[-]: 千帆模型未配置，请修改配置文件已启用模型！！！')
 
     # Ai功能
     def get_ai(self, question):
@@ -120,7 +125,7 @@ class Api_Main_Server:
                 assistant_content = json_data['choices'][0]['message']['content']
                 self.messages.append({"role": "assistant", "content": f"{assistant_content}"})
                 if len(self.messages) == 15:
-                    self.messages = self.messages[0]
+                    self.messages = [{"role": "system", "content": f"{self.OpenAi_Initiating_Message}"}]
                 return assistant_content
             except Exception as e:
                 OutPut.outPut(f'[-]: AI对话接口出现错误，错误信息： {e}')
@@ -168,6 +173,9 @@ class Api_Main_Server:
                 OutPut.outPut(f'[-]: 星火大模型出现错误，错误信息: {e}')
                 return None
             if not Xh_Msg:
+                if not self.qf_ak:
+                    OutPut.outPut(f'[-]: 千帆模型接口未配置，其它模型出现错误，请查看日志！')
+                    return '千帆模型接口未配置，其它模型出现错误，请查看日志！'
                 return get_qf(quest=question)
             else:
                 OutPut.outPut('[+]: Ai对话接口调用成功！！！')

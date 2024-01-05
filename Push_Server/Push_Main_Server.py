@@ -54,7 +54,7 @@ class Push_Main_Server:
         OutPut.outPut('[*]: 定时晚报推送中... ...')
         evening_msg = self.Ams.get_safety_news()
         room_dicts = self.Dms.show_push_rooms()
-        for room_id in room_dicts:
+        for room_id in room_dicts.keys():
             self.wcf.send_text(msg=evening_msg, receiver=room_id)
         OutPut.outPut('[+]: 定时晚报推送成功！！！')
 
@@ -63,7 +63,7 @@ class Push_Main_Server:
         OutPut.outPut('[*]: 定时下班消息推送中... ...')
         off_Work_msg = self.Off_Work_msg.replace('\\n', '\n')
         room_dicts = self.Dms.show_push_rooms()
-        for room_id in room_dicts.values():
+        for room_id in room_dicts.keys():
             self.wcf.send_text(msg=off_Work_msg, receiver=room_id)
         OutPut.outPut('[+]: 定时下班消息推送成功！！！')
 
