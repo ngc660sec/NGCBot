@@ -73,7 +73,7 @@ class Push_Main_Server:
         room_dicts = self.Dms.show_push_rooms()
         fish_img = self.Ams.get_fish()
         for room_id in room_dicts.keys():
-            self.wcf.send_img(path=fish_img, receiver=room_id)
+            self.wcf.send_image(path=fish_img, receiver=room_id)
         OutPut.outPut('[+]: 定时摸鱼日记推送成功！！！')
 
     # 签到表清空
