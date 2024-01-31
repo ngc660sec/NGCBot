@@ -219,7 +219,7 @@ class Db_Main_Server:
         room_name = self.query_room_name(room_id)
         if self.judge_push_room(room_id=room_id):
             conn, curser = self.open_db()
-            del_push_room_sql = f'''DELETE FROM push_rooms WHERE room_id= '{room_name}';'''
+            del_push_room_sql = f'''DELETE FROM push_rooms WHERE room_id= '{room_id}';'''
             curser.execute(del_push_room_sql)
             conn.commit()
             self.close_db(conn, curser)
