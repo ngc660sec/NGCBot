@@ -529,7 +529,10 @@ class Room_Msg_Dispose:
         gh_id = root_xml.find('.//sourceusername').text
         gh_name = root_xml.find('.//sourcedisplayname').text
         if gh_id:
-            at_msg += self.Dms.add_white_gh(gh_id=gh_id, gh_name=gh_name)
+            gh_msg = self.Dms.add_white_gh(gh_id=gh_id, gh_name=gh_name)
+            if not gh_msg:
+                return
+            at_msg += gh_msg
             self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
 
     # 移除白名单公众号
