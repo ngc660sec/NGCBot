@@ -239,7 +239,7 @@ class Db_Main_Server:
             self.close_db(conn, curser)
             msg = f'[+]: 公众号【{gh_name}】添加白名单成功！！！'
         else:
-            msg = f'[~]: 公众号【{gh_name}】已添加到白名单！！！'
+            msg = ''
         OutPut.outPut(msg)
         return msg
 
