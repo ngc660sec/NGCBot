@@ -303,8 +303,9 @@ class Room_Msg_Dispose:
             for value in values:
                 if value == msg.content.strip():
                     OutPut.outPut(f'[+]: 调用自定义回复成功！！！')
+                    send_msg = key.replace('\\n', '\n')
                     self.wcf.send_text(
-                        msg=f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)} {key}',
+                        msg=f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)} {send_msg}',
                         receiver=msg.roomid, aters=msg.sender)
                     return
 
@@ -524,37 +525,61 @@ class Room_Msg_Dispose:
 
     # 添加白名单公众号
     def add_white_gh(self, msg):
-        root_xml = ET.fromstring(msg.content)
-        at_msg = f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)}\n'
-        gh_id = root_xml.find('.//sourceusername').text
-        gh_name = root_xml.find('.//sourcedisplayname').text
-        if gh_id:
-            gh_msg = self.Dms.add_white_gh(gh_id=gh_id, gh_name=gh_name)
-            if not gh_msg:
-                return
-            at_msg += gh_msg
-            self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
+        try:
+            root_xml = ET.fromstring(msg.content)
+            at_msg = f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)}\n'
+            gh_id = root_xml.find('.//sourceusername').text
+            gh_name = root_xml.find('.//sourcedisplayname').text
+            print('公众号信息：', gh_id, gh_name)
+            if not gh_id and not gh_name:
+                gh_name = re.search(r'sourcedisplayname&gt;(?P<gh_name>.*?)&lt;/sourcedisplayname&gt;',
+                                str(msg.content).strip(),
+                                re.DOTALL)
+                gh_id = re.search(r'sourceusername&gt;(?P<gh_id>.*?)&lt;/sourceusername&gt;',
+                                str(msg.content).strip(),
+                                re.DOTALL)
+                if not gh_name.group('gh_name'):
+                    gh_name = re.search(r'&lt;appname&gt;(?P<gh_name>.*?)&lt;/appname&gt', str(msg.content).strip(),
+                                    re.DOTALL)
+                if gh_name and gh_id:
+                    gh_name = gh_name.group('gh_name')
+                    gh_id = gh_id.group('gh_id')
+                    add_msg = self.Dms.add_white_gh(gh_name=gh_name, gh_id=gh_id)
+                    if not add_msg:
+                        return
+                    at_msg += self.Dms.add_white_gh(gh_name=gh_name, gh_id=gh_id)
+                    self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
+
+            if gh_id:
+                gh_msg = self.Dms.add_white_gh(gh_id=gh_id, gh_name=gh_name)
+                if not gh_msg:
+                    return
+                at_msg += gh_msg
+                self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
+        except Exception as e:
+            OutPut.outPut(f'[~]: 添加公众号白名单出了点小问题 :{e}')
 
     # 移除白名单公众号
     def del_white_gh(self, msg):
-        gh_name = '不知名广告'
-        try:
-            at_msg = f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)}\n'
-            res = re.search(r'sourcedisplayname&gt;(?P<gh_name>.*?)&lt;/sourcedisplayname&gt;',
-                            str(msg.content).strip(),
-                            re.DOTALL)
-            if not res.group('gh_name'):
-                res = re.search(r'&lt;appname&gt;(?P<gh_name>.*?)&lt;/appname&gt', str(msg.content).strip(),
+        if 'gh_' in msg:
+            gh_name = '不知名广告'
+            try:
+                at_msg = f'@{self.wcf.get_alias_in_chatroom(wxid=msg.sender, roomid=msg.roomid)}\n'
+                res = re.search(r'sourcedisplayname&gt;(?P<gh_name>.*?)&lt;/sourcedisplayname&gt;',
+                                str(msg.content).strip(),
                                 re.DOTALL)
-            if res:
-                gh_name = res.group('gh_name')
-                at_msg += self.Dms.del_white_gh(gh_name=gh_name)
-                self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
-            else:
-                at_msg += '出错了, 请自己调试一下 ~~~~~~'
-                self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
-        except Exception as e:
-            OutPut.outPut(f'[-]: 移除白名单公众号出现错误，错误信息：{e}')
+                if not res.group('gh_name'):
+                    res = re.search(r'&lt;appname&gt;(?P<gh_name>.*?)&lt;/appname&gt', str(msg.content).strip(),
+                                    re.DOTALL)
+                if res:
+                    gh_name = res.group('gh_name')
+                    at_msg += self.Dms.del_white_gh(gh_name=gh_name)
+                    self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
+                else:
+                    at_msg += '出错了, 请自己调试一下 ~~~~~~'
+                    self.wcf.send_text(msg=at_msg, receiver=msg.roomid, aters=msg.sender)
+            except Exception as e:
+                OutPut.outPut(f'[-]: 移除白名单公众号出现错误，错误信息：{e}')
 
     # 添加黑名单群聊
     def add_black_room(self, sender, room_id):
