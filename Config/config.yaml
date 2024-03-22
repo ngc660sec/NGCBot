@@ -277,7 +277,7 @@ Api_Server:
     # OpenAi
     Open_Ai:
       # Open_Ai接口
-      OpenAi_Api: 'https://proxy2.chatbox.run/v1/chat/completions'
+      OpenAi_Api: 'https://api.openai-proxy.com/v1/chat/completions'
       # OpenAi Key
       OpenAi_Key: 'Bearer sk-'
       # 初始化OpenAi角色
