@@ -249,7 +249,7 @@ class Room_Msg_Dispose:
                 msg.content.strip())
             self.wcf.send_text(msg=dream_msg, receiver=msg.roomid, aters=msg.sender)
         # help帮助菜单
-        elif self.judge_keyword(keyword=self.HelpMenu_Words, msg=msg.content.strip(), list_bool=True, split_bool=True):
+        elif self.judge_keyword(keyword=self.HelpMenu_Words, msg=msg.content.strip(), list_bool=True, equal_bool=True, split_bool=True):
             Thread(target=self.get_help, name="Help帮助菜单", args=(msg,)).start()
         # 自定义回复
         Thread(target=self.custom_get, name="自定义回复", args=(msg,)).start()
