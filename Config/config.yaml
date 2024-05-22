@@ -324,14 +324,10 @@ Api_Server:
   # 图片API配置
   Pic_Api:
     - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
-    - 'https://api.vvhan.com/api/girl'
     - 'https://tpapi.cysir.cn/img/beautyPhoto/api.php'
     - 'http://3650000.xyz/api/'
     - 'https://cdn.seovx.com/?mom=302'
-    - 'https://v.api.aa1.cn/api/pc-girl_bz/index.php?wpon=ro38d57y8rhuwur3788y3rd'
-    - 'https://api.vvhan.com/api/mobil.girl'
     - 'https://free.wqwlkj.cn/wqwlapi/ks_xjj.php'
-    - 'https://api.vvhan.com/api/girl'
     - 'https://tuapi.eees.cc/api.php?category=meinv&px=m&type=302'
     - 'http://lx.linxi.icu/API/meitui.php'
   # 视频API配置
@@ -340,12 +336,7 @@ Api_Server:
     - 'http://api.yujn.cn/api/xjj.php'
     - 'http://api.yujn.cn/api/zzxjj.php'
     - 'https://api.yujn.cn/api/manzhan.php'
-    - 'http://lx.linxi.icu/API/xjj.php'
-    - 'https://api.8uid.cn/qc.php?type=video'
-    - 'https://api.8uid.cn/cd.php?type=video'
-    - 'https://api.8uid.cn/tm.php?type=video'
-    - 'https://api.8uid.cn/dd.php?type=video'
-    - 'http://lx.linxi.icu/API/xjj.php'
+
 
 
 
