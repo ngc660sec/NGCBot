@@ -102,6 +102,7 @@ class Friend_Msg_Dispose:
             if msg.sender in room_members.keys():
                 join_msg = '你小子已经进群了, 还想干嘛[旺柴]'
                 self.wcf.send_text(msg=join_msg, receiver=msg.sender)
+                break
             ret = self.wcf.invite_chatroom_members(wxids=msg.sender, roomid=room_id)
             if ret:
                 OutPut.outPut(
