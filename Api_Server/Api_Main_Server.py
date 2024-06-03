@@ -76,7 +76,7 @@ class Api_Main_Server:
         # 千帆配置
         self.qf_ak = config['Api_Server']['Ai_Config']['QianFan']['Qf_Access_Key']
         self.qf_sk = config['Api_Server']['Ai_Config']['QianFan']['Qf_Secret_Key']
-        if self.qf_ak:
+        if self.qf_ak and self.qf_sk:
             self.chat_comp = qianfan.ChatCompletion(ak=self.qf_ak,
                                                     sk=self.qf_sk)
             self.chat_mess = qianfan.Messages()
