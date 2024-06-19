@@ -8,7 +8,7 @@ chat_completion = qianfan.ChatCompletion(ak="", sk="")
 
 resp = chat_completion.do(messages=[{
     "role": "user",
-    "content": "你好"
+    "content": "hello"
 }])
 
 print(resp)
