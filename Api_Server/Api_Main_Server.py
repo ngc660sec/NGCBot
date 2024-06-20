@@ -209,7 +209,7 @@ class Api_Main_Server:
         except Exception as e:
             msg = f'[-]: 美女视频API接口出现错误，错误信息：{e}\n正在回调中... ...'
             OutPut.outPut(msg)
-            save_path = self.get_girl_pic()
+            save_path = self.get_girl_video()
         OutPut.outPut(f'[+]: 美女视频API接口调用成功！！！')
         return save_path
 
