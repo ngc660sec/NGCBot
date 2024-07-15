@@ -1,0 +1,13 @@
+tencentcloud_sdk_python_common==3.0.1186
+tencentcloud_sdk_python_hunyuan==3.0.1186
+spark-ai-python==0.4.1
+wcferry==39.0.12.0
+feedparser==6.0.11
+Requests==2.32.3
+schedule==1.2.2
+qianfan==0.2.5
+urllib3==2.2.2
+Pillow==10.4.0
+cprint==1.2.2
+PyYAML==6.0.1
+lxml==5.2.2
