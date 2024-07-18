@@ -271,7 +271,7 @@ class FriendMsgHandle:
         if aiMsg:
             self.wcf.send_text(aiMsg, receiver=sender)
             return
-        self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~')
+        self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~', receiver=sender)
 
     def forwardMsgToAdministrators(self, wxId, content):
         """
