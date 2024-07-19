@@ -84,7 +84,7 @@ class FriendMsgHandle:
                 self.showBlackGh(sender, )
                 # Thread(target=self.showBlackGh, args=(sender,)).start()
             # Ai对话 Ai锁功能 对超管没用
-            elif self.aiLock or self.Administrators:
+            elif self.aiLock or sender in self.Administrators:
                 Thread(target=self.getAiMsg, args=(content, sender)).start()
             # 超级管理员发消息转发给好友
             elif judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
