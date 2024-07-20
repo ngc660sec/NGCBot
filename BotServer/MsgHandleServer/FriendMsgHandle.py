@@ -87,7 +87,7 @@ class FriendMsgHandle:
             elif self.aiLock or sender in self.Administrators:
                 Thread(target=self.getAiMsg, args=(content, sender)).start()
             # 超级管理员发消息转发给好友
-            elif judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
+            if judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
                 Thread(target=self.sendFriendMsg, args=(content,)).start()
             # 好友消息转发给超级管理员 超级管理员不触发
             if sender not in self.Administrators:
