@@ -247,6 +247,7 @@ class FriendMsgHandle:
                         break
                     if self.wcf.invite_chatroom_members(roomId, sender):
                         op(f'[+]: 已将 {sender} 拉入群聊【{roomId}】')
+                        break
                     else:
                         op(f'[-]: {sender} 拉入群聊【{roomId}】失败 !!!')
 
