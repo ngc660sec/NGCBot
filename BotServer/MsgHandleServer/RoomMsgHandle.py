@@ -86,7 +86,7 @@ class RoomMsgHandle:
         :return:
         """
         try:
-            ret = 0
+            ret = 1
             content = msg.content.strip()
             wx_names = None
             if '二维码' in content:
