@@ -76,7 +76,7 @@ class AiDialogue:
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: Gpt对话接口出现错误, 错误信息: {e}')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
     def getSparkAi(self, content):
         """
