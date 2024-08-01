@@ -69,8 +69,6 @@ class RoomMsgHandle:
             self.AdminFunction(msg)
             # 入群欢迎
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
-            # 娱乐功能 和 积分功能
-            Thread(target=self.HappyFunction, args=(msg,)).start()
 
         # 普通群聊功能
         else:
