@@ -1,5 +1,5 @@
 <h1 align="center">
-NGCBot V2.1
+NGCBot V2.2
 </h1>
 
 
