@@ -1,0 +1,73 @@
+geoserver:
+  fofa: 'app="GeoServer"'
+  hunter: 'app.name="GeoServer"'
+  quake: 'app="GeoServer"'
+
+鸿翼edoc文档管理系统:
+  hunter: 'web.body="scripts/lib/Cropper/css/cropper.css"'
+  hunter: 'web.icon=="b6ff5fb80eb1412c57eb24b6df8148ec"'
+
+数字通指尖云平台:
+  hunter: 'web.body="/assets/8cca19ff/css/bootstrap-yii.css"'
+
+赛蓝企业管理系统:
+  hunter: 'web.body="赛蓝企业管理系统"'
+  hunter: 'web.icon=="2bf4e65c047bb52063b1e7c129c64148"'
+  hunter: 'web.body="/Content/scripts/plugins/dialog/dialog.js"'
+
+浪潮云财务:
+  hunter: 'web.body="/cwbase/web/scripts/aes.js"'
+
+致远OA:
+  hunter: 'body="/seeyon/USER-DATA/IMAGES/LOGIN/login.gif"'
+
+致远互联-M1移动协同办公:
+  fofa: 'app="致远互联-M1移动端"'
+
+润乾报表:
+  fofa: 'body="润乾报表" || body="/raqsoft"'
+
+科荣AIO管理系统:
+  fofa: 'body="changeAccount(varAccount)"||(body="KoronCom.TrustedSites"&&body="/login.jsp")'
+
+智联云采SRM:
+  fofa: 'title="SRM 2.0"&&body="/assets/img/favicon.ico"'
+
+泛微E-Office:
+  fofa: '((header="general/login/index.php"||body="/general/login/view//images/updateLoad.gif"||(body="szFeatures"&&body="eoffice")||header="Server: eOffice")&&body!="Server: couchdb")||banner="general/login/index.php"'
+
+泛微E-Cology:
+  fofa: 'app="泛微-OA(e-cology)"'
+
+泛微E-Cology v10:
+  fofa: 'body="/build/passport/static/js/lib.js"&&body="/build/ecodesdk/static/js/lib.js"'
+
+用友NC:
+  fofa: 'title="Yonyou UAP"||title="Yonyou NC"&&body="Client/Uclient/UClient.exe"'
+
+锐捷EG易网关:
+  fofa: 'app="Ruijie-EG易网关"'
+
+海康威视教育综合安防管理系统:
+  fofa: 'app="综合安防管理平台"'
+
+方天云ERP:
+  fofa: 'body="AjaxMethods.asmx/GetCompanyItem"&&body="Button1_Click"'
+
+亿赛通电子文档:
+  fofa: 'app="亿赛通-电子文档安全管理系统"'
+
+开源数据大屏AJ-Report:
+  fofa: 'title="AJ-Report"||body="chunk-elementUI.0805594c.js"'
+
+奥威亚视频云:
+  fofa: 'app="AVA-教学视频应用云平台"'
+
+金蝶云星空:
+  fofa: 'app="金蝶云星空-管理中心"'
+
+Altenergy电力系统控制软件:
+  fofa: 'app="昱能科技-微型逆变器控制软件"'
+
+中科智远科技-综合监管云平台:
+  fofa: '(body="/Scripts/USBKey/Syunew6.js"&&body="/Download/DownFile?fileName=SetUp.exe")||body="hm.baidu.com/hm.js?0558502420ce5fee054b31425e77ffa6"||(body="服务器启用了Identity认证，强制在这里登录"&&body="推荐Firefox浏览器")'

@@ -1,0 +1,563 @@
+## 超级管理员配置
+Administrators:
+  - 'wxid_7bizfilssbwi22'
+
+## 系统配置
+systemConfig:
+  # 版权信息
+  systemCopyright: 'NGC660安全实验室'
+  # 好友Ai开关
+  # 1开/0关
+  aiLock: 0
+  # 自动接收转账
+  acceptMoneyLock: 1
+  # 自动同意好友开关
+  acceptFriendLock: 1
+
+## 定时发送配置
+pushConfig:
+  # 早报推送时间
+  morningPageTime: '08:30'
+  # 晚报发送时间设置
+  eveningPageTime: '17:00'
+  # 下班推送时间设置
+  offWorkTime: '18:00'
+  # 摸鱼日记推送时间设置
+  fishTime: '10:00'
+  # KFC文案发送时间设置 每周四发送
+  kfcTime: '11:50'
+  # 定时功能回复配置
+  keyWord:
+    # 下班消息 换行用\n 支持微信表情
+    offWorkMsg: '下班时间到！我要下班 我要下班 我要下班 下下下！\n到点即刻下班，给老板省去水电，给自己来套保健，给老板来句操蛋，出自: #NGC660安全实验室\n速速下班！！！[旺柴]'
+
+## 进群关键词配置
+roomKeyWord:
+  进群:
+    - '47442567074@chatroom'
+    - '47362882837@chatroom'
+  Bot交流群:
+    - '47442567074@chatroom'
+    - '47362882837@chatroom'
+  开发者:
+    - '46017987363@chatroom'
+
+## 自定义关键词回复
+customKeyWord:
+  # 设置关键词
+  '关键词1':
+    - '回复内容1'
+    - '回复内容2'
+  '关键词2':
+    - '回复内容1'
+    - '回复内容2'
+
+## 自定义各种消息 \n换行
+customMsg:
+  # 加好友后回复
+  acceptFriendMsg: '你好, 我是久安信息技术有限公司旗下NGC660安全实验室开发的微信机器人, 你可以叫我NGCBot! 私聊我即可进行智能对话哦[爱心]~~~ ~~~'
+  # 默认进群欢迎词配置 换行用\n 支持微信表情 默认使用文本 卡片自己配置
+  joinRoomMsg: '欢迎新进群的小可爱\n群主正在床上等你哦[爱心]~~~ ~~~'
+  # 指定群聊进群欢迎词 触发了指定群聊 则不会触发默认进群欢迎
+  appointJsonRoomMsgs:
+    # 群聊ID 多个Room加 , 即可
+    '50303957048@chatroom': '【腾讯文档】WingBy小密圈知识星球说明 进群必看！！！！！\nhttps://docs.qq.com/doc/DS2tmaEJlUmFRY0Vi'
+  # 进群欢迎词 卡片配置
+  JoinRoomCard:
+    # 不同的Room需要不同配置 多个room加 , 即可
+    '43064515504@chatroom,47442567074@chatroom,47362882837@chatroom,46017987363@chatroom':
+      # 左下角显示的名字 一般是公众号名称
+      name: 'NGC660安全实验室'
+      # 填公众号ID 可以显示对应的头像
+      account: 'gh_5fc2f516b008'
+      # 卡片消息标题 最多两行
+      title: '欢迎 ❤{}❤ 一起搞机'
+      # 摘要 最多三行
+      digest: '【NGCBot V2.1】新版本来袭！全新功能！全新架构！自动化私域管理必备！'
+      # 点击后跳转的URL
+      url: 'http://mp.weixin.qq.com/s?__biz=MzkyODMxODUwNQ==&amp;mid=2247493526&amp;idx=1&amp;sn=d0f7675929a314941ad3845769bafdcb&amp;chksm=c21832d0f56fbbc6c4451105df94e39283228e9f6bb69eae00888c4869f5b91e3703bd302e92&amp;mpshare=1&amp;scene=1&amp;srcid=0716KB1OiULdPNzLUXmMVVlV&amp;sharer_shareinfo=dd05c6b9c14d98dc6b745cbf673dabec&amp;sharer_shareinfo_first=24b3af78c3e815a698c81c03a49a0244#rd'
+      # 缩略图的链接 到控制台输出拿
+      thumbUrl: 'https://mmbiz.qpic.cn/mmbiz_jpg/QABjQccnicQpAnrqNicQd9iaTIQg3TZia6nr3OaAJQS8bOMrdtFct30axbiaO3OTnULGjHpE0RQD0NmT76FWa5daiaZA/300?wxtype=jpeg&amp;wxfrom=401'
+#  'roomId':
+#    # 左下角显示的名字 一般是公众号名称
+#    name: 'NGC660安全实验室'
+#    # 填公众号ID 可以显示对应的头像
+#    account: ''
+#    # 卡片消息标题 最多两行
+#    title: ''
+#    # 摘要 最多三行
+#    digest: ''
+#    # 点击后跳转的URL
+#    url: ''
+#    # 缩略图的链接 到控制台输出拿
+#    thumbUrl: ''
+
+
+## 管理功能关键词配置
+adminFunctionWord:
+  # 新增管理员关键词
+  addAdminWord:
+    - '添加管理员'
+    - '添加管理'
+    - '新增管理员'
+  # 删除管理员关键词
+  delAdminWord:
+    - '删除管理员'
+    - '删除管理'
+    - '移除管理员'
+  # 新增黑名单群聊关键词
+  addBlackRoomWord:
+    - '拉黑群聊'
+    - '拉黑'
+    - '添加黑名单'
+  # 移出黑名单群聊关键词
+  delBlackRoomWord:
+    - '解除拉黑'
+    - '移出黑名单'
+  # 查看白名单群聊关键词
+  showWhiteRoomWord:
+    - '查看群聊'
+    - '查看白名单群聊'
+  # 查看黑名单群聊关键词
+  showBlackRoomWord:
+    - '查看黑名单群聊'
+    - '查看拉黑群聊'
+  # 查看推送群聊关键词
+  showPushRoomWord:
+    - '查看推送群聊'
+    - '查看广告群'
+  # 新增白名单群聊关键词
+  addWhiteRoomWord:
+    - '拉白'
+    - '加白'
+    - '添加白名单'
+  # 移出白名单群聊关键词
+  delWhiteRoomWord:
+    - '移出白名单'
+    - '移除白名单'
+    - '去白'
+  # 新增推送群聊关键词
+  addPushRoomWord:
+    - '开启推送服务'
+    - '开启推送'
+  # 移除推送群聊关键词
+  delPushRoomWord:
+    - '关闭推送服务'
+    - '关闭推送'
+  # 添加黑名单公众号
+  addBlackGhWord:
+    - '黑号'
+    - '拉黑'
+  # 移除黑名单公众号
+  delBlackGhWord:
+    - '移除拉黑'
+    - '移除'
+    - '移出'
+  # 查看黑名单公众号
+  showBlackGhWord:
+    - '查看拉黑公众号'
+    - '拉黑公众号'
+    - '拉黑公号'
+  # 踢人关键词
+  delUserWord:
+    - '踢出'
+    - '踢'
+  # 给好友发消息关键词
+  sendMsgWord:
+    - '发'
+    - '发送'
+
+## 积分功能配置
+pointConfig:
+  # 签到功能
+  sign:
+    # 签到口令
+    word: '签到: 久安信息技术有限公司承接各类安全服务'
+    # 签到积分
+    point: '10'
+  # 功能积分配置
+  functionPoint:
+    # Md5积分配置
+    md5: '10'
+    # 微步IP查询积分配置
+    wbIp: '10000'
+    # 埃文IP地址查询配置
+    awIp: '10000'
+    # Ai对话积分配置
+    aiPoint: '10'
+    # Ai画图配置
+    aiPicPoint: '10'
+    # 飞书Wiki查询
+    feishuPoint: '10000'
+  # 增加积分关键词
+  addPointWord:
+    - '加'
+    - '+'
+    - '加积分'
+    - '增'
+  # 减少积分关键词
+  delPointWord:
+    - '减'
+    - '-'
+    - '扣除'
+    - '扣'
+  # 积分查询关键词
+  queryPointWord:
+    - '积分查询'
+    - '查询积分'
+
+## 其它功能关键词配置
+functionKeyWord:
+  # 触发美女图片关键词
+  picWord:
+    - '图片'
+  # 触发美女视频关键词
+  videoWord:
+    - '视频'
+  # 触发摸鱼日记关键词
+  fishWord:
+    - '摸鱼日记'
+    - '摸鱼日历'
+  # 触发疯狂星期四文案关键词
+  kfcWord:
+    - 'Kfc'
+    - '疯狂星期四'
+    - '星期四'
+    - '今天星期四'
+    - 'KFC'
+    - 'kfc'
+    - 'v我50'
+    - '明天星期四'
+  # 触发舔狗日记关键词
+  dogWord:
+    - '舔狗日记'
+    - '舔我'
+  # 触发微步IP查询关键词
+  threatBookWord:
+    - 'ip查询'
+    - 'IP查询'
+    - '查询ip'
+    - '查询IP'
+    - '微步查询'
+  # 触发埃文IP地址查询关键词
+  aiWenWord:
+    - 'ip定位'
+    - '溯源'
+    - '定位'
+  # 触发早报关键词
+  morningPageWord:
+    - '早报'
+    - '早间咨询'
+  # 触发晚报关键词
+  eveningPageWord:
+    - '晚报'
+    - '晚间咨询'
+  # MD5解密关键词
+  md5Words:
+    - 'md5解密'
+    - 'MD5解密'
+    - 'md5查询'
+    - 'Md5查询'
+    - 'MD5查询'
+  # 帮助菜单
+  helpMenu:
+    - '帮助'
+    - 'help'
+    - 'Help'
+    - 'HELP'
+    - '帮助菜单'
+    - '菜单'
+  # Ai画图关键词
+  aiPic:
+    - '画'
+    - '画一个'
+  # 飞书知识库查询关键词
+  feishuWords:
+    - '搜索'
+    - '查询漏洞'
+
+## API接口服务配置
+apiServer:
+  apiConfig:
+    # cmd5Email
+    cmd5Email: ''
+    # cmd5 Key
+    cmd5Key: ''
+    # 微步Key
+    threatBookKey: ''
+    # 埃文Key
+    aiWenKey: ''
+    # 高德 Key
+    gaoDeKey: ''
+    # 天行Key
+    txKey: ''
+
+
+  aiConfig:
+    # Ai优先级
+    # 修改序号即可修改优先对话模型
+    aiPriority:
+      1: 'hunYuan'
+      2: 'sparkAi'
+      3: 'openAi'
+      4: 'qianFan'
+    # 画图Ai优先级
+    aiPicPriority:
+      1: 'sparkAi'
+      2: 'qianFan'
+    # Ai角色配置
+    systemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于久安信息技术有限公司旗下NGC660安全实验室, 是一名网络安全专家'
+    # 星火大模型 4.0 Ultra模型 + 图像生成模型
+    sparkApi:
+      # 模型Url
+      sparkAiApi: 'wss://spark-api.xf-yun.com/v4.0/chat'
+      # 模型Secret
+      sparkAiSecret: ''
+      # 模型版本
+      sparkDomain: '4.0Ultra'
+      # 模型Key
+      sparkAiKey: ''
+      # 模型Appid
+      sparkAiAppid: ''
+    # OpenAi 3.5模型
+    openAi:
+      # Open_Ai接口
+      openAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
+      # OpenAi Key
+      openAiKey: 'Bearer sk-'
+    # 千帆大模型  ERNIE-4.0-Turbo-8K模型
+    qianFan:
+      # 应用中的Api Key
+      qfAccessKey: ''
+      # 应用中的Secret Key
+      qfSecretKey: ''
+      # 应用中的应用ID
+      qfAppid: ''
+      # 千帆Ai作画Api 两个key是不一样的 不能通用
+      # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
+      # 应用中的Api Key
+      qfPicAccessKey: ''
+      # 应用中的Secret Key
+      qfPicSecretKey: ''
+      # 应用中的应用ID
+      qfPicAppid: '92991265'
+    # 腾讯混元大模型, 有免费额度
+    hunYuan:
+      # 腾讯云SecretId
+      hunYuanSecretId: ''
+      # 腾讯云SecretKey
+      hunYuanSecretKey: ''
+
+  # 微步查询API
+  threatBookApi: 'https://api.threatbook.cn/v3/ip/query'
+  # 高德地图API
+  gaoDeApi: 'https://restapi.amap.com/v3/staticmap'
+  # 埃文IP地址查询API
+  aiWenApi: 'https://api.ipplus360.com/ip/geo/v1/street/biz/'
+
+  # 舔狗日记API
+  dogApi: 'https://apis.tianapi.com/tiangou/index?key={}'
+  # 摸鱼日记API
+  fishApi: 'https://api.j4u.ink/v1/store/redirect/moyu/calendar/today.png'
+  # 疯狂星期四文案Api
+  kfcApi: 'https://api.pearktrue.cn/api/kfc'
+  # Cmd5解密Api配置
+  cmd5Api: 'http://www.cmd5.com/api.ashx?email={}&key={}&hash={}'
+  # 飞书Wiki Api接口
+  feishuWiki: 'https://open.feishu.cn/open-apis/wiki/v1/nodes/search'
+  # 图片API配置
+  picApi:
+    - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
+    - 'http://3650000.xyz/api/'
+    - 'https://cdn.seovx.com/?mom=302'
+    - 'https://tuapi.eees.cc/api.php?category=meinv&px=m&type=302'
+  # 视频API配置
+  videosApi:
+    - 'http://api.yujn.cn/api/heisis.php'
+    - 'http://api.yujn.cn/api/xjj.php'
+    - 'http://api.yujn.cn/api/zzxjj.php'
+    - 'https://api.yujn.cn/api/manzhan.php'
+    - 'http://api.yujn.cn/api/rewu.php?type=video'
+    - 'http://api.ovoe.top/API/hbss.php'
+    - 'http://abc.gykj.asia/API/hbss.php'
+    - 'https://api.qtkj.love/api/hbss.php'
+    - 'http://api.yujn.cn/api/hanfu.php?type=video'
+    - 'http://abc.gykj.asia/API/gzhf.php'
+    - 'http://www.yujn.cn/api/heisis.php'
+    - 'http://api.yujn.cn/api/manyao.php?type=video'
+    - 'https://api.shenke.love/api/mnsp.php?msg=my&type=video'
+    - 'http://api.yujn.cn/api/COS.php?type=video'
+    - 'http://abc.gykj.asia/API/ntCOS.php'
+    - 'http://api.yujn.cn/api/jksp.php?type=video'
+
+# 表情包关键词配置，跟官网的相匹配，同时删减一些默认表情
+# https://github.com/MeetWq/meme-generator/wiki/%E8%A1%A8%E6%83%85%E5%88%97%E8%A1%A8
+emoConfig:
+  emoHelp:
+    - '表情帮助'
+    - '表情菜单'
+    - '表情列表'
+  emoKeyWord:
+    - '表情'
+    - '表情包'
+  emoRandomKeyWord:
+    - '随机表情'
+  onePicEmo:
+    '跟我去二次元': 'acg_entrance'
+    '添乱': 'add_chaos'
+    '上瘾': 'addiction'
+    '一样': 'alike'
+    '永远喜欢': 'always_like'
+    '诱拐': 'anti_kidnap'
+    '阿尼亚喜欢': 'anya_suki'
+    '鼓掌': 'applaud'
+    '打工人': 'back_to_work'
+    '拍头': 'beat_head'
+    '啃': 'bite'
+    '高血压': 'blood_pressure'
+    '手稿': 'bocchi_draft'
+    '奶茶': 'bubble_tea'
+    '草神': 'caoshen_bite'
+    '画': 'capoo_draw'
+    '撕': 'rip'
+    '咖波撕': 'capoo_rip'
+    '蹭': 'capoo_rub'
+    '撞': 'capoo_strike'
+    '字符画': 'charpic'
+    '追': 'chase_train'
+    '国旗': 'china_flag'
+    '小丑': 'clown'
+    '迷惑': 'confuse'
+    '兑奖': 'coupon'
+    '捂脸': 'cover_face'
+    '爬': 'crawl'
+    '亲亲': 'decent_kiss'
+    '典': 'dianzhongdian'
+    '恐龙': 'dinosaur'
+    '涣散': 'distracted'
+    '离婚协议': 'divorce'
+    '狗都不玩': 'dog_dislike'
+    '痴': 'dog_of_vtb'
+    '不要靠近': 'dont_go_near'
+    '别碰': 'dont_touch'
+    '吃': 'eat'
+    '要上吗': 'fight_with_sunuo'
+    '满脑子': 'fill_head'
+    '闪瞎': 'flash_blind'
+    '关注': 'follow'
+    '拿': 'frieren_take'
+    '哈哈镜': 'funny_mirror'
+    '垃圾桶': 'garbage'
+    '启动': 'genshin_start'
+    '鬼畜': 'guichu'
+    '手枪': 'gun'
+    '锤': 'hammer'
+    '打穿': 'hit_screen'
+    '抱紧': 'hold_tight'
+    '抱大腿': 'hug_leg'
+    '胡桃啃': 'hutao_bite'
+    '不文明': 'incivilization'
+    '采访': 'interview'
+    '急急国王': 'jiji_king'
+    '啾啾': 'jiujiu'
+    '跳': 'jump'
+    '万花筒': 'kaleidoscope'
+    '指': 'karyl_point'
+    '远离': 'keep_away'
+    '踢球': 'kick_ball'
+    '卡比锤': 'kirby_hammer'
+    '可莉吃': 'klee_eat'
+    '敲': 'knock'
+    '偷学': 'learn'
+    '横跳': 'left_right_jump'
+    '让我进去': 'let_me_in'
+    '无穷小': 'lim_x_0'
+    '听音乐': 'listen_music'
+    '小天使': 'little_angel'
+    '加载中': 'loading'
+    '看扁': 'look_flat'
+    '看图标': 'look_this_icon'
+    '循环': 'loop'
+    '寻狗启示': 'lost_dog'
+    '永远爱你': 'love_you'
+    '交个朋友': 'make_friend'
+    '结婚申请': 'marriage'
+    '上香': 'mourning'
+    '我朋友说': 'my_friend'
+    '我老婆': 'my_wife'
+    '需要': 'need'
+    '无响应': 'no_response'
+    '请假条': 'note_for_leave'
+    'out': 'out'
+    '加班': 'overtime'
+    '这像画吗': 'paint'
+    '小画家': 'painter'
+    '拍': 'pat'
+    '完美': 'perfect'
+    '摸': 'petpet'
+    '捏': 'pinch'
+    '顶': 'play'
+    '玩游戏': 'play_game'
+    '一起玩': 'play_together'
+    '出警': 'police'
+    '警察': 'police1'
+    '搞': 'pound'
+    '打印': 'printing'
+    '舔': 'prpr'
+    '打拳': 'punch'
+    '举': 'raise_image'
+    '看书': 'read_book'
+    '怒撕': 'rip_angrily'
+    '诈尸': 'rise_dead'
+    '滚': 'roll'
+    '三维旋转': 'rotate_3d'
+    '快逃': 'run_away'
+    '安全感': 'safe_sense'
+    '挠头': 'scratch_head'
+    '刮刮乐': 'scratchcard'
+    '震惊': 'shock'
+    '坐的住': 'sit_still`'
+    '砸': 'smash'
+    '踩': 'step_on'
+    '炖': 'stew'
+    '科目三': 'subject3'
+    '吸': 'suck'
+    '精神支柱': 'support'
+    '回旋转': 'swirl_turn'
+    '嘲讽': 'taunt'
+    '唐可可举牌': 'tankuku_raisesign'
+    '讲课': 'teach'
+    '拿捏': 'tease'
+    '望远镜': 'telescope'
+    '想什么': 'think_what'
+    '这是鸡': 'this_chicken'
+    '丢': 'throw'
+    '抛': 'throw_gif'
+    '捶': 'thump'
+    '锤爆': 'thump_wildly'
+    '紧贴': 'tightly'
+    '一起': 'together'
+    '嘲笑': 'tom_tease'
+    '上坟': 'tomb_yeah'
+    '恍惚': 'trance'
+    '转': 'turn'
+    '搓': 'twist'
+    '震动': 'vibrate'
+    '墙纸': 'wallpaper'
+    '胡桃平板': 'walnut_pad'
+    '胡桃放大': 'walnut_zoom'
+    '洗衣机': 'washer'
+    '波纹': 'wave'
+    '我想上的': 'what_I_want_to_do'
+    '最想要的东西': 'what_he_wants'
+    '为什么@我': 'why_at_me'
+    '为什么要有手': 'why_have_hands'
+    '风车转': 'windmill_turn'
+    '木鱼': 'wooden_fish'
+    '膜拜': 'worship'
+    '致电': 'you_should_call'
+  twoPicEwo:
+    '揍': 'beat_up'
+    '击剑': 'fencing'
+    '亲': 'kiss'
+    '贴贴': 'rub'
