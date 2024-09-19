@@ -22,6 +22,8 @@ class HappyFunction:
         self.emoOneKeyWordsData = configData['emoConfig']['onePicEmo']
         self.emoTwoKeyWordsData = configData['emoConfig']['twoPicEwo']
         self.emoRandomKeyWords = configData['emoConfig']['emoRandomKeyWord']
+        # 自定义回复关键词字典
+        self.customKeyWords = configData['customKeyWord']
 
     def mainHandle(self, message):
         content = message.content.strip()
@@ -148,6 +150,13 @@ class HappyFunction:
                     self.wcf.send_emotion(path=emoPath, receiver=roomId)
                 else:
                     self.wcf.send_image(path=emoPath, receiver=roomId)
+            # 自定义回复
+            elif judgeEqualListWord(content, self.customKeyWords.keys()):
+                for keyWord in self.customKeyWords.keys():
+                    if judgeEqualWord(content, keyWord):
+                        replyMsgLists = self.customKeyWords.get(keyWord)
+                        for replyMsg in replyMsgLists:
+                            self.wcf.send_text(replyMsg, receiver=roomId)
             # 表情菜单
             elif judgeEqualListWord(content, self.emoHelpKeyWords):
                 msg = '【单人表情】使用方法: \n表情 表情选项\n@某人 表情选项\n单人表情选项如下: \n'

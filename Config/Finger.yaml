@@ -4,16 +4,16 @@ geoserver:
   quake: 'app="GeoServer"'
 
 鸿翼edoc文档管理系统:
-  hunter: 'web.body="scripts/lib/Cropper/css/cropper.css"'
-  hunter: 'web.icon=="b6ff5fb80eb1412c57eb24b6df8148ec"'
+  hunter1: 'web.body="scripts/lib/Cropper/css/cropper.css"'
+  hunter2: 'web.icon=="b6ff5fb80eb1412c57eb24b6df8148ec"'
 
 数字通指尖云平台:
   hunter: 'web.body="/assets/8cca19ff/css/bootstrap-yii.css"'
 
 赛蓝企业管理系统:
-  hunter: 'web.body="赛蓝企业管理系统"'
-  hunter: 'web.icon=="2bf4e65c047bb52063b1e7c129c64148"'
-  hunter: 'web.body="/Content/scripts/plugins/dialog/dialog.js"'
+  hunter1: 'web.body="赛蓝企业管理系统"'
+  hunter2: 'web.icon=="2bf4e65c047bb52063b1e7c129c64148"'
+  hunter3: 'web.body="/Content/scripts/plugins/dialog/dialog.js"'
 
 浪潮云财务:
   hunter: 'web.body="/cwbase/web/scripts/aes.js"'
