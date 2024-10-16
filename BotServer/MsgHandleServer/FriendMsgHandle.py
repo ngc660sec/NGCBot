@@ -236,7 +236,7 @@ class FriendMsgHandle:
         :return:
         """
         for keyWord in self.roomKeyWords.keys():
-            if judgeEqualWord(content, keyWord):
+            if judgeEqualWord(content.lower(), keyWord.lower()):
                 roomLists = self.roomKeyWords.get(keyWord)
                 for roomId in roomLists:
                     roomMember = self.wcf.get_chatroom_members(roomId)
