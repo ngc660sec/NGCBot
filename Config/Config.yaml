@@ -160,8 +160,12 @@ adminFunctionWord:
     - '拉黑公号'
   # 踢人关键词
   delUserWord:
+    - '滚蛋'
+    - '滚'
     - '踢出'
     - '踢'
+    - '滚出去'
+    - '移出'
   # 给好友发消息关键词
   sendMsgWord:
     - '发'
@@ -211,9 +215,14 @@ functionKeyWord:
   # 触发美女图片关键词
   picWord:
     - '图片'
+    - '妹子'
+    - '色图'
+    - '色色'
   # 触发美女视频关键词
   videoWord:
     - '视频'
+    - '成人视频'
+    - '18禁'
   # 触发摸鱼日记关键词
   fishWord:
     - '摸鱼日记'
@@ -289,18 +298,20 @@ apiServer:
     aiWenKey: ''
     # 高德 Key
     gaoDeKey: ''
-    # 天行Key https://www.tianapi.com/
+    # 天行Key
     txKey: ''
 
 
   aiConfig:
     # Ai优先级
     # 修改序号即可修改优先对话模型
+    # 注意大小写 否则无效
     aiPriority:
-      1: 'hunYuan'
-      2: 'sparkAi'
-      3: 'openAi'
-      4: 'qianFan'
+      1: 'kiMi'
+      2: 'hunYuan'
+      3: 'sparkAi'
+      4: 'openAi'
+      5: 'qianFan'
     # 画图Ai优先级
     aiPicPriority:
       1: 'sparkAi'
@@ -340,13 +351,17 @@ apiServer:
       # 应用中的Secret Key
       qfPicSecretKey: ''
       # 应用中的应用ID
-      qfPicAppid: '92991265'
+      qfPicAppid: ''
     # 腾讯混元大模型, 有免费额度
     hunYuan:
       # 腾讯云SecretId
       hunYuanSecretId: ''
       # 腾讯云SecretKey
       hunYuanSecretKey: ''
+    # Kimi大模型
+    kiMi:
+      kiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
+      kiMiKey: 'sk-'
 
   # 微步查询API
   threatBookApi: 'https://api.threatbook.cn/v3/ip/query'
