@@ -10,6 +10,8 @@ from queue import Empty
 from wcferry import Wcf
 
 
+from ApiServer.pluginTest import PluginMain
+
 class MainServer:
     def __init__(self):
         self.wcf = Wcf()
@@ -19,6 +21,7 @@ class MainServer:
         self.Rmh = RoomMsgHandle(self.wcf)
         self.Fmh = FriendMsgHandle(self.wcf)
         self.Pms = PushMainServer(self.wcf)
+        self.Pm = PluginMain(self.wcf)
         # 初始化服务以及配置
         Thread(target=self.initConfig, name='初始化服务以及配置').start()
 

@@ -38,9 +38,14 @@ class AiDialogue:
             'hunYuanSecretId': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretId'],
             'hunYuanSecretKey': configData['apiServer']['aiConfig']['hunYuan']['hunYuanSecretKey']
         }
+        self.kiMiConfig = {
+            'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
+            'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
+        }
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
+        self.kimiMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
         self.aiPriority = configData['apiServer']['aiConfig']['aiPriority']
         self.aiPicPriority = configData['apiServer']['aiConfig']['aiPicPriority']
 
@@ -305,6 +310,40 @@ class AiDialogue:
             op(f'[-]: 腾讯混元Ai对话接口出现错误, 错误信息: {e}')
             return None, messages
 
+    def getKiMiAi(self, content, messages):
+        op(f'[*]: 正在调用kiMi对话接口... ...')
+        """
+        kiMi Ai对话
+        :param OpenAiConfig: kiMi 配置字典
+        :param content: 对话内容
+        :param messages: 消息列表
+        :return:
+        """
+        if not self.kiMiConfig.get('kiMiKey'):
+            op(f'[-]: kiMi模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": "moonshot-v1-8k",
+            "messages": messages
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"{self.kiMiConfig.get('kiMiKey')}",
+        }
+        try:
+            resp = requests.post(url=self.kiMiConfig.get('kiMiApi'), headers=headers, json=data, timeout=15)
+            json_data = resp.json()
+            assistant_content = json_data['choices'][0]['message']['content']
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
+        except Exception as e:
+            op(f'[-]: kiMi对话接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
     def getAi(self, content):
         """
         处理优先级
@@ -312,7 +351,7 @@ class AiDialogue:
         :return:
         """
         result = ''
-        for i in range(1, 5):
+        for i in range(1, 6):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
@@ -322,6 +361,8 @@ class AiDialogue:
                 result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
             if aiModule == 'qianFan':
                 result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
+            if aiModule == 'kiMi':
+                result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
             if not result:
                 continue
             else:
@@ -351,9 +392,9 @@ class AiDialogue:
 if __name__ == '__main__':
     messages = []
     Ad = AiDialogue()
-    print(Ad.getPicAi('画一只布尔猫'))
-    # while 1:
-    #     print(Ad.getAi(input('>> ')))
+    # print(Ad.getPicAi('画一只布尔猫'))
+    while 1:
+        print(Ad.getAi(input('>> ')))
     # Ad.getAi(1)
     # while 1:
     #     content, messages = Ad.getHunYuanAi(input(), messages)
