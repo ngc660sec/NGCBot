@@ -42,10 +42,15 @@ class AiDialogue:
             'kiMiApi': configData['apiServer']['aiConfig']['kiMi']['kiMiApi'],
             'kiMiKey': configData['apiServer']['aiConfig']['kiMi']['kiMiKey']
         }
+        self.bigModelConfig = {
+            'bigModelApi': configData['apiServer']['aiConfig']['bigModel']['bigModelApi'],
+            'bigModelKey': configData['apiServer']['aiConfig']['bigModel']['bigModelKey'],
+        }
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
         self.kimiMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
+        self.bigModelMessages = [{"role": "system", "Content": f'{self.systemAiRole}'}]
         self.aiPriority = configData['apiServer']['aiConfig']['aiPriority']
         self.aiPicPriority = configData['apiServer']['aiConfig']['aiPicPriority']
 
@@ -344,6 +349,41 @@ class AiDialogue:
             op(f'[-]: kiMi对话接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
+    def getBigModel(self, content, messages):
+        op(f'[*]: 正在调用BigModel对话接口... ...')
+        """
+        BigModel
+        :param OpenAiConfig: BigModel 配置字典
+        :param content: 对话内容
+        :param messages: 消息列表
+        :return:
+        """
+        if not self.bigModelConfig.get('bigModelKey'):
+            op(f'[-]: BigModel模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": "glm-4-plus",
+            "messages": messages
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"{self.bigModelConfig.get('bigModelKey')}",
+        }
+        try:
+            resp = requests.post(url=self.bigModelConfig.get('bigModelApi'), headers=headers, json=data, timeout=15)
+            json_data = resp.json()
+            print(json_data)
+            assistant_content = json_data['choices'][0]['message']['content']
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
+        except Exception as e:
+            op(f'[-]: BigMode对话接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
     def getAi(self, content):
         """
         处理优先级
@@ -351,7 +391,7 @@ class AiDialogue:
         :return:
         """
         result = ''
-        for i in range(1, 6):
+        for i in range(1, 7):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
@@ -363,6 +403,8 @@ class AiDialogue:
                 result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
             if aiModule == 'kiMi':
                 result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
+            if aiModule == 'bigModel':
+                result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
             if not result:
                 continue
             else:

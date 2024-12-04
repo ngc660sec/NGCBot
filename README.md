@@ -129,6 +129,7 @@ pip install -r requirements.txt
 
 - `wcferry==39.0.12.0`：[WeChatSetup-3.9.2.23.exe](https://github.com/ngc660sec/NGCBot/releases/download/V2.0-龙年贺岁版/WeChatSetup-3.9.2.23.exe)
 - `wcferry==39.2.4.0`：[WeChatSetup-3.9.10.27.exe](https://github.com/lich0821/WeChatFerry/releases/download/v39.2.4/WeChatSetup-3.9.10.27.exe)
+- `wcferry==39.3.3`：[WeChatSetup-3.9.11.25](https://github.com/lich0821/WeChatFerry/releases/download/v39.3.3/WeChatSetup-3.9.11.25.exe)
 
 安装完毕后，启动`main.py`文件
 
@@ -394,9 +395,9 @@ python main.py
 
 **表情包功能**
 
-此功能需要你的 `WCF` 版本在 `39.2.4.0` 才可以使用，其它版本无法使用
+此功能需要你的 `WCF` 版本在大于等于`39.2.4.0` 才可以使用，其它版本无法使用
 
-使用前请在终端输入以下命令
+使用前请在终端输入以下命令否则会报错，在使用随机表情时有概率出现报错（不用惯）
 
 ```
 meme download
@@ -515,20 +516,57 @@ meme download
 ```
 
 ```
-其它问题待补充~~~~
+7、提示注入失败
+
+- 检查wcf版本和微信版本是否一致
 ```
 
-### 5.1、Bug提交处
+### ❌ 5.1、Bug提交处
 
-关注微信公众号，后台留言，或者添加机器人回复`Bot交流群`拉你进群！
+关注微信公众号，后台留言（不做回复，请进群交流），或者添加机器人回复 `Bot交流群` 拉你进群！（机器人不常开，看到会拉群）
 
-**公众号：**
+<div style="display: flex;">
+  <img src="./README.assets/%E5%85%B3%E6%B3%A8-4177997.gif" alt="Image 1" style="width: 800px; height: auto; margin: 5px;">
+   <img src="./README.assets/113191704454837_.pic.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
+</div>
 
-![关注](./README.assets/%E5%85%B3%E6%B3%A8-4177997.gif)
 
-**机器人微信：**
 
-![113191704454837_.pic](./README.assets/113191704454837_.pic.jpg)
+### 💰 5.2、付费群聊处
+
+**前言**：在项目更新的过程中发现许许多多的同学不会配置项目，也有许多的同学想要接入自己的API但又没学过 `Python` 。所以今天（2024,12,04）宣布建立付费交流群，主要解决以下几个问题：
+
+1. 不会配置项目，不会启动项目
+2. 接入API问题，不会接入自己的API
+3. 想要实现自己的功能，比如（客服）
+4. 等等... ...
+
+进入付费群聊后会在群内进行指导必要时可提供远程协助，另外会开设特定课程如：Python基础课程，机器人使用教程（视屏），API接入课程（指南），等等(还没想好)
+
+另外还会发布机器人+其它大模型的结合使用教程
+
+价格暂定：（**99**）
+
+付费时效：**终生**
+
+联系方式：
+
+<div style="display: flex;">
+  <img src="./README.assets/img_v3_02h8_a1c2e430-6fe2-4af9-a0fc-22a0af86c41g.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
+</div>
+
+### ❗️  5.3、谨防诈骗
+
+如下：
+
+首先此项目启动不需要VPN，另外跟有没有公网IP也没有关系，只需要你电脑配置能登微信，能联网即可
+
+<div style="display: flex;">
+  <img src="./README.assets/img_v3_02h8_7ea23767-38c1-41e9-8b06-3a0743a5559g.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
+   <img src="./README.assets/img_v3_02h8_1f93bcd8-0880-40b0-aeef-c21c77e7910g.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
+</div>
+
+
 
 ## 📝 6、更新日志
 
@@ -544,7 +582,6 @@ meme download
 - 【2024.1.2】  推送Bot V2.0龙年贺岁版，框架重写！逻辑重构！更快！更稳！更多功能！
 - 【2024.07.15】推送Bot V2.1版本 框架再次重写，逻辑再次重构，更快！更稳！删减一些不必要功能，新增Ai画图功能
 - 【2024 09.10】推送Bot V2.2版本 新增飞书WIki查询，需要手动对接飞书知识库，修复一些存在的Bug，新增一些功能，请查看配置文件
-- 【2024 11.14】推送Bot V2.2.1小版本 接入kiMi模型，修复一些Bug，优化一些细节
 ```
 
 ## 🙏🏻 7、鸣谢：
@@ -562,5 +599,21 @@ https://github.com/lich0821/WeChatFerry
 - 渊龙Sec安全团队
 
 ## 👈 9、感谢国产社区GitCode
-- https://gitcode.com/ngc660sec/NGCBot
+
+如果无法访问 `Github` 也可以访问 `GitCode`
+
+<div style="display: flex;">
+  <img src="./README.assets/img_v3_02h8_bae897a8-e165-4051-9a52-f0187c5c236g.png" alt="Image 1" style="width: 100%; height: auto; margin: 5px;" onclick="https://gitcode.com/ngc660sec/NGCBot">
+</div>
+
+
+
+
+
+
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
+   <img style="width:100%" alt="Star History Chart" src="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
+ </picture>
 

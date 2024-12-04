@@ -8,7 +8,7 @@ systemConfig:
   systemCopyright: 'NGC660安全实验室'
   # 好友Ai开关
   # 1开/0关
-  aiLock: 0
+  aiLock: 1
   # 自动接收转账
   acceptMoneyLock: 1
   # 自动同意好友开关
@@ -73,7 +73,7 @@ customMsg:
       # 卡片消息标题 最多两行
       title: '欢迎 ❤{}❤ 一起搞机'
       # 摘要 最多三行
-      digest: '【NGCBot V2.1】新版本来袭！全新功能！全新架构！自动化私域管理必备！'
+      digest: '【NGCBot V2.2】新版本来袭！全新功能！全新架构！自动化私域管理必备！'
       # 点击后跳转的URL
       url: 'http://mp.weixin.qq.com/s?__biz=MzkyODMxODUwNQ==&amp;mid=2247493526&amp;idx=1&amp;sn=d0f7675929a314941ad3845769bafdcb&amp;chksm=c21832d0f56fbbc6c4451105df94e39283228e9f6bb69eae00888c4869f5b91e3703bd302e92&amp;mpshare=1&amp;scene=1&amp;srcid=0716KB1OiULdPNzLUXmMVVlV&amp;sharer_shareinfo=dd05c6b9c14d98dc6b745cbf673dabec&amp;sharer_shareinfo_first=24b3af78c3e815a698c81c03a49a0244#rd'
       # 缩略图的链接 到控制台输出拿
@@ -307,11 +307,12 @@ apiServer:
     # 修改序号即可修改优先对话模型
     # 注意大小写 否则无效
     aiPriority:
-      1: 'kiMi'
-      2: 'hunYuan'
-      3: 'sparkAi'
-      4: 'openAi'
-      5: 'qianFan'
+      1: 'bigModel'
+      2: 'kiMi'
+      3: 'hunYuan'
+      4: 'sparkAi'
+      5: 'openAi'
+      6: 'qianFan'
     # 画图Ai优先级
     aiPicPriority:
       1: 'sparkAi'
@@ -329,7 +330,7 @@ apiServer:
       # 模型Key
       sparkAiKey: ''
       # 模型Appid
-      sparkAiAppid: ''
+      sparkAiAppid: 'b1ea4bca'
     # OpenAi 3.5模型
     openAi:
       # Open_Ai接口
@@ -362,6 +363,11 @@ apiServer:
     kiMi:
       kiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
       kiMiKey: 'sk-'
+    # 智谱大模型
+    bigModel:
+      bigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
+      bigModelKey: 'Bearer '
+
 
   # 微步查询API
   threatBookApi: 'https://api.threatbook.cn/v3/ip/query'

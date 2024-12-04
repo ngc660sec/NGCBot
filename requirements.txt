@@ -6,9 +6,8 @@ wcferry==39.2.4.0
 Requests==2.32.3
 schedule==1.2.2
 Pillow==10.4.0
-spark-ai-python==0.4.1
 urllib3==2.2.3
 PyYAML==6.0.2
 cprint==1.2.2
 lxml==5.2.2
-
+spark-ai-python

@@ -167,4 +167,4 @@ if __name__ == '__main__':
     Ha = HappyApi()
     # print(Ha.getDog())
     # print(Ha.getKfc())
-    Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.1/avatar.jpg')
+    Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
