@@ -245,7 +245,6 @@ class AiDialogue:
                 }
                 resp = requests.post(url, json=data)
                 json_data = resp.json()
-                print(json_data)
                 if json_data['data']['task_status'] == 'SUCCESS':
                     sub_task_result_list = json_data['data']['sub_task_result_list']
                     final_image_list = sub_task_result_list[0]['final_image_list']
@@ -373,7 +372,6 @@ class AiDialogue:
         try:
             resp = requests.post(url=self.bigModelConfig.get('bigModelApi'), headers=headers, json=data, timeout=15)
             json_data = resp.json()
-            print(json_data)
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
             if len(messages) == 21:
