@@ -36,6 +36,8 @@ class HappyApi:
         """
         try:
             content = requests.get(url, timeout=30, verify=True).content
+            if len(content) < 200:
+                return None
             with open(savePath, mode='wb') as f:
                 f.write(content)
             return savePath
@@ -198,4 +200,5 @@ if __name__ == '__main__':
     # print(Ha.getDog())
     # print(Ha.getKfc())
     # Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
-    print(Ha.getShortPlay('霸道总裁爱上我'))
+    # print(Ha.getShortPlay('霸道总裁爱上我'))
+    print(Ha.getPic())
