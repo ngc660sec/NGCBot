@@ -398,7 +398,6 @@ apiServer:
   # 图片API配置
   picApi:
     - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
-    - 'http://3650000.xyz/api/'
     - 'https://cdn.seovx.com/?mom=302'
   # 视频API配置
   videosApi:
