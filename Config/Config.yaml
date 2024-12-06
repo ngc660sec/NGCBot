@@ -13,6 +13,9 @@ systemConfig:
   acceptMoneyLock: 1
   # 自动同意好友开关
   acceptFriendLock: 1
+  # 好友消息转发给管理员开关
+  msgForwardAdmin: 1
+
 
 ## 定时发送配置
 pushConfig:
@@ -284,6 +287,10 @@ functionKeyWord:
   feishuWords:
     - '搜索'
     - '查询漏洞'
+  # 短剧搜索查询关键词
+  shortPlayWords:
+    - '短剧搜索'
+    - '短剧'
 
 ## API接口服务配置
 apiServer:
@@ -330,7 +337,7 @@ apiServer:
       # 模型Key
       sparkAiKey: ''
       # 模型Appid
-      sparkAiAppid: 'b1ea4bca'
+      sparkAiAppid: ''
     # OpenAi 3.5模型
     openAi:
       # Open_Ai接口
@@ -344,7 +351,7 @@ apiServer:
       # 应用中的Secret Key
       qfSecretKey: ''
       # 应用中的应用ID
-      qfAppid: ''
+      qfAppid: '46224165'
       # 千帆Ai作画Api 两个key是不一样的 不能通用
       # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
       # 应用中的Api Key
@@ -352,7 +359,7 @@ apiServer:
       # 应用中的Secret Key
       qfPicSecretKey: ''
       # 应用中的应用ID
-      qfPicAppid: ''
+      qfPicAppid: '92991265'
     # 腾讯混元大模型, 有免费额度
     hunYuan:
       # 腾讯云SecretId
@@ -386,12 +393,13 @@ apiServer:
   cmd5Api: 'http://www.cmd5.com/api.ashx?email={}&key={}&hash={}'
   # 飞书Wiki Api接口
   feishuWiki: 'https://open.feishu.cn/open-apis/wiki/v1/nodes/search'
+  # 短剧搜索 API接口
+  shortPlayApi: 'https://api.dudunas.top/api/duanju?search={}'
   # 图片API配置
   picApi:
     - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
     - 'http://3650000.xyz/api/'
     - 'https://cdn.seovx.com/?mom=302'
-    - 'https://tuapi.eees.cc/api.php?category=meinv&px=m&type=302'
   # 视频API配置
   videosApi:
     - 'http://api.yujn.cn/api/heisis.php'

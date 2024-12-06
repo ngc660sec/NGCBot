@@ -52,6 +52,8 @@ class FriendMsgHandle:
         self.showBlackGhKeyWords = configData['adminFunctionWord']['showBlackGhWord']
         # 添加好友后自动回复消息
         self.acceptFriendMsg = configData['customMsg']['acceptFriendMsg']
+        # 好友消息转发给管理员开关
+        self.msgForwardAdmin = configData['systemConfig']['msgForwardAdmin']
 
     def mainHandle(self, msg):
         content = msg.content.strip()
@@ -61,28 +63,28 @@ class FriendMsgHandle:
         if msgType == 1:
             # 关键词进群
             if judgeEqualListWord(content, self.roomKeyWords.keys()):
-                self.keyWordJoinRoom(sender, content)
-                # Thread(target=self.keyWordJoinRoom, args=(sender, content)).start()
+                # self.keyWordJoinRoom(sender, content)
+                Thread(target=self.keyWordJoinRoom, args=(sender, content)).start()
             # 自定义关键词回复功能
             elif judgeEqualListWord(content, self.customKeyWords.keys()):
-                self.customKeyWordMsg(sender, content)
-                # Thread(target=self.customKeyWordMsg, args=(sender, content)).start()
+                # self.customKeyWordMsg(sender, content)
+                Thread(target=self.customKeyWordMsg, args=(sender, content)).start()
             # 查看白名单群聊
             elif judgeEqualListWord(content, self.showWhiteRoomKeyWords) and sender in self.Administrators:
-                self.showWhiteRoom(sender, )
-                # Thread(target=self.showWhiteRoom, args=(sender,)).start()
+                # self.showWhiteRoom(sender, )
+                Thread(target=self.showWhiteRoom, args=(sender,)).start()
             # 查看黑名单群聊
             elif judgeEqualListWord(content, self.showBlackRoomKeyWords) and sender in self.Administrators:
-                self.showBlackRoom(sender, )
-                # Thread(target=self.showBlackRoom, args=(sender,)).start()
+                # self.showBlackRoom(sender, )
+                Thread(target=self.showBlackRoom, args=(sender,)).start()
             # 查看推送群聊
             elif judgeEqualListWord(content, self.showPushRoomKeyWords) and sender in self.Administrators:
-                self.showPushRoom(sender, )
-                # Thread(target=self.showPushRoom, args=(sender,)).start()
+                # self.showPushRoom(sender, )
+                Thread(target=self.showPushRoom, args=(sender,)).start()
             # 查看黑名单公众号
             elif judgeEqualListWord(content, self.showBlackGhKeyWords) and sender in self.Administrators:
-                self.showBlackGh(sender, )
-                # Thread(target=self.showBlackGh, args=(sender,)).start()
+                # self.showBlackGh(sender, )
+                Thread(target=self.showBlackGh, args=(sender,)).start()
             # Ai对话 Ai锁功能 对超管没用
             elif self.aiLock or sender in self.Administrators:
                 Thread(target=self.getAiMsg, args=(content, sender)).start()
@@ -90,7 +92,7 @@ class FriendMsgHandle:
             if judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
                 Thread(target=self.sendFriendMsg, args=(content,)).start()
             # 好友消息转发给超级管理员 超级管理员不触发
-            if sender not in self.Administrators:
+            if sender not in self.Administrators and self.msgForwardAdmin:
                 Thread(target=self.forwardMsgToAdministrators, args=(sender, content)).start()
         # 转发公众号消息到推送群聊 超管有效
         if msg.type == 49:

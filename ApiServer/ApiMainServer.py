@@ -11,6 +11,14 @@ class ApiMainServer:
         # Ai对象实例化
         self.Ad = AiDialogue()
 
+    def getShortPlay(self, playName):
+        """
+        短剧搜索API
+        :param playName:
+        :return:
+        """
+        return Ps.Ha.getShortPlay(playName)
+
     def getAiWen(self, ip):
         """
         埃文IP查询调用接口

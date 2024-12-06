@@ -532,9 +532,9 @@ meme download
 
 
 
-### 💰 5.2、付费群聊处
+### 💰 5.2、会员群聊处
 
-**前言**：在项目更新的过程中发现许许多多的同学不会配置项目，也有许多的同学想要接入自己的API但又没学过 `Python` 。所以今天（2024,12,04）宣布建立付费交流群，主要解决以下几个问题：
+**前言**：在项目更新的过程中发现许许多多的同学不会配置项目，也有许多的同学想要接入自己的API但又没学过 `Python` 。所以今天（2024,12,04）宣布建立会员交流群，主要解决以下几个问题：
 
 1. 不会配置项目，不会启动项目
 2. 接入API问题，不会接入自己的API
@@ -607,13 +607,9 @@ https://github.com/lich0821/WeChatFerry
 </div>
 
 
-
-
-
-
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date&theme=dark" />
    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
-   <img style="width:100%" alt="Star History Chart" src="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
+   <img style="width:100%" src="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
  </picture>
 

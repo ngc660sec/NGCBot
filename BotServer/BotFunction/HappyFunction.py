@@ -14,6 +14,7 @@ class HappyFunction:
         self.fishKeyWords = configData['functionKeyWord']['fishWord']
         self.kfcKeyWords = configData['functionKeyWord']['kfcWord']
         self.dogKeyWords = configData['functionKeyWord']['dogWord']
+        self.shortPlayWords = configData['functionKeyWord']['shortPlayWords']
         self.morningPageKeyWords = configData['functionKeyWord']['morningPageWord']
         self.eveningPageKeyWords = configData['functionKeyWord']['eveningPageWord']
         self.helpKeyWords = configData['functionKeyWord']['helpMenu']
@@ -24,6 +25,7 @@ class HappyFunction:
         self.emoRandomKeyWords = configData['emoConfig']['emoRandomKeyWord']
         # 自定义回复关键词字典
         self.customKeyWords = configData['customKeyWord']
+
 
     def mainHandle(self, message):
         content = message.content.strip()
@@ -104,6 +106,12 @@ class HappyFunction:
                         receiver=roomId, aters=sender)
                     return
                 self.wcf.send_text(eveningPage, receiver=roomId)
+            # 短剧搜索
+            elif judgeSplitAllEqualWord(content, self.shortPlayWords):
+                playName = content.split(' ')[-1]
+                content = self.Ams.getShortPlay(playName)
+                if content:
+                    self.wcf.send_text(f'@{senderName}\n{content}', receiver=roomId, aters=sender)
             # 随机表情
             elif judgeEqualListWord(content, self.emoRandomKeyWords):
                 avatarPathList.append(getUserPicUrl(self.wcf, sender))
@@ -173,3 +181,4 @@ class HappyFunction:
                 helpMsg += '【二、娱乐功能】\n2.1、美女图片(图片)\n2.2、美女视频(视频)\n2.3、摸鱼日历(摸鱼日历)\n2.4、舔狗日记(舔我)\n2.5、早报(早报)\n2.6、晚报(晚报)\n2.6、表情列表(表情列表)\n2.7、随机表情(随机表情, 有几率报错)\n'
                 helpMsg += '[爱心]=== NGCBot菜单 ===[爱心]\n'
                 self.wcf.send_text(f'@{senderName}\n{helpMsg}', receiver=roomId, aters=sender)
+

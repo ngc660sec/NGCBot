@@ -17,12 +17,15 @@ class HappyApi:
         """
         # 读取配置文件
         configData = Cs.returnConfigData()
+        # 读取系统版权设置
+        self.systemCopyright = configData['systemConfig']['systemCopyright']
         self.txKey = configData['apiServer']['apiConfig']['txKey']
         self.picUrlList = configData['apiServer']['picApi']
         self.videoUrlList = configData['apiServer']['videosApi']
         self.dogApi = configData['apiServer']['dogApi']
         self.fishApi = configData['apiServer']['fishApi']
         self.kfcApi = configData['apiServer']['kfcApi']
+        self.shortPlayApi = configData['apiServer']['shortPlayApi']
 
     def downloadFile(self, url, savePath):
         """
@@ -39,6 +42,32 @@ class HappyApi:
         except Exception as e:
             op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
             return None
+
+    def getShortPlay(self, playName):
+        """
+        短剧搜索
+        :param playName: 短剧名称
+        :return:
+        """
+        op(f'[*]: 正在调用短剧搜索API接口... ...')
+        content = f'🔍搜索内容: {playName}\n'
+        try:
+            jsonData = requests.get(self.shortPlayApi.format(playName), verify=True).json()
+            statusCode = jsonData.get('code')
+            if statusCode != 200:
+                return False
+            dataList = jsonData.get('data')
+            if not dataList:
+                content += '💫搜索的短剧不存在哦 ~~~\n'
+            else:
+                for data in dataList:
+                    content += f'🌟{data.get("name")}\n'
+                    content += f'🔗{data.get("link")}\n\n'
+            content += f"{self.systemCopyright + '整理分享，更多内容请戳 #' + self.systemCopyright if self.systemCopyright else ''}\n{time.strftime('%Y-%m-%d %X')}"
+            return content
+        except Exception as e:
+            op(f'[-]: 短剧搜索API出现错误, 错误信息: {e}')
+            return False
 
     def getPic(self, ):
         """
@@ -163,8 +192,10 @@ class HappyApi:
 
 
 
+
 if __name__ == '__main__':
     Ha = HappyApi()
     # print(Ha.getDog())
     # print(Ha.getKfc())
-    Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
+    # Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
+    print(Ha.getShortPlay('霸道总裁爱上我'))
