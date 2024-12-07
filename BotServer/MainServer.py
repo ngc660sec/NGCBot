@@ -33,11 +33,11 @@ class MainServer:
             userInfo = self.wcf.get_user_info()
             # 用户信息打印
             cprint.info(f"""
-            \t========== NGCBot V2.1 ==========
+            \t========== NGCBot V2.2 ==========
             \t微信名：{userInfo.get('name')}
             \t微信ID：{userInfo.get('wxid')}
             \t手机号：{userInfo.get('mobile')}
-            \t========== NGCBot V2.1 ==========       
+            \t========== NGCBot V2.2 ==========       
             """.replace(' ', ''))
 
     def processMsg(self, ):
