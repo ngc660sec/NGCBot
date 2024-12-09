@@ -145,7 +145,24 @@ python main.py
 
 进入微信之后，会自动初始化必备文件
 
-### 3.2、配置文件快速配置
+## 3.2、视频教程
+
+视频已经上传至B站
+
+https://www.bilibili.com/video/BV1voqwYAEWs/
+
+<iframe src="//player.bilibili.com/player.html?bvid=BV1voqwYAEWs&page=1"
+        scrolling="no" 
+        border="0" 
+        frameborder="no" 
+        framespacing="0" 
+        allowfullscreen="true" 
+        style="width: 100%; height: 600px;">
+</iframe>
+
+
+
+### 3.3、配置文件快速配置
 
 如果启动成功，下一步配置所需的`Key`，**Ai 对话**等功能都需要用到 `Key`
 
@@ -164,7 +181,7 @@ python main.py
 
 ![image-20240919094938902](./README.assets/image-20240919094938902.png)
 
-#### 3.2.1、各种 Key 配置
+#### 3.3.1、各种 Key 配置
 
 这里介绍几个比较难找的
 
