@@ -1,13 +1,14 @@
-<h1 align="center">
+<h3 align="center">
 NGCBot V2.2
-</h1>
+</h3>
+
 
 ![Logo2](./README.assets/Logo2.png)
 
-<h4 align="center">
+<h5 align="center">
 一个基于✨HOOK机制的微信机器人，支持🌱安全新闻定时推送【FreeBuf，先知，安全客，奇安信攻防社区】，👯Kfc文案，⚡漏洞查询，⚡手机号归属地查询，⚡知识库查询，🎉星座查询，⚡天气查询，🌱摸鱼日历，⚡微步威胁情报查询，
 🐛视频，⚡图片，👯帮助菜单。📫 支持积分功能，⚡支持自动拉人，，🌱自动群发，👯Ai回复，😄自定义程度丰富，小白也可轻松上手！
-</h4>
+</h5>
 <div style="text-align: center">
     <a href="http://ngc660.cn">
         <img src="https://img.shields.io/badge/NGCBot-NGC660%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4-da282a">
@@ -20,6 +21,7 @@ NGCBot V2.2
     <img src="https://img.shields.io/badge/license-GPL--3.0-orange">
     <img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/ngc660sec/NGCBot?color=blueviolet&display_name=tag&include_prereleases&label=Release">
 </div>
+
 
 
 
@@ -612,4 +614,3 @@ https://github.com/lich0821/WeChatFerry
    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
    <img style="width:100%" src="https://api.star-history.com/svg?repos=ngc660sec/NGCBot&type=Date" />
  </picture>
-
