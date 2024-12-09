@@ -147,19 +147,9 @@ python main.py
 
 ## 3.2、视频教程
 
-视频已经上传至B站
+视频已经上传至B站，Github放不了，要看的话大家去B站看即可
 
 https://www.bilibili.com/video/BV1voqwYAEWs/
-
-<iframe src="//player.bilibili.com/player.html?bvid=BV1voqwYAEWs&page=1"
-        scrolling="no" 
-        border="0" 
-        frameborder="no" 
-        framespacing="0" 
-        allowfullscreen="true" 
-        style="width: 100%; height: 600px;">
-</iframe>
-
 
 
 ### 3.3、配置文件快速配置
