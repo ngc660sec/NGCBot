@@ -119,13 +119,10 @@ class RoomMsgHandle:
                             ret = 0
 
                 if ret:
-                    for ids, msgs in self.appointJoinRoomMsgs.items():
-                        if msg.roomid not in ids:
-                            break
-                        for rid in ids.split(','):
-                            if rid == msg.roomid:
-                                self.wcf.send_text(msg=f'@{wx_name} ' + msgs.replace("\\n", "\n"), receiver=msg.roomid)
-                                appoint = 0
+                    for id, msgs in self.appointJoinRoomMsgs.items():
+                        if id == msg.roomid:
+                            self.wcf.send_text(msg=f'@{wx_name} ' + msgs.replace("\\n", "\n"), receiver=msg.roomid)
+                            appoint = 0
                 if appoint and ret:
                     joinRoomMsg = f'@{wx_name} ' + self.joinRoomMsg.replace("\\n", "\n")
                     self.wcf.send_text(msg=joinRoomMsg, receiver=msg.roomid)
@@ -236,7 +233,5 @@ class RoomMsgHandle:
 if __name__ == '__main__':
     configData = Cs.returnConfigData()
     appointJoinRoomMsgs = configData['customMsg']['appointJsonRoomMsgs']
-    print(appointJoinRoomMsgs)
     for ids, msgs in appointJoinRoomMsgs.items():
-        print(ids.split(','))
-        print(ids, msgs)
+        print(ids)
