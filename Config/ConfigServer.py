@@ -4,7 +4,7 @@ import os
 
 def returnConfigPath():
     """
-    返回配置文件夹路径
+    返回配置文件夹路径555
     :return:
     """
     current_path = os.path.dirname(__file__)
