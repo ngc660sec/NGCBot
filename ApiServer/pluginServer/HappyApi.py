@@ -95,7 +95,7 @@ class HappyApi:
                 content = f'视频描述: {description}\n视频作者: {nickname}\n视频链接: {videoUrl}'
                 return content
             elif code == 202:
-                time.sleep(60)
+                time.sleep(200)
                 return self.getWechatVideo(objectId, objectNonceId)
             return None
         except Exception as e:
