@@ -68,7 +68,7 @@ class HappyApi:
                 Card_meaning_extension = result.get('Card_meaning_extension')
                 e_image = result.get('e_image')
                 picPath = self.downloadFile(e_image, savePath)
-                content = f'描述: {Pai_Yi_deduction}\n建议: {core_prompt}\n描述: {Knowledge_expansion}\n建议: {Card_meaning_extension}'
+                content = f'描述: {Pai_Yi_deduction}\n\n建议: {core_prompt}\n\n描述: {Knowledge_expansion}\n\n建议: {Card_meaning_extension}'
                 return content, picPath
             return '', ''
         except Exception as e:
@@ -85,7 +85,7 @@ class HappyApi:
         op(f'[*]: 正在调用视频号API接口... ...')
         try:
             jsonData = requests.get(self.dpWechatVideoApi.format(self.dpKey, objectId, objectNonceId), verify=True,
-                                    timeout=120).json()
+                                    timeout=500).json()
             code = jsonData.get('code')
             if code == 200:
                 videoData = jsonData.get('data')
