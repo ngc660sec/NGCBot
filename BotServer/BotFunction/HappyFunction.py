@@ -23,6 +23,7 @@ class HappyFunction:
         self.emoOneKeyWordsData = configData['emoConfig']['onePicEmo']
         self.emoTwoKeyWordsData = configData['emoConfig']['twoPicEwo']
         self.emoRandomKeyWords = configData['emoConfig']['emoRandomKeyWord']
+        self.taLuoWords = configData['functionKeyWord']['taLuoWords']
         # 自定义回复关键词字典
         self.customKeyWords = configData['customKeyWord']
 
@@ -112,6 +113,20 @@ class HappyFunction:
                 content = self.Ams.getShortPlay(playName)
                 if content:
                     self.wcf.send_text(f'@{senderName}\n{content}', receiver=roomId, aters=sender)
+            # 抖音视频解析
+            elif judgeInWord(content, '复制打开抖音'):
+                videoPath = self.Ams.getVideoAnalysis(content)
+                if videoPath:
+                    self.wcf.send_file(path=videoPath, receiver=roomId)
+
+            elif judgeEqualListWord(content, self.taLuoWords):
+                content, picPath = self.Ams.getTaLuo()
+                if content and picPath:
+                    self.wcf.send_image(path=picPath, receiver=roomId)
+                    self.wcf.send_text(f'@{senderName}\n\n{content}', receiver=roomId, aters=sender)
+                else:
+                    self.wcf.send_text(f'@{senderName}\n塔罗牌占卜接口出现错误, 请联系超管查看控制台输出 ~~~')
+
             # 随机表情
             elif judgeEqualListWord(content, self.emoRandomKeyWords):
                 avatarPathList.append(getUserPicUrl(self.wcf, sender))
@@ -181,4 +196,10 @@ class HappyFunction:
                 helpMsg += '【二、娱乐功能】\n2.1、美女图片(图片)\n2.2、美女视频(视频)\n2.3、摸鱼日历(摸鱼日历)\n2.4、舔狗日记(舔我)\n2.5、早报(早报)\n2.6、晚报(晚报)\n2.6、表情列表(表情列表)\n2.7、随机表情(随机表情, 有几率报错)\n'
                 helpMsg += '[爱心]=== NGCBot菜单 ===[爱心]\n'
                 self.wcf.send_text(f'@{senderName}\n{helpMsg}', receiver=roomId, aters=sender)
-
+        elif msgType == 49:
+            # 视频号解析
+            objectId, objectNonceId = getWechatVideoData(content)
+            if objectId and objectNonceId:
+                msg = self.Ams.getWechatVideo(objectId, objectNonceId)
+                if msg:
+                    self.wcf.send_text(f'@{senderName}\n{msg}', receiver=roomId, aters=sender)

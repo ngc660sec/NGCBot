@@ -58,6 +58,8 @@ class RoomMsgHandle:
             Thread(target=self.Pf.mainHandle, args=(msg,)).start()
             # 娱乐功能
             Thread(target=self.Hf.mainHandle, args=(msg,)).start()
+            # 入群欢迎
+            Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
         # 黑名单群聊功能
         elif judgeBlackRoom(roomId):
             # 超管功能以及管理功能

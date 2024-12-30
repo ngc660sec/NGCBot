@@ -266,4 +266,4 @@ if __name__ == '__main__':
     # print(Pa.getAiWenIpv4('117.167.255.42'))
     # print(Pa.getThreatBook('117.167.255.42'))
     # print(Pa.getCmd5('827ccb0eea8a706c4c34a16891f84e7b'))
-    print(Pa.getFeishuVuln('admin'))
+    # print(Pa.getFeishuVuln('admin'))

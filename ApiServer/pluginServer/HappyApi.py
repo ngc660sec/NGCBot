@@ -7,6 +7,7 @@ import asyncio
 import random
 import time
 import os
+import re
 
 
 class HappyApi:
@@ -26,6 +27,10 @@ class HappyApi:
         self.fishApi = configData['apiServer']['fishApi']
         self.kfcApi = configData['apiServer']['kfcApi']
         self.shortPlayApi = configData['apiServer']['shortPlayApi']
+        self.dpKey = configData['apiServer']['apiConfig']['dpKey']
+        self.dpVideoAnalysisApi = configData['apiServer']['dpVideoAnalysisAPi']
+        self.dpWechatVideoApi = configData['apiServer']['dpWechatVideoApi']
+        self.dpTaLuoApi = configData['apiServer']['dpTaLuoApi']
 
     def downloadFile(self, url, savePath):
         """
@@ -43,6 +48,81 @@ class HappyApi:
             return savePath
         except Exception as e:
             op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
+            return None
+
+    def getTaLuo(self, ):
+        """
+        塔罗牌占卜
+        :return:
+        """
+        op(f'[*]: 正在调用塔罗牌占卜接口... ...')
+        try:
+            jsonData = requests.get(self.dpTaLuoApi.format(self.dpKey), verify=True).json()
+            code = jsonData.get('code')
+            if code == 200:
+                savePath = Fcs.returnPicCacheFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+                result = jsonData.get('result')
+                Pai_Yi_deduction = result.get('Pai_Yi_deduction')
+                core_prompt = result.get('core_prompt')
+                Knowledge_expansion = result.get('Knowledge_expansion')
+                Card_meaning_extension = result.get('Card_meaning_extension')
+                e_image = result.get('e_image')
+                picPath = self.downloadFile(e_image, savePath)
+                content = f'描述: {Pai_Yi_deduction}\n建议: {core_prompt}\n描述: {Knowledge_expansion}\n建议: {Card_meaning_extension}'
+                return content, picPath
+            return '', ''
+        except Exception as e:
+            op(f'[-]: 塔罗牌占卜接口出现错误, 错误信息: {e}')
+            return '', ''
+
+    def getWechatVideo(self, objectId, objectNonceId):
+        """
+        微信视频号处理下载, 返回Url
+        :param objectId:
+        :param objectNonceId:
+        :return:
+        """
+        op(f'[*]: 正在调用视频号API接口... ...')
+        try:
+            jsonData = requests.get(self.dpWechatVideoApi.format(self.dpKey, objectId, objectNonceId), verify=True,
+                                    timeout=120).json()
+            code = jsonData.get('code')
+            if code == 200:
+                videoData = jsonData.get('data')
+                description = videoData.get('description').replace("\n", "")
+                nickname = videoData.get('nickname')
+                videoUrl = videoData.get('url')
+                content = f'视频描述: {description}\n视频作者: {nickname}\n视频链接: {videoUrl}'
+                return content
+            elif code == 202:
+                time.sleep(60)
+                return self.getWechatVideo(objectId, objectNonceId)
+            return None
+        except Exception as e:
+            op(f'[-]: 视频号API接口出现错误, 错误信息: {e}')
+            return None
+
+    def getVideoAnalysis(self, videoText):
+        """
+        抖音视频解析去水印
+        :param videoText: 短视频连接或者分享文本
+        :return: 视频地址
+        """
+        op(f'[*]: 正在调用视频解析去水印API接口... ....')
+        try:
+            douUrl = re.search(r'(https?://[^\s]+)', videoText).group()
+            jsonData = requests.get(self.dpVideoAnalysisApi.format(self.dpKey, douUrl), verify=True).json()
+            code = jsonData.get('code')
+            if code == 200:
+                videoData = jsonData.get('data')
+                videoUrl = videoData.get('video_url')
+                savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.mp4'
+                savePath = self.downloadFile(videoUrl, savePath)
+                if savePath:
+                    return savePath
+            return None
+        except Exception as e:
+            op(f'[-]: 视频解析去水印API出现错误, 错误信息: {e}')
             return None
 
     def getShortPlay(self, playName):
@@ -191,14 +271,14 @@ class HappyApi:
             return None, None
 
 
-
-
-
-
 if __name__ == '__main__':
     Ha = HappyApi()
     # print(Ha.getDog())
     # print(Ha.getKfc())
     # Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
     # print(Ha.getShortPlay('霸道总裁爱上我'))
-    print(Ha.getPic())
+    # print(Ha.getPic())
+    # print(Ha.getVideoAnalysis(
+    #     '3.84 复制打开抖音，看看【SQ的小日常的作品】师傅：门可以让我踹吗 # 情侣 # 搞笑 # 反转... https://v.douyin.com/iydr37xU/ bAg:/ F@H.vS 01/06'))
+    # print(Ha.getWechatVideo('14258814955767007275', '14776806611926650114_15_140_59_32_1735528000805808'))
+    print(Ha.getTaLuo())

@@ -11,6 +11,30 @@ class ApiMainServer:
         # Ai对象实例化
         self.Ad = AiDialogue()
 
+    def getTaLuo(self):
+        """
+        塔罗牌占卜API
+        :return:
+        """
+        return Ps.Ha.getTaLuo()
+
+    def getWechatVideo(self, objectId, objectNonceId):
+        """
+        视频号处理
+        :param objectId:
+        :param objectNonceId:
+        :return:
+        """
+        return Ps.Ha.getWechatVideo(objectId, objectNonceId)
+
+    def getVideoAnalysis(self, videoText):
+        """
+        抖音视频解析去水印
+        :param videoText:
+        :return:
+        """
+        return Ps.Ha.getVideoAnalysis(videoText)
+
     def getShortPlay(self, playName):
         """
         短剧搜索API

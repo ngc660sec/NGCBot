@@ -65,6 +65,8 @@ customMsg:
   appointJsonRoomMsgs:
     # 群聊ID 多个Room加 , 即可
     '50303957048@chatroom': '【腾讯文档】WingBy小密圈知识星球说明 进群必看！！！！！\nhttps://docs.qq.com/doc/DS2tmaEJlUmFRY0Vi'
+    '49507388138@chatroom': '恭喜您成为尊贵的NGC会员，愿耀眼的bot标带您开拓进取，勇创辉煌，成就卓越。祝您在未来的道路丰衣足食，有人陪你沧海桑田，永远积极向上，热泪盈眶，车到山前必有路，有路必有NGCBot'
+    '47555703573@chatroom': '测试123123'
   # 进群欢迎词 卡片配置
   JoinRoomCard:
     # 不同的Room需要不同配置 多个room加 , 即可
@@ -291,6 +293,11 @@ functionKeyWord:
   shortPlayWords:
     - '短剧搜索'
     - '短剧'
+  # 塔罗牌占卜关键词
+  taLuoWords:
+    - '塔罗牌'
+    - '塔罗'
+    - '占卜'
 
 ## API接口服务配置
 apiServer:
@@ -307,6 +314,9 @@ apiServer:
     gaoDeKey: ''
     # 天行Key
     txKey: ''
+    # DpApi Key
+    # https://api.dudunas.top/
+    dpKey: ''
 
 
   aiConfig:
@@ -337,7 +347,7 @@ apiServer:
       # 模型Key
       sparkAiKey: ''
       # 模型Appid
-      sparkAiAppid: ''
+      sparkAiAppid: 'b1ea4bca'
     # OpenAi 3.5模型
     openAi:
       # Open_Ai接口
@@ -374,8 +384,12 @@ apiServer:
     bigModel:
       bigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
       bigModelKey: 'Bearer '
-
-
+  # Dp接口 塔罗牌占卜
+  dpTaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
+  # Dp接口 视频去水印API
+  dpVideoAnalysisAPi: 'https://api.dudunas.top/api/qushuiyin?AppSecret={}&text={}'
+  # Dp接口 视频号解析
+  dpWechatVideoApi: 'https://api.dudunas.top/api/vxdown?AppSecret={}&objectId={}&objectNonceId={}'
   # 微步查询API
   threatBookApi: 'https://api.threatbook.cn/v3/ip/query'
   # 高德地图API
@@ -399,6 +413,8 @@ apiServer:
   picApi:
     - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
     - 'https://cdn.seovx.com/?mom=302'
+    - 'https://api.mhimg.cn/api/girls_img/?type=img'
+    - 'https://api.mhimg.cn/api/Welfare_img/'
   # 视频API配置
   videosApi:
     - 'http://api.yujn.cn/api/heisis.php'

@@ -7,6 +7,23 @@ import time
 import os
 
 
+def getWechatVideoData(content):
+    """
+    处理微信视频号 提取objectId objectNonceId
+    :param content:
+    :return: objectId objectNonceId
+    """
+    try:
+        root = ET.fromstring(content)
+        finderFeed = root.find('.//finderFeed')
+        objectId = finderFeed.find('./objectId').text
+        objectNonceId = finderFeed.find('./objectNonceId').text
+        return objectId, objectNonceId
+    except Exception as e:
+        op(f'[-]: 提取微信视频号ID出现错误, 错误信息: {e}')
+        return '', ''
+
+
 def getAtData(wcf, msg):
     """
     处理@信息
@@ -39,14 +56,12 @@ def getIdName(wcf, Id):
     获取好友或者群聊昵称
     :return:
     """
-    Name = ''
-    friendLists = wcf.get_contacts()
-    for friend in friendLists:
-        if friend.get('wxid') == Id:
-            Name = friend.get('name')
-            break
-        continue
-    return Name
+    name_list = wcf.query_sql("MicroMsg.db",
+                              f"SELECT UserName, NickName FROM Contact WHERE UserName = '{Id}';")
+    if not name_list:
+        return ''
+    name = name_list[0]['NickName']
+    return name
 
 
 def getUserPicUrl(wcf, sender):
@@ -74,3 +89,7 @@ def getUserPicUrl(wcf, sender):
     except Exception as e:
         op(f'[-]: 获取好友头像下载地址出现错误, 错误信息: {e}')
         return None
+
+
+if __name__ == '__main__':
+    pass
