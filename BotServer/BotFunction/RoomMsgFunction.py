@@ -40,8 +40,6 @@ class RoomMsgFunction:
                 }]
                 assistant_content, Mes = self.Ams.getDeepSeek(aiContent, aiMessages)
                 self.wcf.send_text(assistant_content, receiver=roomId)
-
-
             # 群聊发言排行榜
             if judgeEqualListWord(content, self.speechListKeyWords):
                 roomName = getIdName(self.wcf, roomId)
@@ -51,7 +49,7 @@ class RoomMsgFunction:
                 for data in msgTypeData:
                     if data[0] == 1:
                         msg += f'- 💬文字消息：{data[1]} 条\n'
-                    elif data[0] == 2:
+                    elif data[0] == 3:
                         msg += f'- 💬图片消息：{data[1]} 条\n'
                     elif data[0] == 47:
                         msg += f'- 💬表情包消息：{data[1]} 条\n'
@@ -78,7 +76,6 @@ class RoomMsgFunction:
                 oldMsg = self.Dms.searchRoomContent(roomId, newMsgId)
                 msg = f'拦截到一条撤回的消息\n发送ID: {oldMsg[1]}\n发送人: {oldMsg[2]}\n消息类型: {oldMsg[0]}\n消息类容: {oldMsg[3]}'
                 self.wcf.send_text(msg, receiver=roomId)
-
         else:
             # 其它类型消息不存内容
             self.Dms.addRoomContent(roomId, msgType, sender, senderName, msgId, '其它类型消息')
