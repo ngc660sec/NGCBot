@@ -129,7 +129,7 @@ class HappyFunction:
                     self.wcf.send_image(path=picPath, receiver=roomId)
                     self.wcf.send_text(f'@{senderName}\n\n{content}', receiver=roomId, aters=sender)
                 else:
-                    self.wcf.send_text(f'@{senderName}\n塔罗牌占卜接口出现错误, 请联系超管查看控制台输出 ~~~')
+                    self.wcf.send_text(f'@{senderName}\n塔罗牌占卜接口出现错误, 请联系超管查看控制台输出 ~~~', receiver=roomId, aters=sender)
 
             # 随机表情
             elif judgeEqualListWord(content, self.emoRandomKeyWords):

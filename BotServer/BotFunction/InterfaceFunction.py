@@ -76,7 +76,7 @@ def getIdName(wcf, Id):
         name_list = wcf.query_sql("MicroMsg.db",
                                   f"SELECT UserName, NickName FROM Contact WHERE UserName = '{Id}';")
         if not name_list:
-            return ''
+            return getIdName(wcf, Id)
         name = name_list[0]['NickName']
         return name
     except Exception as e:
