@@ -408,7 +408,7 @@ class AiDialogue:
             "Authorization": f"{self.deepSeekConfig.get('deepSeekKey')}",
         }
         try:
-            resp = requests.post(url=self.deepSeekConfig.get('deepSeekApi'), headers=headers, json=data, timeout=15)
+            resp = requests.post(url=self.deepSeekConfig.get('deepSeekApi'), headers=headers, json=data, timeout=300)
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
