@@ -46,11 +46,16 @@ class AiDialogue:
             'bigModelApi': configData['apiServer']['aiConfig']['bigModel']['bigModelApi'],
             'bigModelKey': configData['apiServer']['aiConfig']['bigModel']['bigModelKey'],
         }
+        self.deepSeekConfig = {
+            'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
+            'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
+        }
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
         self.kimiMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
         self.bigModelMessages = [{"role": "system", "Content": f'{self.systemAiRole}'}]
+        self.deepSeekMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.aiPriority = configData['apiServer']['aiConfig']['aiPriority']
         self.aiPicPriority = configData['apiServer']['aiConfig']['aiPicPriority']
 
@@ -349,7 +354,6 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
     def getBigModel(self, content, messages):
-        op(f'[*]: 正在调用BigModel对话接口... ...')
         """
         BigModel
         :param OpenAiConfig: BigModel 配置字典
@@ -357,6 +361,7 @@ class AiDialogue:
         :param messages: 消息列表
         :return:
         """
+        op(f'[*]: 正在调用BigModel对话接口... ...')
         if not self.bigModelConfig.get('bigModelKey'):
             op(f'[-]: BigModel模型未配置, 请检查相关配置!!!')
             return None, []
@@ -382,6 +387,39 @@ class AiDialogue:
             op(f'[-]: BigMode对话接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
+    def getDeepSeek(self, content, messages):
+        """
+        deepSeek
+        :param content: 对话内容
+        :param messages: 消息列表
+        :return:
+        """
+        op(f'[*]: 正在调用deepSeek对话接口... ...')
+        if not self.deepSeekConfig.get('deepSeekKey'):
+            op(f'[-]: deepSeek模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": "deepseek-chat",
+            "messages": messages
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"{self.deepSeekConfig.get('deepSeekKey')}",
+        }
+        try:
+            resp = requests.post(url=self.deepSeekConfig.get('deepSeekApi'), headers=headers, json=data, timeout=15)
+            json_data = resp.json()
+            assistant_content = json_data['choices'][0]['message']['content']
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
+        except Exception as e:
+            op(f'[-]: deepSeek对话接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
     def getAi(self, content):
         """
         处理优先级
@@ -389,7 +427,7 @@ class AiDialogue:
         :return:
         """
         result = ''
-        for i in range(1, 7):
+        for i in range(1, 8):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
@@ -403,6 +441,8 @@ class AiDialogue:
                 result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
             if aiModule == 'bigModel':
                 result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
+            if aiModule == 'deepSeek':
+                result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
             if not result:
                 continue
             else:

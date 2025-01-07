@@ -199,6 +199,8 @@ class HappyApi:
                 if fishPath:
                     break
                 continue
+        if not fishPath:
+            op(f'[-]: 魔域日历接口出现错误, 请检查！')
         return fishPath
 
     def getKfc(self, ):
@@ -281,4 +283,5 @@ if __name__ == '__main__':
     # print(Ha.getVideoAnalysis(
     #     '3.84 复制打开抖音，看看【SQ的小日常的作品】师傅：门可以让我踹吗 # 情侣 # 搞笑 # 反转... https://v.douyin.com/iydr37xU/ bAg:/ F@H.vS 01/06'))
     # print(Ha.getWechatVideo('14258814955767007275', '14776806611926650114_15_140_59_32_1735528000805808'))
-    print(Ha.getTaLuo())
+    # print(Ha.getTaLuo())
+    print(Ha.getFish())

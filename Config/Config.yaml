@@ -176,6 +176,9 @@ adminFunctionWord:
     - '发'
     - '发送'
 
+
+
+
 ## 积分功能配置
 pointConfig:
   # 签到功能
@@ -298,6 +301,16 @@ functionKeyWord:
     - '塔罗牌'
     - '塔罗'
     - '占卜'
+  # 群聊消息总结关键词
+  summarizeMsgWord:
+    - '总结群聊'
+    - '群聊总结'
+  # 群聊发言榜
+  speechListWord:
+    - '发言榜'
+  # 划水榜
+  rowingListWord:
+    - '潜水榜'
 
 ## API接口服务配置
 apiServer:
@@ -324,12 +337,13 @@ apiServer:
     # 修改序号即可修改优先对话模型
     # 注意大小写 否则无效
     aiPriority:
-      1: 'bigModel'
-      2: 'kiMi'
+      2: 'deepSeek'
+      1: 'kiMi'
       3: 'hunYuan'
       4: 'sparkAi'
       5: 'openAi'
       6: 'qianFan'
+      7: 'bigModel'
     # 画图Ai优先级
     aiPicPriority:
       1: 'sparkAi'
@@ -347,7 +361,7 @@ apiServer:
       # 模型Key
       sparkAiKey: ''
       # 模型Appid
-      sparkAiAppid: 'b1ea4bca'
+      sparkAiAppid: ''
     # OpenAi 3.5模型
     openAi:
       # Open_Ai接口
@@ -384,6 +398,10 @@ apiServer:
     bigModel:
       bigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
       bigModelKey: 'Bearer '
+    # DeepSeek 模型
+    deepSeek:
+      deepSeekApi: 'https://api.deepseek.com/chat/completions'
+      deepSeekKey: 'Bearer sk-'
   # Dp接口 塔罗牌占卜
   dpTaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
   # Dp接口 视频去水印API

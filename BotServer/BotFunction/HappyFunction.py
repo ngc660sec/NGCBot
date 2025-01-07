@@ -6,6 +6,10 @@ import Config.ConfigServer as Cs
 
 class HappyFunction:
     def __init__(self, wcf):
+        """
+        娱乐功能
+        :param wcf:
+        """
         self.wcf = wcf
         self.Ams = ApiMainServer()
         configData = Cs.returnConfigData()
@@ -203,3 +207,4 @@ class HappyFunction:
                 msg = self.Ams.getWechatVideo(objectId, objectNonceId)
                 if msg:
                     self.wcf.send_text(f'@{senderName}\n{msg}', receiver=roomId, aters=sender)
+

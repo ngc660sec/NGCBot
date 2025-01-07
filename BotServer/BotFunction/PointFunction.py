@@ -8,7 +8,7 @@ import Config.ConfigServer as Cs
 class PointFunction:
     def __init__(self, wcf):
         """
-        Ai画图
+        积分功能
         :param wcf:
         """
         self.wcf = wcf

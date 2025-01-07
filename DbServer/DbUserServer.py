@@ -16,10 +16,12 @@ class DbUserServer:
         """
         conn, cursor = Dds.openDb(Cs.returnUserDbPath())
         try:
-            cursor.execute('INSERT INTO Admin VALUES (?, ?)', (wxId, roomId))
-            conn.commit()
-            Dds.closeDb(conn, cursor)
-            return True
+            if not self.searchAdmin(wxId, roomId):
+                cursor.execute('INSERT INTO Admin VALUES (?, ?)', (wxId, roomId))
+                conn.commit()
+                Dds.closeDb(conn, cursor)
+                return True
+            return False
         except Exception as e:
             op(f'[-]: 增加管理员出现错误, 错误信息: {e}')
             Dds.closeDb(conn, cursor)

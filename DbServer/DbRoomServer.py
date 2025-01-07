@@ -16,10 +16,12 @@ class DbRoomServer:
         """
         conn, cursor = Dds.openDb(Cs.returnRoomDbPath())
         try:
-            cursor.execute('INSERT INTO whiteRoom VALUES (?, ?)', (roomId, roomName))
-            conn.commit()
-            Dds.closeDb(conn, cursor)
-            return True
+            if not self.searchWhiteRoom(roomId):
+                cursor.execute('INSERT INTO whiteRoom VALUES (?, ?)', (roomId, roomName))
+                conn.commit()
+                Dds.closeDb(conn, cursor)
+                return True
+            return False
         except Exception as e:
             op(f'[-]: 新增白名单群聊出现错误, 错误信息: {e}')
             Dds.closeDb(conn, cursor)
@@ -90,10 +92,12 @@ class DbRoomServer:
         """
         conn, cursor = Dds.openDb(Cs.returnRoomDbPath())
         try:
-            cursor.execute('INSERT INTO blackRoom VALUES (?, ?)', (roomId, roomName))
-            conn.commit()
-            Dds.closeDb(conn, cursor)
-            return True
+            if not self.searchBlackRoom(roomId):
+                cursor.execute('INSERT INTO blackRoom VALUES (?, ?)', (roomId, roomName))
+                conn.commit()
+                Dds.closeDb(conn, cursor)
+                return True
+            return False
         except Exception as e:
             op(f'[-]: 新增黑名单群聊出现错误, 错误信息: {e}')
             Dds.closeDb(conn, cursor)
@@ -165,10 +169,12 @@ class DbRoomServer:
         """
         conn, cursor = Dds.openDb(Cs.returnRoomDbPath())
         try:
-            cursor.execute('INSERT INTO pushRoom VALUES (?, ?)', (roomId, roomName))
-            conn.commit()
-            Dds.closeDb(conn, cursor)
-            return True
+            if not self.searchPushRoom(roomId):
+                cursor.execute('INSERT INTO pushRoom VALUES (?, ?)', (roomId, roomName))
+                conn.commit()
+                Dds.closeDb(conn, cursor)
+                return True
+            return False
         except Exception as e:
             op(f'[-]: 新增推送群聊出现错误, 错误信息: {e}')
             Dds.closeDb(conn, cursor)

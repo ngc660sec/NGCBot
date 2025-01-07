@@ -7,6 +7,22 @@ import time
 import os
 
 
+def getWithdrawMsgData(content):
+    """
+    提取撤回消息的 ID
+    :param content:
+    :return:
+    """
+    root = ET.fromstring(content)
+    try:
+        newMsgId = root.find(".//newmsgid").text
+        replaceMsg = root.find(".//replacemsg").text
+        if newMsgId and replaceMsg:
+            if '撤回了一条消息' in replaceMsg:
+                return newMsgId
+    except Exception:
+        return None
+
 def getWechatVideoData(content):
     """
     处理微信视频号 提取objectId objectNonceId
@@ -20,7 +36,7 @@ def getWechatVideoData(content):
         objectNonceId = finderFeed.find('./objectNonceId').text
         return objectId, objectNonceId
     except Exception as e:
-        op(f'[-]: 提取微信视频号ID出现错误, 错误信息: {e}')
+        op(f'[~]: 提取微信视频号ID出现错误, 错误信息: {e}, 不用管此报错 ~~~')
         return '', ''
 
 
@@ -56,12 +72,18 @@ def getIdName(wcf, Id):
     获取好友或者群聊昵称
     :return:
     """
-    name_list = wcf.query_sql("MicroMsg.db",
-                              f"SELECT UserName, NickName FROM Contact WHERE UserName = '{Id}';")
-    if not name_list:
-        return ''
-    name = name_list[0]['NickName']
-    return name
+    try:
+        name_list = wcf.query_sql("MicroMsg.db",
+                                  f"SELECT UserName, NickName FROM Contact WHERE UserName = '{Id}';")
+        if not name_list:
+            return ''
+        name = name_list[0]['NickName']
+        return name
+    except Exception as e:
+        op(f'[~]: 获取好友或者群聊昵称出现错误, 错误信息: {e}')
+        return getIdName(wcf, Id)
+
+
 
 
 def getUserPicUrl(wcf, sender):
@@ -92,4 +114,4 @@ def getUserPicUrl(wcf, sender):
 
 
 if __name__ == '__main__':
-    pass
+    getWithdrawMsgData('<sysmsg type="revokemsg"><revokemsg><session>47555703573@chatroom</session><msgid>1387587956</msgid><newmsgid>6452489353190914412</newmsgid><replacemsg><![CDATA["Vcnnn8h" 撤回了一条消息]]></replacemsg><announcement_id><![CDATA[]]></announcement_id></revokemsg></sysmsg>')

@@ -64,9 +64,12 @@ class PushMainServer:
         op(f'[*]: 定时摸鱼日记推送中... ...')
         room_dicts = self.Dms.showPushRoom()
         fishPath = self.Ams.getFish()
-        for room_id in room_dicts.keys():
-            self.wcf.send_image(path=fishPath, receiver=room_id)
-        op('[+]: 定时摸鱼日记推送成功！！！')
+        if fishPath:
+            for room_id in room_dicts.keys():
+                self.wcf.send_image(path=fishPath, receiver=room_id)
+            op('[+]: 定时摸鱼日记推送成功！！！')
+        else:
+            op(f'[-]: 定时摸鱼日记推送失败！！！')
 
     # 每周四KFC推送
     def pushKfc(self, ):
@@ -101,6 +104,15 @@ class PushMainServer:
         Fcs.clearCacheFolder()
         op(f'[+]: 定时缓存文件清空成功！！！')
 
+    def clearRoomTableData(self, ):
+        """
+        定时清除群聊消息库
+        :return:
+        """
+        op(f'[*]: 群聊消息库清空中... ...')
+        self.Dms.clearRoomMsgTableData()
+        op(f'[+]: 群聊消息库清空成功！！！')
+
     def run(self, ):
         schedule.every().day.at(self.morningPageTime).do(self.pushMorningPage)
         schedule.every().day.at(self.fishTime).do(self.pushFish)
@@ -109,6 +121,7 @@ class PushMainServer:
         schedule.every().day.at(self.offWorkTime).do(self.pushOffWork)
         schedule.every().day.at('00:00').do(self.clearSign)
         schedule.every().day.at('03:00').do(self.clearCacheFile)
+        schedule.every().weeks.monday.at("00:00").do(self.clearRoomTableData)
         op(f'[+]: 已开启定时推送服务！！！')
         while True:
             schedule.run_pending()

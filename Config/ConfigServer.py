@@ -54,6 +54,9 @@ def saveFeishuConfigData(configData):
         yaml.dump(configData, file)
 
 
+def returnRoomMsgDbPath():
+    return returnConfigPath() + 'RoomMsg.db'
+
 def returnUserDbPath():
     return returnConfigPath() + 'User.db'
 
@@ -64,6 +67,7 @@ def returnRoomDbPath():
 
 def returnGhDbPath():
     return returnConfigPath() + 'Gh.db'
+
 
 
 def returnPointDbPath():

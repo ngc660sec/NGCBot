@@ -11,6 +11,15 @@ class ApiMainServer:
         # Ai对象实例化
         self.Ad = AiDialogue()
 
+    def getDeepSeek(self, content, message):
+        """
+        deepSeek
+        :param content:
+        :param message:
+        :return:
+        """
+        return self.Ad.getDeepSeek(content, message)
+
     def getTaLuo(self):
         """
         塔罗牌占卜API

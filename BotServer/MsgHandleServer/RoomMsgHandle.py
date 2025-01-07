@@ -1,4 +1,5 @@
 from BotServer.BotFunction.AdministratorFunction import AdministratorFunction
+from BotServer.BotFunction.RoomMsgFunction import RoomMsgFunction
 from BotServer.BotFunction.AdminFunction import AdminFunction
 from BotServer.BotFunction.HappyFunction import HappyFunction
 from BotServer.BotFunction.PointFunction import PointFunction
@@ -28,6 +29,7 @@ class RoomMsgHandle:
         self.Pf = PointFunction(self.wcf)
         self.Af = AdminFunction(self.wcf)
         self.Asf = AdministratorFunction(self.wcf)
+        self.Rmf = RoomMsgFunction(self.wcf)
         configData = Cs.returnConfigData()
         self.Administrators = configData['Administrators']
         self.aiWenKeyWords = configData['functionKeyWord']['aiWenWord']
@@ -50,6 +52,7 @@ class RoomMsgHandle:
     def mainHandle(self, msg):
         roomId = msg.roomid
         sender = msg.sender
+        # print('消息类型-----------------------------', msg.type)
         # 白名单群聊功能
         if judgeWhiteRoom(roomId):
             # 超管功能以及管理功能
@@ -60,6 +63,8 @@ class RoomMsgHandle:
             Thread(target=self.Hf.mainHandle, args=(msg,)).start()
             # 入群欢迎
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
+            # 推送群聊和白名单群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
+            Thread(target=self.Rmf.mainHandle, args=(msg,)).start()
         # 黑名单群聊功能
         elif judgeBlackRoom(roomId):
             # 超管功能以及管理功能
@@ -76,6 +81,8 @@ class RoomMsgHandle:
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
             # 娱乐功能 和 积分功能
             Thread(target=self.HappyFunction, args=(msg,)).start()
+            # 推送群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
+            Thread(target=self.Rmf.mainHandle, args=(msg, )).start()
         # 普通群聊功能
         else:
             # 超管功能以及管理功能
@@ -84,6 +91,14 @@ class RoomMsgHandle:
             Thread(target=self.HappyFunction, args=(msg,)).start()
             # 入群欢迎
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
+
+    def RoomMsgFunction(self, msg):
+        """
+        群聊消息服务
+        :param msg:
+        :return:
+        """
+
 
     def JoinRoomWelcome(self, msg):
         """

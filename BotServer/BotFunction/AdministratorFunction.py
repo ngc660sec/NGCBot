@@ -6,6 +6,10 @@ import Config.ConfigServer as Cs
 
 class AdministratorFunction:
     def __init__(self, wcf):
+        """
+        超管功能
+        :param wcf:
+        """
         self.wcf = wcf
         self.Dms = DbMainServer()
         configData = Cs.returnConfigData()
