@@ -8,6 +8,7 @@ import schedule
 
 class PushMainServer:
     def __init__(self, wcf):
+        self.stopFlag = True
         self.wcf = wcf
         self.Ams = ApiMainServer()
         self.Dms = DbMainServer()
@@ -113,6 +114,14 @@ class PushMainServer:
         self.Dms.clearRoomMsgTableData()
         op(f'[+]: 群聊消息库清空成功！！！')
 
+    def stopPushServer(self, ):
+        """
+        停止定时推送
+        :param flag:
+        :return:
+        """
+        self.stopFlag = False
+
     def run(self, ):
         schedule.every().day.at(self.morningPageTime).do(self.pushMorningPage)
         schedule.every().day.at(self.fishTime).do(self.pushFish)
@@ -123,6 +132,6 @@ class PushMainServer:
         schedule.every().day.at('03:00').do(self.clearCacheFile)
         schedule.every().weeks.monday.at("00:00").do(self.clearRoomTableData)
         op(f'[+]: 已开启定时推送服务！！！')
-        while True:
+        while self.stopFlag:
             schedule.run_pending()
 

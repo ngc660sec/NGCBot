@@ -18,5 +18,8 @@ Bot_Logo = """
 
 if __name__ == '__main__':
     cprint.info(Bot_Logo.strip())
-    Ms = MainServer()
-    Ms.processMsg()
+    try:
+        Ms = MainServer()
+        Ms.processMsg()
+    except KeyboardInterrupt:
+        Ms.Pms.stopPushServer()
