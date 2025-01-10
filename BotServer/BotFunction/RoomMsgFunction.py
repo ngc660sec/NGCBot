@@ -36,10 +36,13 @@ class RoomMsgFunction:
                 aiContent = f'群聊名称: {roomName}\n{self.Dms.showRoomContent(roomId)}'
                 aiMessages = [{
                     "role": "system",
-                    "content": "你叫NGCBot, 是一个微信群聊消息总结小助手, 你会总结我给你的聊天数据集, 它的格式是群聊名称: TEST\n微信ID,微信名称,聊天内容\n.....你会将每一个人的聊天进行分析, 并根据聊天内容总结出这一天都聊了什么内容, 最后做出总结并且以人性化的口吻回答!",
+                    "content": "你叫NGCBot, 是一个微信群聊消息总结小助手, 你会总结我给你的聊天数据集, 它的格式是群聊名称: TEST\n微信ID,微信名称,聊天内容\n.....你会将每一个人的聊天进行分析, 并根据聊天内容总结出这一天都聊了什么内容, 最后做出总结并且以人性化的口吻回答! 回复时不要用MarkDown语法并整理相关格式，多用微信的emoji表情进行回复，全程必须充满热情！",
                 }]
                 assistant_content, Mes = self.Ams.getDeepSeek(aiContent, aiMessages)
-                self.wcf.send_text(assistant_content, receiver=roomId)
+                if assistant_content:
+                    self.wcf.send_text(assistant_content, receiver=roomId)
+                else:
+                    self.wcf.send_text(f'@{senderName} 请先配置DeepSeek模型！！！', receiver=roomId, aters=sender)
             # 群聊发言排行榜
             if judgeEqualListWord(content, self.speechListKeyWords):
                 roomName = getIdName(self.wcf, roomId)
