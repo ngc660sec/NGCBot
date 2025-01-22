@@ -301,6 +301,10 @@ functionKeyWord:
     - '塔罗牌'
     - '塔罗'
     - '占卜'
+  # 点歌关键词
+  musicWords:
+    - '点歌'
+    - '点'
   # 群聊消息总结关键词
   summarizeMsgWord:
     - '总结群聊'
@@ -427,6 +431,10 @@ apiServer:
   feishuWiki: 'https://open.feishu.cn/open-apis/wiki/v1/nodes/search'
   # 短剧搜索 API接口
   shortPlayApi: 'https://api.dudunas.top/api/duanju?search={}'
+  # 点歌 API接口
+  musicApi:
+    - 'https://qqmusic.qqovo.cn/getSearchByKey?key={}&page=1&limit=1'
+    - 'https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={}&n=1&num=1&type=json'
   # 图片API配置
   picApi:
     - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
