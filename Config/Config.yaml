@@ -433,6 +433,7 @@ apiServer:
   shortPlayApi: 'https://api.dudunas.top/api/duanju?search={}'
   # 点歌 API接口
   musicApi:
+    - 'https://www.hhlqilongzhu.cn/api/dg_kugouSQ.php?msg={}&n=1&type=json'
     - 'https://qqmusic.qqovo.cn/getSearchByKey?key={}&page=1&limit=1'
     - 'https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={}&n=1&num=1&type=json'
   # 图片API配置
