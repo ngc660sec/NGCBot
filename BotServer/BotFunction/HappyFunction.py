@@ -28,6 +28,7 @@ class HappyFunction:
         self.emoTwoKeyWordsData = configData['emoConfig']['twoPicEwo']
         self.emoRandomKeyWords = configData['emoConfig']['emoRandomKeyWord']
         self.taLuoWords = configData['functionKeyWord']['taLuoWords']
+        self.musicWords = configData['functionKeyWord']['musicWords']
         # 自定义回复关键词字典
         self.customKeyWords = configData['customKeyWord']
 
@@ -122,7 +123,15 @@ class HappyFunction:
                 videoPath = self.Ams.getVideoAnalysis(content)
                 if videoPath:
                     self.wcf.send_file(path=videoPath, receiver=roomId)
-
+            # 点歌
+            elif judgeSplitAllEqualWord(content, self.musicWords):
+                musicName = content.split(' ')[-1]
+                musicHexData = self.Ams.getMusic(musicName)
+                data = self.wcf.query_sql('MSG0.db', "SELECT * FROM MSG where type = 49  limit 1")
+                self.wcf.query_sql('MSG0.db',
+                                   f"UPDATE MSG SET  CompressContent = x'{musicHexData}', BytesExtra=x'',type=49,SubType=3,IsSender=0,TalkerId=2 WHERE MsgSvrID={data[0]['MsgSvrID']}")
+                self.wcf.forward_msg(data[0]["MsgSvrID"], roomId)
+            # 塔罗牌
             elif judgeEqualListWord(content, self.taLuoWords):
                 content, picPath = self.Ams.getTaLuo()
                 if content and picPath:
