@@ -6,6 +6,7 @@ import requests
 import asyncio
 import random
 import time
+import lz4.block as lb
 import os
 import re
 
@@ -31,6 +32,7 @@ class HappyApi:
         self.dpVideoAnalysisApi = configData['apiServer']['dpVideoAnalysisAPi']
         self.dpWechatVideoApi = configData['apiServer']['dpWechatVideoApi']
         self.dpTaLuoApi = configData['apiServer']['dpTaLuoApi']
+        self.musicApi = configData['apiServer']['musicApi']
 
     def downloadFile(self, url, savePath):
         """
@@ -49,6 +51,115 @@ class HappyApi:
         except Exception as e:
             op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
             return None
+
+    def getMusic(self, musicName):
+        op(f'[*]: 正在调用点歌接口... ...')
+        for musicApi in self.musicApi:
+            try:
+                jsonData = requests.get(musicApi.format(musicName), verify=True, timeout=30).json()
+                result = jsonData.get('response', {}).get('data', {}).get('song', {}).get('list', [])
+                if result:
+                    firstSong = result[0]
+                    songName = firstSong.get('songname')
+                    songMid = firstSong.get('songmid')
+                    singers = firstSong.get('singer', [])
+                    firstSingerName = singers[0].get('name', '')
+                    singerPic = None  # 默认值为 None
+                    zhida_singer = jsonData.get('response', {}).get('data', {}).get('zhida', {}).get('zhida_singer', [])
+                    if zhida_singer:
+                        singerPic = zhida_singer.get('singerPic')  # 获取第一个歌手的图片链接
+                    musicPlayApi = f"https://qqmusic.qqovo.cn/getMusicPlay?songmid={songMid}&quality=m4a"
+                    music_response = requests.get(musicPlayApi)
+                    api = 1
+                    if music_response.status_code == 400:
+                        fallbackMusicApi = f"https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={musicName}&n=1&num=1&type=json"
+                        music_response = requests.get(fallbackMusicApi)
+                        api = 2
+                    if music_response.status_code == 200:
+                        music_data = music_response.json()
+                        if (api == 1):
+                            play_url = music_data.get('data', {}).get('playUrl', {}).get(songMid, {}).get('url')
+                            if not play_url:  # 如果主接口返回的play_url为空，使用备用接口
+                                fallbackMusicApi = f"https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={musicName}&n=1&num=1&type=json"
+                                music_response = requests.get(fallbackMusicApi)
+                                music_response = music_response.json()
+                                songName = music_response.get('title', '')
+                                firstSingerName = music_response.get('singer', '')
+                                play_url = music_response.get('music_url', '')  # 备用接口返回的播放链接字段
+                                singerPic = music_response.get('cover', '')
+                                dataurl = music_response.get('link', '')
+                            else:
+                                dataurl = f"https://y.qq.com/n/ryqq/songDetail/{songMid}"
+                        else:
+                            # 处理备用接口的返回结果
+                            songName = music_data.get('title', '')
+                            firstSingerName = music_data.get('singer', '')
+                            play_url = music_data.get('music_url', '')  # 备用接口返回的播放链接字段
+                            singerPic = music_data.get('cover', '')
+                            dataurl = music_data.get('link', '')
+                        if play_url:
+                            # 构造 XML 消息
+                            xml_message = f"""<?xml version="1.0"?>
+            <msg>
+                    <appmsg appid="wx8dd6ecd81906fd84" sdkver="0">
+                            <title>{songName}</title>
+                            <des>{firstSingerName}\n❤Bot-祝您天天开心❤</des>
+                            <action>view</action>
+                            <type>3</type>
+                            <showtype>0</showtype>
+                            <content />
+                            <url>{dataurl}</url>
+                            <dataurl>{play_url}</dataurl>
+                            <lowurl/>
+                            <lowdataurl/>
+                            <recorditem />
+                            <thumburl />
+                            <messageaction />
+                            <laninfo />
+                            <extinfo />
+                            <sourceusername />
+                            <sourcedisplayname />
+                            <commenturl />
+                            <appattach>
+                                    <totallen>0</totallen>
+                                    <attachid />
+                                    <emoticonmd5></emoticonmd5>
+                                    <fileext />
+                                    <aeskey></aeskey>
+                            </appattach>
+                            <webviewshared>
+                                    <publisherId />
+                                    <publisherReqId>0</publisherReqId>
+                            </webviewshared>
+                            <weappinfo>
+                                    <pagepath />
+                                    <username />
+                                    <appid />
+                                    <appservicetype>0</appservicetype>
+                            </weappinfo>
+                            <websearch />
+                            <songalbumurl>{singerPic}</songalbumurl>
+                    </appmsg>
+                    <scene>0</scene>
+                    <appinfo>
+                            <version>49</version>
+                            <appname>网易云音乐</appname>
+                    </appinfo>
+                    <commenturl />
+            </msg>"""
+
+                            # 将文本编码成字节
+                            text_bytes = xml_message.encode('utf-8')
+                            # 使用 lz4 压缩
+                            compressed_data = lb.compress(text_bytes,store_size=False)
+                            # 将压缩后的数据转为十六进制字符串，以便存储到数据库
+                            compressed_data_hex = compressed_data.hex()
+                            return compressed_data_hex
+            except Exception as e:
+                op(f'[-]: 点歌API出现错误, 错误信息: {e}')
+                continue
+            return None
+
 
     def getTaLuo(self, ):
         """
@@ -284,4 +395,5 @@ if __name__ == '__main__':
     #     '3.84 复制打开抖音，看看【SQ的小日常的作品】师傅：门可以让我踹吗 # 情侣 # 搞笑 # 反转... https://v.douyin.com/iydr37xU/ bAg:/ F@H.vS 01/06'))
     # print(Ha.getWechatVideo('14258814955767007275', '14776806611926650114_15_140_59_32_1735528000805808'))
     # print(Ha.getTaLuo())
-    print(Ha.getFish())
+    # print(Ha.getFish())
+    print(Ha.getMusic('晴天'))
