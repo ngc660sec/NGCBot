@@ -200,7 +200,7 @@ class HappyApi:
                     break
                 continue
         if not fishPath:
-            op(f'[-]: 魔域日历接口出现错误, 请检查！')
+            op(f'[-]: 摸鱼日历接口出现错误, 请检查！')
         return fishPath
 
     def getKfc(self, ):
