@@ -111,7 +111,6 @@ class HappyApi:
 	</appinfo>
 	<commenturl />
 </msg>"""
-            print(xml_message)
             # 将文本编码成字节
             text_bytes = xml_message.encode('utf-8')
             # 使用 lz4 压缩
