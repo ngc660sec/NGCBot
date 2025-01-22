@@ -11,6 +11,14 @@ class ApiMainServer:
         # Ai对象实例化
         self.Ad = AiDialogue()
 
+    def getMusic(self, musicName):
+        """
+        点歌API
+        :param musicName:
+        :return:
+        """
+        return Ps.Ha.getMusic(musicName)
+
     def getDeepSeek(self, content, message):
         """
         deepSeek
