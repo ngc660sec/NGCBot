@@ -125,7 +125,7 @@ class HappyFunction:
                     self.wcf.send_file(path=videoPath, receiver=roomId)
             # 点歌
             elif judgeSplitAllEqualWord(content, self.musicWords):
-                musicName = content.split(' ')[-1]
+                musicName = content.split(' ')[1::]
                 musicHexData = self.Ams.getMusic(musicName)
                 if not musicHexData:
                     self.wcf.send_text(f'@{senderName} 点歌接口出现错误, 请稍后再试 ~~~', receiver=roomId, aters=sender)
