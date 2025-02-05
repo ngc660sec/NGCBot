@@ -348,6 +348,7 @@ apiServer:
       5: 'openAi'
       6: 'qianFan'
       7: 'bigModel'
+      8: 'localDeepSeek'
     # 画图Ai优先级
     aiPicPriority:
       1: 'sparkAi'
@@ -406,6 +407,9 @@ apiServer:
     deepSeek:
       deepSeekApi: 'https://api.deepseek.com/chat/completions'
       deepSeekKey: 'Bearer sk-'
+    # DeepSeek 本地模型
+    localDeepSeek: 
+      deepSeekmodel: 'deepseek-r1:8b' # 填写通过ollama部署的本地模型版本
   # Dp接口 塔罗牌占卜
   dpTaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
   # Dp接口 视频去水印API

@@ -12,6 +12,7 @@ from OutPut.outPut import op
 import requests
 import time
 import json
+import ollama
 
 
 class AiDialogue:
@@ -50,6 +51,7 @@ class AiDialogue:
             'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
             'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
         }
+        self.localDeepSeekModel = configData['apiServer']['aiConfig']['localDeepSeek']['deepSeekmodel']
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
@@ -420,6 +422,30 @@ class AiDialogue:
             op(f'[-]: deepSeek对话接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
+    def getLocalDeepSeek(self, content, messages):
+        """
+        deepSeek
+        :param content: 对话内容
+        :param messages: 消息列表
+        :return:
+        """
+        op(f'[*]: 正在调用deepSeek本地对话接口... ...')
+        if not self.localDeepSeekModel:
+            op(f'[-]: deepSeek本地模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        try:
+            resp = ollama.chat(model=self.localDeepSeekModel, messages=messages)
+            assistant_content = resp.message.content
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
+        except Exception as e:
+            op(f'[-]: deepSeek本地对话接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
     def getAi(self, content):
         """
         处理优先级
@@ -427,7 +453,7 @@ class AiDialogue:
         :return:
         """
         result = ''
-        for i in range(1, 8):
+        for i in range(1, 9):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
@@ -443,6 +469,8 @@ class AiDialogue:
                 result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
             if aiModule == 'deepSeek':
                 result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
+            if aiModule == 'localDeepSeek':
+                result, self.deepSeekMessages = self.getLocalDeepSeek(content, self.deepSeekMessages)
             if not result:
                 continue
             else:
