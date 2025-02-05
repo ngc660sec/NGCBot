@@ -12,3 +12,4 @@ cprint==1.2.2
 lxml==5.2.2
 spark-ai-python
 lz4
+ollama
