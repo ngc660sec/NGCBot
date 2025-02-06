@@ -408,8 +408,10 @@ apiServer:
       deepSeekApi: 'https://api.deepseek.com/chat/completions'
       deepSeekKey: 'Bearer sk-'
     # DeepSeek 本地模型
-    localDeepSeek: 
-      deepSeekmodel: 'deepseek-r1:8b' # 填写通过ollama部署的本地模型版本
+    localDeepSeek: 
+      localDeepSeekApi: 'http://127.0.0.1:11434/api/chat'
+      localDeepSeekModel: 'deepseek-r1:8b'
+
   # Dp接口 塔罗牌占卜
   dpTaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
   # Dp接口 视频去水印API
