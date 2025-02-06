@@ -12,7 +12,6 @@ from OutPut.outPut import op
 import requests
 import time
 import json
-import ollama
 
 
 class AiDialogue:
@@ -51,7 +50,11 @@ class AiDialogue:
             'deepSeekApi': configData['apiServer']['aiConfig']['deepSeek']['deepSeekApi'],
             'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
         }
-        self.localDeepSeekModel = configData['apiServer']['aiConfig']['localDeepSeek']['deepSeekmodel']
+        self.localDeepSeekModel = {
+            'localDeepSeekApi': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekApi'],
+            'localDeepSeekModel': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekModel']
+        }
+
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
@@ -430,21 +433,24 @@ class AiDialogue:
         :return:
         """
         op(f'[*]: 正在调用deepSeek本地对话接口... ...')
-        if not self.localDeepSeekModel:
-            op(f'[-]: deepSeek本地模型未配置, 请检查相关配置!!!')
-            return None, []
-        messages.append({"role": "user", "content": f'{content}'})
-        try:
-            resp = ollama.chat(model=self.localDeepSeekModel, messages=messages)
-            assistant_content = resp.message.content
-            messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
-            return assistant_content, messages
-        except Exception as e:
-            op(f'[-]: deepSeek本地对话接口出现错误, 错误信息: {e}')
-            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+        if not self.localDeepSeekModel:
+            op(f'[-]: deepSeek本地模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": self.localDeepSeekModel.get('localDeepSeekModel'),
+            'messages': messages,
+            'stream': False
+        }
+        try:
+            resp = requests.post(url=self.localDeepSeekModel.get('localDeepSeekApi'), json=data)
+            jsonData = resp.json()
+            assistant_content = jsonData['message']['content'].split('</think>')[-1].strip()
+            return assistant_content, []
+        except Exception as e:
+            op(f'[-]: deepSeek本地对话接口出现错误, 错误信息: {e}')
+            return None, []
+
 
     def getAi(self, content):
         """
