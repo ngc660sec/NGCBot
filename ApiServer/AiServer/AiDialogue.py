@@ -51,9 +51,9 @@ class AiDialogue:
             'deepSeekKey': configData['apiServer']['aiConfig']['deepSeek']['deepSeekKey'],
         }
         self.localDeepSeekModel = {
-            'localDeepSeekApi': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekApi'],
-            'localDeepSeekModel': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekModel']
-        }
+            'localDeepSeekApi': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekApi'],
+            'localDeepSeekModel': configData['apiServer']['aiConfig']['localDeepSeek']['localDeepSeekModel']
+        }
 
         self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
         self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
@@ -433,74 +433,75 @@ class AiDialogue:
         :return:
         """
         op(f'[*]: 正在调用deepSeek本地对话接口... ...')
-        if not self.localDeepSeekModel:
-            op(f'[-]: deepSeek本地模型未配置, 请检查相关配置!!!')
-            return None, []
-        messages.append({"role": "user", "content": f'{content}'})
-        data = {
-            "model": self.localDeepSeekModel.get('localDeepSeekModel'),
-            'messages': messages,
-            'stream': False
-        }
-        try:
-            resp = requests.post(url=self.localDeepSeekModel.get('localDeepSeekApi'), json=data)
-            jsonData = resp.json()
-            assistant_content = jsonData['message']['content'].split('</think>')[-1].strip()
-            return assistant_content, []
-        except Exception as e:
-            op(f'[-]: deepSeek本地对话接口出现错误, 错误信息: {e}')
-            return None, []
+        if not self.localDeepSeekModel:
+            op(f'[-]: deepSeek本地模型未配置, 请检查相关配置!!!')
+            return None, []
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": self.localDeepSeekModel.get('localDeepSeekModel'),
+            'messages': messages,
+            'stream': False
+        }
+        try:
+            resp = requests.post(url=self.localDeepSeekModel.get('localDeepSeekApi'), json=data)
+            jsonData = resp.json()
+            assistant_content = jsonData['message']['content'].split('</think>')[-1].strip()
+            return assistant_content, []
+        except Exception as e:
+            op(f'[-]: deepSeek本地对话接口出现错误, 错误信息: {e}')
+            return None, []
 
 
-    def getAi(self, content):
-        """
-        处理优先级
-        :param content:
-        :return:
-        """
-        result = ''
-        for i in range(1, 9):
-            aiModule = self.aiPriority.get(i)
-            if aiModule == 'hunYuan':
-                result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
-            if aiModule == 'sparkAi':
-                result = self.getSparkAi(content)
-            if aiModule == 'openAi':
-                result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
-            if aiModule == 'qianFan':
-                result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
-            if aiModule == 'kiMi':
-                result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
-            if aiModule == 'bigModel':
-                result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
-            if aiModule == 'deepSeek':
-                result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
-            if aiModule == 'localDeepSeek':
-                result, self.deepSeekMessages = self.getLocalDeepSeek(content, self.deepSeekMessages)
-            if not result:
-                continue
-            else:
-                break
-        return result
+def getAi(self, content):
+    """
+    处理优先级
+    :param content:
+    :return:
+    """
+    result = ''
+    for i in range(1, 9):
+        aiModule = self.aiPriority.get(i)
+        if aiModule == 'hunYuan':
+            result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
+        if aiModule == 'sparkAi':
+            result = self.getSparkAi(content)
+        if aiModule == 'openAi':
+            result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
+        if aiModule == 'qianFan':
+            result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
+        if aiModule == 'kiMi':
+            result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
+        if aiModule == 'bigModel':
+            result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
+        if aiModule == 'deepSeek':
+            result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
+        if aiModule == 'localDeepSeek':
+            result, self.deepSeekMessages = self.getLocalDeepSeek(content, self.deepSeekMessages)
+        if not result:
+            continue
+        else:
+            break
+    return result
 
-    def getPicAi(self, content):
-        """
-        处理优先级
-        :param content:
-        :return:
-        """
-        picPath = ''
-        for i in range(1, 3):
-            aiPicModule = self.aiPicPriority.get(i)
-            if aiPicModule == 'sparkAi':
-                picPath = self.getSparkPic(content)
-            if aiPicModule == 'qianFan':
-                picPath = self.getQianFanPic(content)
-            if not picPath:
-                continue
-            else:
-                break
-        return picPath
+
+def getPicAi(self, content):
+    """
+    处理优先级
+    :param content:
+    :return:
+    """
+    picPath = ''
+    for i in range(1, 3):
+        aiPicModule = self.aiPicPriority.get(i)
+        if aiPicModule == 'sparkAi':
+            picPath = self.getSparkPic(content)
+        if aiPicModule == 'qianFan':
+            picPath = self.getQianFanPic(content)
+        if not picPath:
+            continue
+        else:
+            break
+    return picPath
 
 
 if __name__ == '__main__':
