@@ -408,8 +408,8 @@ apiServer:
       deepSeekApi: 'https://api.deepseek.com/chat/completions'
       deepSeekKey: 'Bearer sk-'
     # DeepSeek 本地模型
-    localDeepSeek: 
-      localDeepSeekApi: 'http://127.0.0.1:11434/api/chat'
+    localDeepSeek:
+      localDeepSeekApi: 'http://127.0.0.1:11434/api/chat'
       localDeepSeekModel: 'deepseek-r1:8b'
 
   # Dp接口 塔罗牌占卜
