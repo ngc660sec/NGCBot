@@ -8,9 +8,12 @@ def returnConfigPath():
     :return:
     """
     current_path = os.path.dirname(__file__)
-    current_list_path = current_path.split('\\')[0:-1]
-    configPath = '/'.join(current_list_path) + '/Config/'
-    return configPath
+    if '\\' in current_path:
+        current_list_path = current_path.split('\\')[0:-1]
+        configPath = '/'.join(current_list_path) + '/Config/'
+        return configPath
+    else:
+        return current_path
 
 
 def returnConfigData():
