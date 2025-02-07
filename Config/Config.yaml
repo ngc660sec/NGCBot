@@ -342,13 +342,14 @@ apiServer:
     # 注意大小写 否则无效
     aiPriority:
       2: 'deepSeek'
-      1: 'kiMi'
+      9: 'kiMi'
       3: 'hunYuan'
       4: 'sparkAi'
       5: 'openAi'
       6: 'qianFan'
       7: 'bigModel'
       8: 'localDeepSeek'
+      1: 'siliconFlow'
     # 画图Ai优先级
     aiPicPriority:
       1: 'sparkAi'
@@ -372,7 +373,8 @@ apiServer:
       # Open_Ai接口
       openAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
       # OpenAi Key
-      openAiKey: 'Bearer sk-'
+      openAiKey: 'Bearer {key填这里，前面的Bearer保留}'
+      openAiModel: 'gpt-3.5-turbo'
     # 千帆大模型  ERNIE-4.0-Turbo-8K模型
     qianFan:
       # 应用中的Api Key
@@ -395,22 +397,31 @@ apiServer:
       hunYuanSecretId: ''
       # 腾讯云SecretKey
       hunYuanSecretKey: ''
+      hunYuanModel: 'hunyuan-pro'
     # Kimi大模型
     kiMi:
       kiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
-      kiMiKey: 'sk-'
+      kiMiKey: ''
+      kiMiModel: 'moonshot-v1-8k'
     # 智谱大模型
     bigModel:
       bigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-      bigModelKey: 'Bearer '
+      bigModelKey: 'Bearer {key填这里，前面的Bearer保留}'
+      bigModelModel: 'glm-4-plus'
     # DeepSeek 模型
     deepSeek:
       deepSeekApi: 'https://api.deepseek.com/chat/completions'
-      deepSeekKey: 'Bearer sk-'
+      deepSeekKey: 'Bearer {key填这里，前面的Bearer保留}'
+      deepSeekModel: 'deepseek-chat'
     # DeepSeek 本地模型
     localDeepSeek:
       localDeepSeekApi: 'http://127.0.0.1:11434/api/chat'
       localDeepSeekModel: 'deepseek-r1:8b'
+    # 硅基流动
+    siliconFlow:
+      siliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
+      siliconFlowKey: 'Bearer {key填这里，前面的Bearer保留}'
+      siliconFlowModel: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B'
 
   # Dp接口 塔罗牌占卜
   dpTaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
