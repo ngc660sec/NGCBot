@@ -452,56 +452,56 @@ class AiDialogue:
             return None, []
 
 
-def getAi(self, content):
-    """
-    处理优先级
-    :param content:
-    :return:
-    """
-    result = ''
-    for i in range(1, 9):
-        aiModule = self.aiPriority.get(i)
-        if aiModule == 'hunYuan':
-            result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
-        if aiModule == 'sparkAi':
-            result = self.getSparkAi(content)
-        if aiModule == 'openAi':
-            result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
-        if aiModule == 'qianFan':
-            result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
-        if aiModule == 'kiMi':
-            result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
-        if aiModule == 'bigModel':
-            result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
-        if aiModule == 'deepSeek':
-            result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
-        if aiModule == 'localDeepSeek':
-            result, self.deepSeekMessages = self.getLocalDeepSeek(content, self.deepSeekMessages)
-        if not result:
-            continue
-        else:
-            break
-    return result
+    def getAi(self, content):
+        """
+        处理优先级
+        :param content:
+        :return:
+        """
+        result = ''
+        for i in range(1, 9):
+            aiModule = self.aiPriority.get(i)
+            if aiModule == 'hunYuan':
+                result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
+            if aiModule == 'sparkAi':
+                result = self.getSparkAi(content)
+            if aiModule == 'openAi':
+                result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
+            if aiModule == 'qianFan':
+                result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
+            if aiModule == 'kiMi':
+                result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
+            if aiModule == 'bigModel':
+                result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
+            if aiModule == 'deepSeek':
+                result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
+            if aiModule == 'localDeepSeek':
+                result, self.deepSeekMessages = self.getLocalDeepSeek(content, self.deepSeekMessages)
+            if not result:
+                continue
+            else:
+                break
+        return result
 
 
-def getPicAi(self, content):
-    """
-    处理优先级
-    :param content:
-    :return:
-    """
-    picPath = ''
-    for i in range(1, 3):
-        aiPicModule = self.aiPicPriority.get(i)
-        if aiPicModule == 'sparkAi':
-            picPath = self.getSparkPic(content)
-        if aiPicModule == 'qianFan':
-            picPath = self.getQianFanPic(content)
-        if not picPath:
-            continue
-        else:
-            break
-    return picPath
+    def getPicAi(self, content):
+        """
+        处理优先级
+        :param content:
+        :return:
+        """
+        picPath = ''
+        for i in range(1, 3):
+            aiPicModule = self.aiPicPriority.get(i)
+            if aiPicModule == 'sparkAi':
+                picPath = self.getSparkPic(content)
+            if aiPicModule == 'qianFan':
+                picPath = self.getQianFanPic(content)
+            if not picPath:
+                continue
+            else:
+                break
+        return picPath
 
 
 if __name__ == '__main__':
