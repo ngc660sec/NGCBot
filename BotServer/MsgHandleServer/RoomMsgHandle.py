@@ -73,7 +73,6 @@ class RoomMsgHandle:
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
             # 推送群聊和白名单群聊才可以使用群聊总结功能&撤回消息检测功能&发言排行榜功能&定时推送总结
             Thread(target=self.Rmf.mainHandle, args=(msg,)).start()
-            Thread(target=self.Gf.mainHandle, args=(msg, )).start()
         # 黑名单群聊功能
         elif judgeBlackRoom(roomId):
             # 超管功能以及管理功能
