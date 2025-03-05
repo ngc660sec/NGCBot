@@ -70,7 +70,7 @@ class AiDialogue:
         # 本地Ollama配置
         self.OllamaConfig = {
             'OllamaApi': configData['AiConfig']['OllamaConfig']['OllamaApi'],
-            'localDeepSeekModel': configData['AiConfig']['OllamaConfig']['OllamaModel']
+            'OllamaModel': configData['AiConfig']['OllamaConfig']['OllamaModel']
         }
 
         # 硅基流动配置
@@ -472,7 +472,7 @@ class AiDialogue:
         try:
             resp = requests.post(url=self.OllamaConfig.get('OllamaApi'), json=data)
             jsonData = resp.json()
-            assistant_content = jsonData['choices'][0]['message']['content'].split('</think>')[-1].strip()
+            assistant_content = jsonData['message']['content'].split('</think>')[-1].strip()
             return assistant_content, []
         except Exception as e:
             op(f'[-]: Ollama本地对话接口出现错误, 错误信息: {e}')
