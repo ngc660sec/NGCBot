@@ -1,0 +1,621 @@
+# 系统相关配置
+SystemConfig:
+  # 超级管理员配置
+  Administrators:
+    - 'wxid_7bizfilssbwi22'
+    - 'wxid2'
+    - '.....'
+  #系统版权信息
+  SystemCopyright: 'NGC660安全实验室'
+  # 好友Ai开关 以下功能都是 1开/0关
+  AiLock: 1
+  # 自动接收转账
+  AcceptMoneyLock: 1
+  # 加好友配置
+  AcceptFriendConfig:
+    # 自动同意好友
+    AcceptFriendLock: 1
+    # 加好友后回复
+    AcceptFriendMsg: '你好, 我是NGC660安全实验室开发的微信机器人, 你可以叫我NGCBot! 私聊我即可进行智能对话哦[爱心]~~~ ~~~'
+  #好友消息转发给管理员
+  MsgForwardAdmin: 1
+
+# Ai相关配置 [包含AiKey Ai模型 Ai调用顺序]
+AiConfig:
+  # Ai优先级
+  # 修改序号即可修改优先对话模型
+  # 注意大小写 否则无效
+  AiPriority:
+    1: 'deepSeek'
+    2: 'siliconFlow'
+    3: 'douBao'
+    4: 'bigModel'
+    5: 'kiMi'
+    6: 'hunYuan'
+    7: 'ollama'
+    8: 'openAi'
+    9: 'sparkAi'
+    10: 'qianFan'
+  # 画图Ai优先级
+  AiPicPriority:
+    1: 'douBao'
+    2: 'qianFan'
+    3: 'sparkAi'
+  # Ai角色配置
+  SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
+  # 豆包配置
+  DouBaoConfig:
+    DouBaoApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
+    DouBaoKey: 'Bearer {key填这里，前面的Bearer保留}'
+    DouBaoModel: 'ep-'
+    # 文生图需要填写以下内容 不使用文生图不需要填写
+    ## ReqKey以及ModelVersion需要根据火山文档填写
+    DouBaoAk: '火山AK'
+    DouBaoSk: '火山SK'
+    DouBaoReqKey: 'high_aes'
+    DouBaoPicModelVersion: 'anime_v1.3'
+  # 硅基流动配置
+  SiliconFlowConfig:
+    SiliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
+    SiliconFlowKey: 'Bearer {key填这里，前面的Bearer保留}'
+    SiliconFlowModel: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B'
+  # Ollama本地模型配置
+  OllamaConfig:
+    OllamaApi: 'http://127.0.0.1:11434/api/chat'
+    OllamaModel: 'deepseek-r1:8b'
+  # DeepSeek官网模型配置
+  DeepSeekConfig:
+    DeepSeekApi: 'https://api.deepseek.com/chat/completions'
+    DeepSeekKey: 'Bearer {key填这里，前面的Bearer保留}'
+    DeepSeekModel: 'deepseek-chat'
+  # 智谱模型配置
+  BigModelConfig:
+    BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
+    BigModelKey: 'Bearer {key填这里，前面的Bearer保留}'
+    BigModelModel: 'glm-4-plus'
+  # 月之暗面模型配置
+  KiMiConfig:
+    KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
+    KiMiKey: ''
+    KiMiModel: 'moonshot-v1-8k'
+  # 混元模型配置
+  HunYuanConfig:
+    # 腾讯云SecretId
+    HunYuanSecretId: ''
+    # 腾讯云SecretKey
+    HunYuanSecretKey: ''
+    HunYuanModel: 'hunyuan-pro'
+  # 千帆模型配置
+  QianFanConfig:
+    # 应用中的Api Key
+    QfAccessKey: ''
+    # 应用中的Secret Key
+    QfSecretKey: ''
+    # 应用中的应用ID
+    QfAppid: '46224165'
+    # 千帆Ai作画Api 两个key是不一样的 不能通用
+    # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
+    # 应用中的Api Key
+    QfPicAccessKey: ''
+    # 应用中的Secret Key
+    QfPicSecretKey: ''
+    # 应用中的应用ID
+    QfPicAppid: ''
+  # OpenAi模型配置
+  OpenAiConfig:
+    # Open_Ai接口
+    OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
+    # OpenAi Key
+    OpenAiKey: 'Bearer {key填这里，前面的Bearer保留}'
+    # 模型版本
+    OpenAiModel: 'gpt-3.5-turbo'
+  # 星火模型配置
+  SparkConfig:
+    # 模型Url
+    SparkAiApi: 'wss://spark-api.xf-yun.com/v4.0/chat'
+    # 模型Secret
+    SparkAiSecret: ''
+    # 模型版本
+    SparkDomain: '4.0Ultra'
+    # 模型Key
+    SparkAiKey: ''
+    # 模型Appid
+    SparkAiAppid: ''
+
+# 所有Key配置 [不包含Ai Key配置]
+KeyConfig:
+  # Cmd5配置
+  Cmd5Config:
+    Cmd5Email: ''
+    Cmd5Key: ''
+  # 埃文配置
+  AiWenConfig:
+    AiWenKey: ''
+  # 高德配置
+  GaoDeConfig:
+    GaoDeKey: ''
+  # Dp接口配置
+  DpConfig:
+    DpKey: ''
+
+# 定时推送配置
+ScheduledConfig:
+  #早报推送时间配置
+  MorningPageTime: '08:30'
+  # 晚报推送时间配置
+  EveningPageTime: '17:00'
+  # 摸鱼日记推送时间配置
+  FishTime: '10:00'
+  # KFC文案推送时间配置
+  KfcTime: '11:50'
+  # 下班推送配置
+  OffWorkConfig:
+    #下班推送时间配置
+    OffWorkTime: '18:00'
+    # 下班推送内容配置 \n换行
+    OffWorkMsg: '下班时间到！我要下班 我要下班 我要下班 下下下！\n到点即刻下班，给老板省去水电，给自己来套保健，给老板来句操蛋，出自: #NGC660安全实验室\n速速下班！！！[旺柴]'
+
+# 进群配置(关键词进群/进群欢迎)
+JoinGroupConfig:
+  # 关键词进群配置
+  JoinGroupKeyWordsConfig:
+    '进群':
+      - '47442567074@chatroom'
+      - '47362882837@chatroom'
+      - '46017987363@chatroom'
+    Bot交流群:
+      - '47442567074@chatroom'
+      - '47362882837@chatroom'
+      - '46017987363@chatroom'
+    开发者:
+      - '46017987363@chatroom'
+  # 进群欢迎配置
+  JoinGroupMsgConfig:
+  # 默认进群提示词配置
+    JoinGroupDefaultMsg: '欢迎新进群的小可爱\n群主正在床上等你哦[爱心]~~~ ~~~'
+    # 指定群聊进群欢迎词 触发了指定群聊 则不会触发默认进群欢迎
+    AppointJsonRoomMsgs:
+      # 群聊ID 多个Room加 , 即可
+      '50303957048@chatroom': '【腾讯文档】WingBy小密圈知识星球说明 进群必看！！！！！\nhttps://docs.qq.com/doc/DS2tmaEJlUmFRY0Vi'
+      '49507388138@chatroom': '恭喜您成为尊贵的NGC会员，愿耀眼的bot标带您开拓进取，勇创辉煌，成就卓越。祝您在未来的道路丰衣足食，有人陪你沧海桑田，永远积极向上，热泪盈眶，车到山前必有路，有路必有NGCBot'
+      '47555703573@chatroom': '测试123123'
+    # 进群欢迎词 卡片配置 可新增多个卡片
+    JoinRoomCard:
+      # 不同的Room需要不同配置 多个room加 , 即可
+      '43064515504@chatroom,47442567074@chatroom,47362882837@chatroom,46017987363@chatroom':
+        # 左下角显示的名字 一般是公众号名称
+        name: 'NGC660安全实验室'
+        # 填公众号ID 可以显示对应的头像
+        account: 'gh_5fc2f516b008'
+        # 卡片消息标题 最多两行
+        title: '欢迎 ❤{}❤ 一起搞机'
+        # 摘要 最多三行
+        digest: '【NGCBot V2.2】新版本来袭！全新功能！全新架构！自动化私域管理必备！'
+        # 点击后跳转的URL
+        url: 'http://mp.weixin.qq.com/s?__biz=MzkyODMxODUwNQ==&amp;mid=2247493526&amp;idx=1&amp;sn=d0f7675929a314941ad3845769bafdcb&amp;chksm=c21832d0f56fbbc6c4451105df94e39283228e9f6bb69eae00888c4869f5b91e3703bd302e92&amp;mpshare=1&amp;scene=1&amp;srcid=0716KB1OiULdPNzLUXmMVVlV&amp;sharer_shareinfo=dd05c6b9c14d98dc6b745cbf673dabec&amp;sharer_shareinfo_first=24b3af78c3e815a698c81c03a49a0244#rd'
+        # 缩略图的链接 到控制台输出拿
+        thumbUrl: 'https://mmbiz.qpic.cn/mmbiz_jpg/QABjQccnicQpAnrqNicQd9iaTIQg3TZia6nr3OaAJQS8bOMrdtFct30axbiaO3OTnULGjHpE0RQD0NmT76FWa5daiaZA/300?wxtype=jpeg&amp;wxfrom=401'
+
+# 功能配置
+FunctionConfig:
+  # 娱乐功能配置
+  HappyFunctionConfig:
+    # 图片功能配置
+    PicConfig:
+      PicKeyWords:
+        - '图片'
+        - '妹子'
+        - '色图'
+        - '色色'
+      PicApi:
+        - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
+        - 'https://cdn.seovx.com/?mom=302'
+        - 'https://api.mhimg.cn/api/girls_img/?type=img'
+        - 'https://api.mhimg.cn/api/Welfare_img/'
+    # 视频功能配置
+    VideoConfig:
+      VideoKeyWords:
+        - '视频'
+        - '成人视频'
+        - '18禁'
+      VideoApi:
+        - 'http://api.yujn.cn/api/heisis.php'
+        - 'http://api.yujn.cn/api/xjj.php'
+        - 'http://api.yujn.cn/api/zzxjj.php'
+        - 'https://api.yujn.cn/api/manzhan.php'
+        - 'http://api.yujn.cn/api/rewu.php?type=video'
+        - 'http://api.ovoe.top/API/hbss.php'
+        - 'http://abc.gykj.asia/API/hbss.php'
+        - 'https://api.qtkj.love/api/hbss.php'
+        - 'http://api.yujn.cn/api/hanfu.php?type=video'
+        - 'http://abc.gykj.asia/API/gzhf.php'
+        - 'http://www.yujn.cn/api/heisis.php'
+        - 'http://api.yujn.cn/api/manyao.php?type=video'
+        - 'https://api.shenke.love/api/mnsp.php?msg=my&type=video'
+        - 'http://api.yujn.cn/api/COS.php?type=video'
+        - 'http://abc.gykj.asia/API/ntCOS.php'
+        - 'http://api.yujn.cn/api/jksp.php?type=video'
+    # Kfc功能配置
+    KfcConfig:
+      KfcKeyWords:
+        - 'Kfc'
+        - '疯狂星期四'
+        - '星期四'
+        - '今天星期四'
+        - 'KFC'
+        - 'kfc'
+        - 'v我50'
+        - '明天星期四'
+      KfcApi: 'https://api.pearktrue.cn/api/kfc'
+    # 舔狗日记功能配置 [需要DpKey]
+    DogConfig:
+      DogKeyWords:
+        - '舔狗日记'
+        - '舔我'
+      DogApi: 'https://api.dudunas.top/api/yulu?type=舔狗日记&AppSecret={}'
+    # 摸鱼日记功能配置
+    FishConfig:
+      FishKeyWords:
+        - '摸鱼日记'
+        - '摸鱼日历'
+      FishApi: 'https://api.dudunas.top/api/moyu'
+    # 短剧搜索配置 [需要DpKey]
+    ShortPlayConfig:
+      ShortPlayKeyWords:
+        - '短剧搜索'
+        - '短剧'
+      ShortPlayApi: 'https://api.dudunas.top/api/duanju?search={}'
+    # 塔罗牌配置 [需要配置DpKey]
+    TaLuoConfig:
+      TaLuoKeyWords:
+        - '塔罗牌'
+        - '塔罗'
+        - '占卜'
+      TaLuoApi: 'https://api.dudunas.top/api/taluo?AppSecret={}'
+    # 抖音视频去水印 [需要配置Dp Key]
+    DyVideoAnalysisConfig:
+      DyVideoAnalysisKeyWords:
+        - '复制打开抖音'
+        - '复制打开快手'
+      DyVideoAnalysisAPi: 'https://api.dudunas.top/api/qushuiyin?AppSecret={}&text={}'
+    # 视频号解析 [需要配置Dp Key]
+    WechatVideoConfig:
+      WechatVideoApi: 'https://api.dudunas.top/api/vxdown?AppSecret={}&objectId={}&objectNonceId={}'
+    # 点歌配置
+    MusicConfig:
+      MusicKeyWords:
+        - '点歌'
+        - '点'
+      MusicApi:
+        - 'https://www.hhlqilongzhu.cn/api/dg_kugouSQ.php?msg={}&n=1&type=json'
+        - 'https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={}&n=1&num=1&type=json'
+        - 'https://qqmusic.qqovo.cn/getSearchByKey?key={}&page=1&limit=1'
+    # 早报配置
+    MorningPageConfig:
+      MorningPageKeyWords:
+        - '早报'
+        - '早间咨询'
+    # 晚报配置
+    EveningPageConfig:
+      EveningPageKeyWords:
+        - '晚报'
+        - '晚间咨询'
+    # 帮助菜单配置
+    HelpMenuConfig:
+      HelpMenuKeyWords:
+        - '帮助'
+        - 'help'
+        - 'Help'
+        - 'HELP'
+        - '帮助菜单'
+        - '菜单'
+
+  # 积分功能配置 Ai功能不在此处 Ai关键词在此处配置
+  PointFunctionConfig:
+    # 功能积分配置
+    PointConfig:
+      AiWenPoint: 10
+      Cmd5Point: 100
+      AiMsgPoint: 10
+      AiPicPoint: 10
+    # 埃文IP定位配置 [需要配置埃文Key、高德Key]
+    AiWenIpConfig:
+      AiWenKeyWords:
+        - 'ip定位'
+        - '溯源'
+        - '定位'
+      AiWenApi: 'https://api.ipplus360.com/ip/geo/v1/street/biz/'
+      gaoDeApi: 'https://restapi.amap.com/v3/staticmap'
+    # MD5查询配置 [需要配置CMD5 Email&Key]
+    Cmd5Config:
+      Cmd5KeyWords:
+        - 'md5解密'
+        - 'MD5解密'
+        - 'md5查询'
+        - 'Md5查询'
+        - 'MD5查询'
+      Cmd5Api: 'http://www.cmd5.com/api.ashx?email={}&key={}&hash={}'
+    SignConfig:
+      SignKeyWord: '签到: NGC660安全实验室承接微信AI机器人定制!'
+      SignPoint: 10
+    SearchPointConfig:
+      SearchPointKeyWords:
+        - '积分查询'
+        - '查询积分'
+    AiPicConfig:
+      AiPicKeyWords:
+        - '画'
+        - '画图'
+
+  # 游戏功能配置
+  GameFunctionConfig:
+    # 看图猜成语配置
+    IdiomGameConfig:
+      IdiomApi: 'https://api.dudunas.top/api/chengyu?AppSecret={}'
+      StartGameKeyWord: '看图猜成语'
+      StopGameKeyWord: '结束猜成语'
+      GameRound: 5
+
+  # 群聊功能配置
+  RoomConfig:
+    SummarizeMsgKeyWords:
+      - '总结群聊'
+      - '群聊总结'
+    SpeechListWords:
+      - '发言榜'
+    RowingListWords:
+      - '潜水榜'
+
+  # 管理功能配置
+  AdminFunctionConfig:
+    AddAdminKeyWords:
+      - '添加管理员'
+      - '添加管理'
+      - '新增管理员'
+    DelAdminKeyWords:
+      - '删除管理员'
+      - '删除管理'
+      - '移除管理员'
+    AddBlackRoomKeyWords:
+      - '拉黑群聊'
+      - '拉黑'
+      - '添加黑名单'
+    DelBlackRoomKeyWords:
+      - '解除拉黑'
+      - '移出黑名单'
+    ShowWhiteRoomKeyWords:
+      - '查看群聊'
+      - '查看白名单群聊'
+    ShowBlackRoomKeyWords:
+      - '查看黑名单群聊'
+      - '查看拉黑群聊'
+    ShowPushRoomKeyWords:
+      - '查看推送群聊'
+      - '查看广告群'
+    AddWhiteRoomKeyWords:
+      - '拉白'
+      - '加白'
+      - '添加白名单'
+    DelWhiteRoomKeyWords:
+      - '移出白名单'
+      - '移除白名单'
+      - '去白'
+    AddPushRoomKeyWords:
+      - '开启推送服务'
+      - '开启推送'
+    DelPushRoomKeyWords:
+      - '关闭推送服务'
+      - '关闭推送'
+    AddBlackGhKeyWords:
+      - '黑号'
+      - '拉黑'
+    DelBlackGhKeyWords:
+      - '移除拉黑'
+      - '移除'
+      - '移出'
+    ShowBlackGhKeyWords:
+      - '查看拉黑公众号'
+      - '拉黑公众号'
+      - '拉黑公号'
+    DelUserKeyWords:
+      - '滚蛋'
+      - '滚'
+      - '踢出'
+      - '踢'
+      - '滚出去'
+      - '移出'
+    SendMsgKeyWords:
+      - '发'
+      - '发送'
+    AddPointKeyWords:
+      - '加'
+      - '+'
+      - '加积分'
+      - '增'
+    DelPointKeyWords:
+      - '减'
+      - '-'
+      - '扣除'
+      - '扣'
+
+# 自定义关键词回复配置
+CustomConfig:
+  # 设置关键词
+  '关键词1':
+    - '回复内容1'
+    - '回复内容2'
+  '关键词2':
+    - '回复内容1'
+    - '回复内容2'
+
+# 表情包关键词配置，跟官网的相匹配，同时删减一些默认表情
+# https://github.com/MeetWq/meme-generator/wiki/%E8%A1%A8%E6%83%85%E5%88%97%E8%A1%A8
+EmoConfig:
+  EmoHelp:
+    - '表情帮助'
+    - '表情菜单'
+    - '表情列表'
+  EmoKeyWords:
+    - '表情'
+    - '表情包'
+  EmoRandomKeyWords:
+    - '随机表情'
+  OnePicEmo:
+    '跟我去二次元': 'acg_entrance'
+    '添乱': 'add_chaos'
+    '上瘾': 'addiction'
+    '一样': 'alike'
+    '永远喜欢': 'always_like'
+    '诱拐': 'anti_kidnap'
+    '阿尼亚喜欢': 'anya_suki'
+    '鼓掌': 'applaud'
+    '打工人': 'back_to_work'
+    '拍头': 'beat_head'
+    '啃': 'bite'
+    '高血压': 'blood_pressure'
+    '手稿': 'bocchi_draft'
+    '奶茶': 'bubble_tea'
+    '草神': 'caoshen_bite'
+    '画': 'capoo_draw'
+    '撕': 'rip'
+    '咖波撕': 'capoo_rip'
+    '蹭': 'capoo_rub'
+    '撞': 'capoo_strike'
+    '字符画': 'charpic'
+    '追': 'chase_train'
+    '国旗': 'china_flag'
+    '小丑': 'clown'
+    '迷惑': 'confuse'
+    '兑奖': 'coupon'
+    '捂脸': 'cover_face'
+    '爬': 'crawl'
+    '亲亲': 'decent_kiss'
+    '典': 'dianzhongdian'
+    '恐龙': 'dinosaur'
+    '涣散': 'distracted'
+    '离婚协议': 'divorce'
+    '狗都不玩': 'dog_dislike'
+    '痴': 'dog_of_vtb'
+    '不要靠近': 'dont_go_near'
+    '别碰': 'dont_touch'
+    '吃': 'eat'
+    '要上吗': 'fight_with_sunuo'
+    '满脑子': 'fill_head'
+    '闪瞎': 'flash_blind'
+    '关注': 'follow'
+    '拿': 'frieren_take'
+    '哈哈镜': 'funny_mirror'
+    '垃圾桶': 'garbage'
+    '启动': 'genshin_start'
+    '鬼畜': 'guichu'
+    '手枪': 'gun'
+    '锤': 'hammer'
+    '打穿': 'hit_screen'
+    '抱紧': 'hold_tight'
+    '抱大腿': 'hug_leg'
+    '胡桃啃': 'hutao_bite'
+    '不文明': 'incivilization'
+    '采访': 'interview'
+    '急急国王': 'jiji_king'
+    '啾啾': 'jiujiu'
+    '跳': 'jump'
+    '万花筒': 'kaleidoscope'
+    '指': 'karyl_point'
+    '远离': 'keep_away'
+    '踢球': 'kick_ball'
+    '卡比锤': 'kirby_hammer'
+    '可莉吃': 'klee_eat'
+    '敲': 'knock'
+    '偷学': 'learn'
+    '横跳': 'left_right_jump'
+    '让我进去': 'let_me_in'
+    '无穷小': 'lim_x_0'
+    '听音乐': 'listen_music'
+    '小天使': 'little_angel'
+    '加载中': 'loading'
+    '看扁': 'look_flat'
+    '看图标': 'look_this_icon'
+    '循环': 'loop'
+    '寻狗启示': 'lost_dog'
+    '永远爱你': 'love_you'
+    '交个朋友': 'make_friend'
+    '结婚申请': 'marriage'
+    '上香': 'mourning'
+    '我朋友说': 'my_friend'
+    '我老婆': 'my_wife'
+    '需要': 'need'
+    '无响应': 'no_response'
+    '请假条': 'note_for_leave'
+    'out': 'out'
+    '加班': 'overtime'
+    '这像画吗': 'paint'
+    '小画家': 'painter'
+    '拍': 'pat'
+    '完美': 'perfect'
+    '摸': 'petpet'
+    '捏': 'pinch'
+    '顶': 'play'
+    '玩游戏': 'play_game'
+    '一起玩': 'play_together'
+    '出警': 'police'
+    '警察': 'police1'
+    '搞': 'pound'
+    '打印': 'printing'
+    '舔': 'prpr'
+    '打拳': 'punch'
+    '举': 'raise_image'
+    '看书': 'read_book'
+    '怒撕': 'rip_angrily'
+    '诈尸': 'rise_dead'
+    '滚': 'roll'
+    '三维旋转': 'rotate_3d'
+    '快逃': 'run_away'
+    '安全感': 'safe_sense'
+    '挠头': 'scratch_head'
+    '刮刮乐': 'scratchcard'
+    '震惊': 'shock'
+    '坐的住': 'sit_still`'
+    '砸': 'smash'
+    '踩': 'step_on'
+    '炖': 'stew'
+    '科目三': 'subject3'
+    '吸': 'suck'
+    '精神支柱': 'support'
+    '回旋转': 'swirl_turn'
+    '嘲讽': 'taunt'
+    '唐可可举牌': 'tankuku_raisesign'
+    '讲课': 'teach'
+    '拿捏': 'tease'
+    '望远镜': 'telescope'
+    '想什么': 'think_what'
+    '这是鸡': 'this_chicken'
+    '丢': 'throw'
+    '抛': 'throw_gif'
+    '捶': 'thump'
+    '锤爆': 'thump_wildly'
+    '紧贴': 'tightly'
+    '一起': 'together'
+    '嘲笑': 'tom_tease'
+    '上坟': 'tomb_yeah'
+    '恍惚': 'trance'
+    '转': 'turn'
+    '搓': 'twist'
+    '震动': 'vibrate'
+    '墙纸': 'wallpaper'
+    '胡桃平板': 'walnut_pad'
+    '胡桃放大': 'walnut_zoom'
+    '洗衣机': 'washer'
+    '波纹': 'wave'
+    '我想上的': 'what_I_want_to_do'
+    '最想要的东西': 'what_he_wants'
+    '为什么@我': 'why_at_me'
+    '为什么要有手': 'why_have_hands'
+    '风车转': 'windmill_turn'
+    '木鱼': 'wooden_fish'
+    '膜拜': 'worship'
+    '致电': 'you_should_call'
+  TwoPicEwo:
+    '揍': 'beat_up'
+    '击剑': 'fencing'
+    '亲': 'kiss'
+    '贴贴': 'rub'
