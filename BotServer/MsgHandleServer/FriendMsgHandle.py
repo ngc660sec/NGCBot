@@ -84,12 +84,12 @@ class FriendMsgHandle:
             elif judgeEqualListWord(content, self.showBlackGhKeyWords) and sender in self.Administrators:
                 # self.showBlackGh(sender, )
                 Thread(target=self.showBlackGh, args=(sender,)).start()
+                # 超级管理员发消息转发给好友
+            elif judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
+                Thread(target=self.sendFriendMsg, args=(content,)).start()
             # Ai对话 Ai锁功能 对超管没用
             elif self.aiLock or sender in self.Administrators:
                 Thread(target=self.getAiMsg, args=(content, sender)).start()
-            # 超级管理员发消息转发给好友
-            if judgeSplitAllEqualWord(content, self.sendMsgKeyWords):
-                Thread(target=self.sendFriendMsg, args=(content,)).start()
             # 好友消息转发给超级管理员 超级管理员不触发
             if sender not in self.Administrators and self.msgForwardAdmin:
                 Thread(target=self.forwardMsgToAdministrators, args=(sender, content)).start()
