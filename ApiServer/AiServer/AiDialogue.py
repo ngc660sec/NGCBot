@@ -582,7 +582,7 @@ class AiDialogue:
             if aiModule == 'deepSeek':
                 result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
             if aiModule == 'ollama':
-                result, self.deepSeekMessages = self.getOllama(content, self.deepSeekMessages)
+                result, self.ollamaMessages = self.getOllama(content, self.deepSeekMessages)
             if aiModule == 'siliconFlow':
                 result, self.siliconFlowMessages = self.getSiliconFlow(content, self.siliconFlowMessages)
             if aiModule == 'douBao':
