@@ -125,13 +125,14 @@ class ApiMainServer:
         """
         return Ps.Ha.getDog()
 
-    def getAi(self, content):
+    def getAi(self, content, sender):
         """
         Ai对话调用接口
         :param content:
+        :param sender: 群聊room@wxId 私聊 wxId
         :return:
         """
-        return self.Ad.getAi(content)
+        return self.Ad.getAi(content, sender)
 
     def getAiPic(self, content):
         """
