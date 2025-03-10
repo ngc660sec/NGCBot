@@ -28,7 +28,7 @@ class FriendMsgHandle:
         self.Ad = AiDialogue()
         self.Dms = DbMainServer()
         configData = Cs.returnConfigData()
-        
+
         # 超级管理员列表
         self.Administrators = configData['SystemConfig']['Administrators']
         # 功能关键词配置
@@ -38,7 +38,6 @@ class FriendMsgHandle:
         self.showPushRoomKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['ShowPushRoomKeyWords']
         self.showBlackGhKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['ShowBlackGhKeyWords']
 
-        
         # 系统配置
         self.aiLock = configData['SystemConfig']['AiLock']
         self.acceptMoneyLock = configData['SystemConfig']['AcceptMoneyLock']
@@ -46,7 +45,6 @@ class FriendMsgHandle:
         self.msgForwardAdmin = configData['SystemConfig']['MsgForwardAdmin']
         self.acceptFriendMsg = configData['SystemConfig']['AcceptFriendConfig']['AcceptFriendMsg']
 
-        
         # 自定义配置
         self.roomKeyWords = configData['JoinGroupConfig']['JoinGroupKeyWordsConfig']
         self.customKeyWords = configData['CustomConfig']
@@ -269,7 +267,7 @@ class FriendMsgHandle:
         :param sender:
         :return:
         """
-        aiMsg = self.Ad.getAi(content)
+        aiMsg = self.Ad.getAi(content, sender)
         if aiMsg:
             self.wcf.send_text(aiMsg, receiver=sender)
             return

@@ -15,13 +15,14 @@ class PointFunction:
         self.Ams = ApiMainServer()
         self.Dms = DbMainServer()
         configData = Cs.returnConfigData()
-        
+
         # 积分功能关键词配置
         self.aiWenKeyWords = configData['FunctionConfig']['PointFunctionConfig']['AiWenIpConfig']['AiWenKeyWords']
         self.md5KeyWords = configData['FunctionConfig']['PointFunctionConfig']['Cmd5Config']['Cmd5KeyWords']
         self.signKeyWord = configData['FunctionConfig']['PointFunctionConfig']['SignConfig']['SignKeyWord']
         self.aiPicKeyWords = configData['FunctionConfig']['PointFunctionConfig']['AiPicConfig']['AiPicKeyWords']
-        self.searchPointKeyWord = configData['FunctionConfig']['PointFunctionConfig']['SearchPointConfig']['SearchPointKeyWords']
+        self.searchPointKeyWord = configData['FunctionConfig']['PointFunctionConfig']['SearchPointConfig'][
+            'SearchPointKeyWords']
 
     def mainHandle(self, message):
         content = message.content.strip()
@@ -88,7 +89,8 @@ class PointFunction:
             # Ai对话
             elif judgeAtMe(self.wcf.self_wxid, content, atUserLists) and not judgeOneEqualListWord(noAtMsg,
                                                                                                    self.aiPicKeyWords):
-                aiMsg = self.Ams.getAi(noAtMsg)
+                chatSender = f'room@{sender}'
+                aiMsg = self.Ams.getAi(noAtMsg, chatSender)
                 if aiMsg:
                     self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}',
                                        receiver=roomId, aters=sender)

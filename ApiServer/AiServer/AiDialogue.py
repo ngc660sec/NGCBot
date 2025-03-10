@@ -91,15 +91,7 @@ class AiDialogue:
         }
 
         # 初始化消息列表
-        self.openAiMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
-        self.qianFanMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
-        self.hunYuanMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
-        self.kimiMessages = [{"Role": "system", "Content": f'{self.systemAiRole}'}]
-        self.bigModelMessages = [{"role": "system", "Content": f'{self.systemAiRole}'}]
-        self.deepSeekMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
-        self.ollamaMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
-        self.siliconFlowMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
-        self.douBaoMessages = [{"role": "system", "content": f'{self.systemAiRole}'}]
+        self.userChatDicts = {}
 
         # AI优先级配置
         self.aiPriority = configData['AiConfig']['AiPriority']
@@ -558,39 +550,45 @@ class AiDialogue:
             op(f'[-]: 豆包文生图模型出现错误, 错误信息: {e}')
             return None
 
-    def getAi(self, content):
+    def getAi(self, content, sender):
         """
         处理优先级
         :param content:
         :return:
         """
+        # 处理会话
+        if sender not in self.userChatDicts:
+            self.userChatDicts[sender] = [{"role": "system", "content": f'{self.systemAiRole}'}]
         result = ''
         for i in range(1, 11):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
-                result, self.hunYuanMessages = self.getHunYuanAi(content, self.hunYuanMessages)
+                result, self.userChatDicts[sender] = self.getHunYuanAi(content, self.userChatDicts[sender])
             if aiModule == 'sparkAi':
                 result = self.getSparkAi(content)
             if aiModule == 'openAi':
-                result, self.openAiMessages = self.getOpenAi(content, self.openAiMessages)
+                result, self.userChatDicts[sender] = self.getOpenAi(content, self.userChatDicts[sender])
             if aiModule == 'qianFan':
-                result, self.qianFanMessages = self.getQianFanAi(content, self.qianFanMessages)
+                result, self.userChatDicts[sender] = self.getQianFanAi(content, self.userChatDicts[sender])
             if aiModule == 'kiMi':
-                result, self.kimiMessages = self.getKiMiAi(content, self.kimiMessages)
+                result, self.userChatDicts[sender] = self.getKiMiAi(content, self.userChatDicts[sender])
             if aiModule == 'bigModel':
-                result, self.bigModelMessages = self.getBigModel(content, self.bigModelMessages)
+                result, self.userChatDicts[sender] = self.getBigModel(content, self.userChatDicts[sender])
             if aiModule == 'deepSeek':
-                result, self.deepSeekMessages = self.getDeepSeek(content, self.deepSeekMessages)
+                result, self.userChatDicts[sender] = self.getDeepSeek(content, self.userChatDicts[sender])
             if aiModule == 'ollama':
-                result, self.ollamaMessages = self.getOllama(content, self.deepSeekMessages)
+                result, self.userChatDicts[sender] = self.getOllama(content, self.userChatDicts[sender])
             if aiModule == 'siliconFlow':
-                result, self.siliconFlowMessages = self.getSiliconFlow(content, self.siliconFlowMessages)
+                result, self.userChatDicts[sender] = self.getSiliconFlow(content, self.userChatDicts[sender])
             if aiModule == 'douBao':
-                result, self.douBaoMessages = self.getDouBao(content, self.douBaoMessages)
+                result, self.userChatDicts[sender] = self.getDouBao(content, self.userChatDicts[sender])
             if not result:
                 continue
             else:
                 break
+        if len(self.userChatDicts[sender]) == 21:
+            del self.userChatDicts[sender][1]
+            del self.userChatDicts[sender][2]
         return result
 
     def getPicAi(self, content):
