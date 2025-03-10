@@ -80,14 +80,14 @@ class AiDialogue:
             'SiliconFlowModel': configData['AiConfig']['SiliconFlowConfig']['SiliconFlowModel']
         }
         # 豆包配置
-        self.DouBaoConfig = {
-            'DouBaoApi': configData['AiConfig']['DouBaoConfig']['DouBaoApi'],
-            'DouBaoKey': configData['AiConfig']['DouBaoConfig']['DouBaoKey'],
-            'DouBaoModel': configData['AiConfig']['DouBaoConfig']['DouBaoModel'],
-            'DouBaoAk': configData['AiConfig']['DouBaoConfig']['DouBaoAk'],
-            'DouBaoSk': configData['AiConfig']['DouBaoConfig']['DouBaoSk'],
-            'DouBaoReqKey': configData['AiConfig']['DouBaoConfig']['DouBaoReqKey'],
-            'DouBaoPicModelVersion': configData['AiConfig']['DouBaoConfig']['DouBaoPicModelVersion']
+        self.VolcengineConfig = {
+            'VolcengineApi': configData['AiConfig']['VolcengineConfig']['VolcengineApi'],
+            'VolcengineKey': configData['AiConfig']['VolcengineConfig']['VolcengineKey'],
+            'VolcengineModel': configData['AiConfig']['VolcengineConfig']['VolcengineModel'],
+            'VolcengineAk': configData['AiConfig']['VolcengineConfig']['VolcengineAk'],
+            'VolcengineSk': configData['AiConfig']['VolcengineConfig']['VolcengineSk'],
+            'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
+            'VolcenginePicModelVersion': configData['AiConfig']['VolcengineConfig']['VolcenginePicModelVersion']
         }
 
         # 初始化消息列表
@@ -193,7 +193,7 @@ class AiDialogue:
         messages.append({"role": "user", "content": content})
         if not self.QianfanAiConfig.get('QfAccessKey') or not self.QianfanAiConfig.get('QfSecretKey'):
             op(f'[-]: 千帆大模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
         def getAccessToken():
             try:
@@ -221,15 +221,15 @@ class AiDialogue:
                 resp = requests.post(url, json=data)
                 result = resp.json()['result']
                 messages.append({"role": "assistant", "content": result})
-                return result, messages
+                return result, [{"role": "system", "content": f'{self.systemAiRole}'}]
             except Exception as e:
                 op(f'[-]: 请求千帆模型AccessToken出现错误, 错误信息: {e}')
-                return None, messages
+                return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
         access_token = getAccessToken()
         if not access_token:
             op(f'[-]: 获取千帆模型AccessToken失败, 请检查千帆配置!!!')
-            return None, messages
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
         aiContent = getAiContent(access_token, messages)
         if len(messages) == 21:
@@ -351,7 +351,7 @@ class AiDialogue:
                 del messages[2]
             if content:
                 return content, messages
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         except TencentCloudSDKException as e:
             op(f'[-]: 腾讯混元Ai对话接口出现错误, 错误信息: {e}')
             return None, messages
@@ -360,7 +360,7 @@ class AiDialogue:
         op(f'[*]: 正在调用KiMi对话接口... ...')
         if not self.KiMiConfig.get('KiMiKey'):
             op(f'[-]: KiMi模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         data = {
             "model": self.KiMiConfig.get('KiMiModel'),
@@ -394,7 +394,7 @@ class AiDialogue:
         op(f'[*]: 正在调用BigModel对话接口... ...')
         if not self.BigModelConfig.get('BigModelKey'):
             op(f'[-]: BigModel模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         data = {
             "model": self.BigModelConfig.get('BigModelModel'),
@@ -427,7 +427,7 @@ class AiDialogue:
         op(f'[*]: 正在调用DeepSeek对话接口... ...')
         if not self.DeepSeekConfig.get('DeepSeekKey'):
             op(f'[-]: DeepSeek模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         data = {
             "model": self.DeepSeekConfig.get('DeepSeekModel'),
@@ -454,7 +454,7 @@ class AiDialogue:
         op(f'[*]: 正在调用Ollama本地对话接口... ...')
         if not self.OllamaConfig:
             op(f'[-]: Ollama本地模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         data = {
             "model": self.OllamaConfig.get('OllamaModel'),
@@ -468,13 +468,13 @@ class AiDialogue:
             return assistant_content, []
         except Exception as e:
             op(f'[-]: Ollama本地对话接口出现错误, 错误信息: {e}')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
     def getSiliconFlow(self, content, messages):
         op(f'[*]: 正在调用硅基流动对话接口... ...')
         if not self.SiliconFlowConfig.get('SiliconFlowKey'):
             op(f'[-]: 硅基流动模型未配置, 请检查相关配置!!!')
-            return None, []
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         data = {
             "model": self.SiliconFlowConfig.get('SiliconFlowModel'),
@@ -498,23 +498,23 @@ class AiDialogue:
             op(f'[-]: 硅基对话接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
-    def getDouBao(self, content, messages):
-        op(f'[*]: 正在调用豆包文本大模型接口... ...')
-        if not self.DouBaoConfig.get('DouBaoKey'):
-            op(f'[-]: 豆包文本大模型接口未配置')
-            return None, self.douBaoMessages[0]
+    def getVolcengine(self, content, messages):
+        op(f'[*]: 正在调用火山引擎文本大模型接口... ...')
+        if not self.VolcengineConfig.get('VolcengineKey'):
+            op(f'[-]: 火山引擎文本大模型接口未配置')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         headers = {
-            "Authorization": f"{self.DouBaoConfig.get('DouBaoKey')}",
+            "Authorization": f"{self.VolcengineConfig.get('VolcengineKey')}",
             "Content-Type": "application/json"
         }
         data = {
-            "model": self.DouBaoConfig.get('DouBaoModel'),
+            "model": self.VolcengineConfig.get('VolcengineModel'),
             "messages": messages,
             "stream": False
         }
         try:
-            resp = requests.post(self.DouBaoConfig.get('DouBaoApi'), headers=headers, json=data)
+            resp = requests.post(self.VolcengineConfig.get('VolcengineApi'), headers=headers, json=data)
             jsonData = resp.json()
             assistant_content = jsonData.get('choices')[0].get('message').get('content')
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
@@ -523,20 +523,20 @@ class AiDialogue:
                 del messages[2]
             return assistant_content, messages
         except Exception as e:
-            op(f'[-]: 豆包文本大模型接口出现错误, 错误信息: {e}')
+            op(f'[-]: 火山引擎文本大模型接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
-    def getDouBaoPic(self, content):
-        op(f'[*]: 正在调用豆包文生图模型... ...')
-        if not self.DouBaoConfig.get('DouBaoAk'):
-            op(f'[-]: 豆包文生图模型未配置, 请检查相关配置!!!')
+    def getVolcenginePic(self, content):
+        op(f'[*]: 正在调用火山引擎文生图模型... ...')
+        if not self.VolcengineConfig.get('VolcengineAk'):
+            op(f'[-]: 火山引擎文生图模型未配置, 请检查相关配置!!!')
             return None
         visual_service = VisualService()
-        visual_service.set_ak(self.DouBaoConfig.get('DouBaoAk'))
-        visual_service.set_sk(self.DouBaoConfig.get('DouBaoSk'))
+        visual_service.set_ak(self.VolcengineConfig.get('VolcengineAk'))
+        visual_service.set_sk(self.VolcengineConfig.get('VolcengineSk'))
         data = {
-            'req_key': self.DouBaoConfig.get('DouBaoReqKey'),
-            'model_version': self.DouBaoConfig.get('DouBaoPicModelVersion'),
+            'req_key': self.VolcengineConfig.get('VolcengineReqKey'),
+            'model_version': self.VolcengineConfig.get('VolcenginePicModelVersion'),
             'prompt': content,
         }
         try:
@@ -547,7 +547,7 @@ class AiDialogue:
                 f.write(base64.b64decode(binaryDataBase64))
             return picPath
         except Exception as e:
-            op(f'[-]: 豆包文生图模型出现错误, 错误信息: {e}')
+            op(f'[-]: 火山引擎文生图模型出现错误, 错误信息: {e}')
             return None
 
     def getAi(self, content, sender):
@@ -580,8 +580,8 @@ class AiDialogue:
                 result, self.userChatDicts[sender] = self.getOllama(content, self.userChatDicts[sender])
             if aiModule == 'siliconFlow':
                 result, self.userChatDicts[sender] = self.getSiliconFlow(content, self.userChatDicts[sender])
-            if aiModule == 'douBao':
-                result, self.userChatDicts[sender] = self.getDouBao(content, self.userChatDicts[sender])
+            if aiModule == 'Volcengine':
+                result, self.userChatDicts[sender] = self.getVolcengine(content, self.userChatDicts[sender])
             if not result:
                 continue
             else:
@@ -604,8 +604,8 @@ class AiDialogue:
                 picPath = self.getSparkPic(content)
             if aiPicModule == 'qianFan':
                 picPath = self.getQianFanPic(content)
-            if aiPicModule == 'douBao':
-                picPath = self.getDouBaoPic(content)
+            if aiPicModule == 'Volcengine':
+                picPath = self.getVolcenginePic(content)
             if not picPath:
                 continue
             else:
