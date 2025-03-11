@@ -43,17 +43,18 @@ AiConfig:
     3: 'sparkAi'
   # Ai角色配置
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
-  # 豆包配置
-  DouBaoConfig:
-    DouBaoApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
-    DouBaoKey: 'Bearer {key填这里，前面的Bearer保留}'
-    DouBaoModel: 'ep-'
+  # 火山引擎配置
+  VolcengineConfig:
+    # 文本对话设置 可以改为其它模型
+    VolcengineApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
+    VolcengineKey: 'Bearer {key填这里，前面的Bearer保留}'
+    VolcengineModel: 'ep-'
     # 文生图需要填写以下内容 不使用文生图不需要填写
     ## ReqKey以及ModelVersion需要根据火山文档填写
-    DouBaoAk: '火山AK'
-    DouBaoSk: '火山SK'
-    DouBaoReqKey: 'high_aes'
-    DouBaoPicModelVersion: 'anime_v1.3'
+    VolcengineAk: '火山AK'
+    VolcengineSk: '火山SK'
+    VolcengineReqKey: 'high_aes'
+    VolcenginePicModelVersion: 'anime_v1.3'
   # 硅基流动配置
   SiliconFlowConfig:
     SiliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
