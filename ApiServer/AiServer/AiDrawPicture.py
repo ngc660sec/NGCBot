@@ -180,7 +180,7 @@ class AiDrawPicture:
                 picPath = self.getSparkPic(content)
             if aiPicModule == 'qianFan':
                 picPath = self.getQianFanPic(content)
-            if aiPicModule == 'Volcengine':
+            if aiPicModule == 'volcengine':
                 picPath = self.getVolcenginePic(content)
             if not picPath:
                 continue

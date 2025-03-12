@@ -28,7 +28,7 @@ AiConfig:
   AiPriority:
     1: 'deepSeek'
     2: 'siliconFlow'
-    3: 'Volcengine'
+    3: 'volcengine'
     4: 'bigModel'
     5: 'kiMi'
     6: 'hunYuan'
@@ -38,7 +38,7 @@ AiConfig:
     10: 'qianFan'
   # 画图Ai优先级
   AiPicPriority:
-    1: 'Volcengine'
+    1: 'volcengine'
     2: 'qianFan'
     3: 'sparkAi'
   # Ai角色配置

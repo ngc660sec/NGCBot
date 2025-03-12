@@ -448,7 +448,7 @@ class AiDialogue:
                 result, self.userChatDicts[sender] = self.getOllama(content, self.userChatDicts[sender])
             if aiModule == 'siliconFlow':
                 result, self.userChatDicts[sender] = self.getSiliconFlow(content, self.userChatDicts[sender])
-            if aiModule == 'Volcengine':
+            if aiModule == 'volcengine':
                 result, self.userChatDicts[sender] = self.getVolcengine(content, self.userChatDicts[sender])
             if not result:
                 continue
