@@ -28,7 +28,7 @@ AiConfig:
   AiPriority:
     1: 'deepSeek'
     2: 'siliconFlow'
-    3: 'douBao'
+    3: 'Volcengine'
     4: 'bigModel'
     5: 'kiMi'
     6: 'hunYuan'
@@ -38,7 +38,7 @@ AiConfig:
     10: 'qianFan'
   # 画图Ai优先级
   AiPicPriority:
-    1: 'douBao'
+    1: 'Volcengine'
     2: 'qianFan'
     3: 'sparkAi'
   # Ai角色配置
@@ -67,47 +67,45 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer {key填这里，前面的Bearer保留}'
+    DeepSeekKey: 'Bearer sk-0e350b5a9d6a4b9d90ca84cd7a14634d'
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer {key填这里，前面的Bearer保留}'
+    BigModelKey: 'Bearer 57a7c73f7066e28125a08ed46dc03a5a'
     BigModelModel: 'glm-4-plus'
   # 月之暗面模型配置
   KiMiConfig:
     KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
-    KiMiKey: ''
+    KiMiKey: 'sk-wVRHSdloMdybMglFKJJVsn0Xs3Nni6QIg5jKeLWq9sduOr70'
     KiMiModel: 'moonshot-v1-8k'
   # 混元模型配置
   HunYuanConfig:
-    # 腾讯云SecretId
-    HunYuanSecretId: ''
-    # 腾讯云SecretKey
-    HunYuanSecretKey: ''
+    HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
+    HunYuanKey: 'sk-zNDoCP5F38XiZGDDrlSof28oeLwRxHQGL1kXcVtw2rmRml0H'
     HunYuanModel: 'hunyuan-pro'
   # 千帆模型配置
   QianFanConfig:
     # 应用中的Api Key
-    QfAccessKey: ''
+    QfAccessKey: 'omcFWPHjq8h8T2iLwY13enq4'
     # 应用中的Secret Key
-    QfSecretKey: ''
+    QfSecretKey: 'GlC1gGvlLmHXXSAnKVls4NdoZArynMzS'
     # 应用中的应用ID
     QfAppid: '46224165'
     # 千帆Ai作画Api 两个key是不一样的 不能通用
     # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
     # 应用中的Api Key
-    QfPicAccessKey: ''
+    QfPicAccessKey: 'mRatxOWiqbaLXHW0w2baLi9P'
     # 应用中的Secret Key
-    QfPicSecretKey: ''
+    QfPicSecretKey: 'ysr1ad6wwDhnRQPZZiiH65lBQY9ZJh9O'
     # 应用中的应用ID
-    QfPicAppid: ''
+    QfPicAppid: '92991265'
   # OpenAi模型配置
   OpenAiConfig:
     # Open_Ai接口
     OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
     # OpenAi Key
-    OpenAiKey: 'Bearer {key填这里，前面的Bearer保留}'
+    OpenAiKey: 'Bearer sk-vQKpy0YdBiFxGAjJEbD71a3b7d78404c98A5B1828665DcB1'
     # 模型版本
     OpenAiModel: 'gpt-3.5-turbo'
   # 星火模型配置
@@ -115,29 +113,29 @@ AiConfig:
     # 模型Url
     SparkAiApi: 'wss://spark-api.xf-yun.com/v4.0/chat'
     # 模型Secret
-    SparkAiSecret: ''
+    SparkAiSecret: 'MmM5OTk0NzA5NjNiMGUyN2Q3ZGMyN2I0'
     # 模型版本
     SparkDomain: '4.0Ultra'
     # 模型Key
-    SparkAiKey: ''
+    SparkAiKey: '61d3a8781217dff47f14ba31e65af6dd'
     # 模型Appid
-    SparkAiAppid: ''
+    SparkAiAppid: 'b1ea4bca'
 
 # 所有Key配置 [不包含Ai Key配置]
 KeyConfig:
   # Cmd5配置
   Cmd5Config:
-    Cmd5Email: ''
-    Cmd5Key: ''
+    Cmd5Email: 'qq58527cdb65557f09a697fb782a6f09cf'
+    Cmd5Key: 'f839d51c86cfed5fa3f5dbe691a65c48'
   # 埃文配置
   AiWenConfig:
-    AiWenKey: ''
+    AiWenKey: 'BM9hbquMNsLvQ2x1IodXS9B2M4JOsHzOAxattaH11x3shDLx70qBPfTT7eeI4Dh9'
   # 高德配置
   GaoDeConfig:
-    GaoDeKey: ''
+    GaoDeKey: '56e0f7695422c119c00ea46410a1d436'
   # Dp接口配置
   DpConfig:
-    DpKey: ''
+    DpKey: 'a78eff8703b1061b1c4a7220c1082d33'
 
 # 定时推送配置
 ScheduledConfig:
@@ -276,7 +274,7 @@ FunctionConfig:
     # 抖音视频去水印 [需要配置Dp Key]
     DyVideoAnalysisConfig:
       DyVideoAnalysisKeyWords:
-        - '复制打开抖音'
+        - 'v.douyin.com'
         - '复制打开快手'
       DyVideoAnalysisAPi: 'https://api.dudunas.top/api/qushuiyin?AppSecret={}&text={}'
     # 视频号解析 [需要配置Dp Key]
@@ -356,6 +354,13 @@ FunctionConfig:
       StartGameKeyWord: '看图猜成语'
       StopGameKeyWord: '结束猜成语'
       GameRound: 5
+    # 成语接龙
+    IdiomSolitaireConfig:
+      IdiomSolitaireApi: 'https://api.dudunas.top/api/chengyujielong/'
+      StartGameKeyWord: '成语接龙'
+      StopGameKeyWord: '结束接龙'
+      GameRound: 5
+
 
   # 群聊功能配置
   RoomConfig:

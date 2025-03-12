@@ -1,4 +1,5 @@
 from BotServer.BotFunction.InterfaceFunction import *
+import FileCache.FileCacheServer as Fcs
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 from threading import Timer
@@ -28,6 +29,24 @@ class idiomGame:
         self.timerDict = {}
         # 游戏轮数
         self.gameRound = configData['FunctionConfig']['GameFunctionConfig']['IdiomGameConfig']['GameRound']
+
+    def downloadFile(self, url, savePath):
+        """
+        通用下载文件函数
+        :param url:
+        :param savePath:
+        :return:
+        """
+        try:
+            content = requests.get(url, timeout=30, verify=True).content
+            if len(content) < 200:
+                return None
+            with open(savePath, mode='wb') as f:
+                f.write(content)
+            return savePath
+        except Exception as e:
+            op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
+            return None
 
     def clearTimer(self, roomId):
         """

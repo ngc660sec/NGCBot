@@ -1,4 +1,5 @@
 from ApiServer.AiServer.AiDialogue import AiDialogue
+from ApiServer.AiServer.AiDrawPicture import AiDrawPicture
 import ApiServer.pluginServer as Ps
 
 
@@ -10,6 +11,7 @@ class ApiMainServer:
         """
         # Ai对象实例化
         self.Ad = AiDialogue()
+        self.Adp = AiDrawPicture()
 
     def getMusic(self, musicName):
         """
@@ -129,7 +131,7 @@ class ApiMainServer:
         """
         Ai对话调用接口
         :param content:
-        :param sender: 群聊room@wxId 私聊 wxId
+        :param sender: 发送者 群聊中则是room@+sender 好友私聊则是 sender
         :return:
         """
         return self.Ad.getAi(content, sender)
@@ -139,7 +141,7 @@ class ApiMainServer:
         Ai图像生成调用接口
         :return:
         """
-        return self.Ad.getPicAi(content)
+        return self.Adp.getPicAi(content)
 
     def getEmoticon(self, avatarPathList, memeKey=None):
         """

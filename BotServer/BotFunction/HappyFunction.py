@@ -75,7 +75,7 @@ class HappyFunction:
                         f'@{getIdName(self.wcf, sender, roomId)} 摸鱼日历接口出现错误, 请联系超管查看控制台输出日志 ~~~',
                         receiver=roomId, aters=sender)
                     return
-                self.wcf.send_file(fishPath, receiver=roomId)
+                self.wcf.send_image(fishPath, receiver=roomId)
 
             # 疯狂星期四
             elif judgeEqualListWord(content, self.kfcKeyWords):
