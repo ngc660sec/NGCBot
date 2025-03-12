@@ -1,4 +1,5 @@
 from ApiServer.gameServer.idiomGame import idiomGame
+from ApiServer.gameServer.idiomSolitaireGame import idiomSolitaireGame
 
 """
 需要传wcf到此处的接口
@@ -12,3 +13,4 @@ class GameServer:
         """
         self.wcf = wcf
         self.iG = idiomGame(wcf)
+        self.iSG = idiomSolitaireGame(wcf)

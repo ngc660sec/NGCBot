@@ -67,6 +67,8 @@ class idiomGame:
             resp = requests.get(self.idiomApi.format(self.idiomKey), timeout=30)
             jsonData = resp.json()
             result = jsonData.get('result')
+            savePath = f'{Fcs.returnPicCacheFolder()}/{int(time.time() * 1000)}.jpg'
+            imgPath = self.downloadFile(result.get('imglink'), savePath)
             if result:
                 # 重置游戏数据，包括时间
                 self.GameSession[roomId] = {
@@ -75,7 +77,7 @@ class idiomGame:
                     'jieshi': result.get('jieshi'),
                     'chuchu': result.get('chuchu'),
                     'lizi': result.get('lizi'),
-                    'imglink': result.get('imglink'),
+                    'imglink': imgPath,
                     'errorNumber': 0,
                     'time': time.time(),  # 每次获取新数据时重置时间
                     'active': True,

@@ -18,3 +18,5 @@ class GameFunction:
         if msgType == 1:
             # 看图猜成语游戏
             Thread(target=self.Gs.iG.mainHandle, args=(message,)).start()
+            # 成语接龙游戏
+            Thread(target=self.Gs.iSG.mainHandle, args=(message, )).start()

@@ -67,37 +67,37 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer sk-0e350b5a9d6a4b9d90ca84cd7a14634d'
+    DeepSeekKey: 'Bearer sk-'
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer 57a7c73f7066e28125a08ed46dc03a5a'
+    BigModelKey: 'Bearer '
     BigModelModel: 'glm-4-plus'
   # 月之暗面模型配置
   KiMiConfig:
     KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
-    KiMiKey: 'sk-wVRHSdloMdybMglFKJJVsn0Xs3Nni6QIg5jKeLWq9sduOr70'
+    KiMiKey: 'sk-'
     KiMiModel: 'moonshot-v1-8k'
   # 混元模型配置
   HunYuanConfig:
     HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
-    HunYuanKey: 'sk-zNDoCP5F38XiZGDDrlSof28oeLwRxHQGL1kXcVtw2rmRml0H'
+    HunYuanKey: 'sk-'
     HunYuanModel: 'hunyuan-pro'
   # 千帆模型配置
   QianFanConfig:
     # 应用中的Api Key
-    QfAccessKey: 'omcFWPHjq8h8T2iLwY13enq4'
+    QfAccessKey: ''
     # 应用中的Secret Key
-    QfSecretKey: 'GlC1gGvlLmHXXSAnKVls4NdoZArynMzS'
+    QfSecretKey: ''
     # 应用中的应用ID
-    QfAppid: '46224165'
+    QfAppid: ''
     # 千帆Ai作画Api 两个key是不一样的 不能通用
     # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
     # 应用中的Api Key
-    QfPicAccessKey: 'mRatxOWiqbaLXHW0w2baLi9P'
+    QfPicAccessKey: ''
     # 应用中的Secret Key
-    QfPicSecretKey: 'ysr1ad6wwDhnRQPZZiiH65lBQY9ZJh9O'
+    QfPicSecretKey: ''
     # 应用中的应用ID
     QfPicAppid: '92991265'
   # OpenAi模型配置
@@ -105,7 +105,7 @@ AiConfig:
     # Open_Ai接口
     OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
     # OpenAi Key
-    OpenAiKey: 'Bearer sk-vQKpy0YdBiFxGAjJEbD71a3b7d78404c98A5B1828665DcB1'
+    OpenAiKey: 'Bearer sk-'
     # 模型版本
     OpenAiModel: 'gpt-3.5-turbo'
   # 星火模型配置
@@ -113,11 +113,11 @@ AiConfig:
     # 模型Url
     SparkAiApi: 'wss://spark-api.xf-yun.com/v4.0/chat'
     # 模型Secret
-    SparkAiSecret: 'MmM5OTk0NzA5NjNiMGUyN2Q3ZGMyN2I0'
+    SparkAiSecret: ''
     # 模型版本
     SparkDomain: '4.0Ultra'
     # 模型Key
-    SparkAiKey: '61d3a8781217dff47f14ba31e65af6dd'
+    SparkAiKey: ''
     # 模型Appid
     SparkAiAppid: 'b1ea4bca'
 
@@ -125,17 +125,17 @@ AiConfig:
 KeyConfig:
   # Cmd5配置
   Cmd5Config:
-    Cmd5Email: 'qq58527cdb65557f09a697fb782a6f09cf'
-    Cmd5Key: 'f839d51c86cfed5fa3f5dbe691a65c48'
+    Cmd5Email: ''
+    Cmd5Key: ''
   # 埃文配置
   AiWenConfig:
-    AiWenKey: 'BM9hbquMNsLvQ2x1IodXS9B2M4JOsHzOAxattaH11x3shDLx70qBPfTT7eeI4Dh9'
+    AiWenKey: ''
   # 高德配置
   GaoDeConfig:
-    GaoDeKey: '56e0f7695422c119c00ea46410a1d436'
+    GaoDeKey: ''
   # Dp接口配置
   DpConfig:
-    DpKey: 'a78eff8703b1061b1c4a7220c1082d33'
+    DpKey: ''
 
 # 定时推送配置
 ScheduledConfig:
