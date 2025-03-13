@@ -74,7 +74,7 @@ class AiDialogue:
             'SiliconFlowKey': configData['AiConfig']['SiliconFlowConfig']['SiliconFlowKey'],
             'SiliconFlowModel': configData['AiConfig']['SiliconFlowConfig']['SiliconFlowModel']
         }
-        # 豆包配置
+        # 火山配置
         self.VolcengineConfig = {
             'VolcengineApi': configData['AiConfig']['VolcengineConfig']['VolcengineApi'],
             'VolcengineKey': configData['AiConfig']['VolcengineConfig']['VolcengineKey'],
@@ -84,7 +84,12 @@ class AiDialogue:
             'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
             'VolcenginePicModelVersion': configData['AiConfig']['VolcengineConfig']['VolcenginePicModelVersion']
         }
-
+        # 通义配置
+        self.QwenConfig = {
+            'QwenApi': configData['AiConfig']['QwenConfig']['QwenApi'],
+            'QwenModel': configData['AiConfig']['QwenConfig']['QwenModel'],
+            'QwenKey': configData['AiConfig']['QwenConfig']['QwenKey'],
+        }
         # 初始化消息列表
         self.userChatDicts = {}
 
@@ -363,6 +368,12 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
     def getSiliconFlow(self, content, messages):
+        """
+        硅基流动
+        :param content:
+        :param messages:
+        :return:
+        """
         op(f'[*]: 正在调用硅基流动对话接口... ...')
         if not self.SiliconFlowConfig.get('SiliconFlowKey'):
             op(f'[-]: 硅基流动模型未配置, 请检查相关配置!!!')
@@ -391,6 +402,12 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
     def getVolcengine(self, content, messages):
+        """
+        火山引擎
+        :param content:
+        :param messages:
+        :return:
+        """
         op(f'[*]: 正在调用火山引擎文本大模型接口... ...')
         if not self.VolcengineConfig.get('VolcengineKey'):
             op(f'[-]: 火山引擎文本大模型接口未配置')
@@ -418,6 +435,40 @@ class AiDialogue:
             op(f'[-]: 火山引擎文本大模型接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
+    def getQwen(self, content, messages):
+        """
+        通义千问对话
+        :param content:
+        :param messages:
+        :return:
+        """
+        op(f'[*]: 正在调用通义千问大模型接口... ...')
+        if not self.QwenConfig.get('QwenKey'):
+            op(f'[-]: 通义千问接口未配置')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+        messages.append({"role": "user", "content": f'{content}'})
+        headers = {
+            "Authorization": f"{self.QwenConfig.get('QwenKey')}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": self.QwenConfig.get('QwenModel'),
+            "messages": messages,
+            "stream": False
+        }
+        try:
+            resp = requests.post(self.QwenConfig.get('QwenApi'), headers=headers, json=data)
+            jsonData = resp.json()
+            assistant_content = jsonData.get('choices')[0].get('message').get('content')
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
+        except Exception as e:
+            op(f'[-]: 通义千问接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
     def getAi(self, content, sender):
         """
         处理优先级
@@ -428,7 +479,7 @@ class AiDialogue:
         if sender not in self.userChatDicts:
             self.userChatDicts[sender] = [{"role": "system", "content": f'{self.systemAiRole}'}]
         result = ''
-        for i in range(1, 11):
+        for i in range(1, 12):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.userChatDicts[sender] = self.getHunYuanAi(content, self.userChatDicts[sender])
@@ -450,6 +501,8 @@ class AiDialogue:
                 result, self.userChatDicts[sender] = self.getSiliconFlow(content, self.userChatDicts[sender])
             if aiModule == 'volcengine':
                 result, self.userChatDicts[sender] = self.getVolcengine(content, self.userChatDicts[sender])
+            if aiModule == 'qwen':
+                result, self.userChatDicts[sender] = self.getQwen(content, self.userChatDicts[sender])
             if not result:
                 continue
             else:
@@ -467,7 +520,7 @@ if __name__ == '__main__':
     Ad = AiDialogue()
     # print(Ad.getPicAi('画一只布尔猫'))
     while 1:
-        print(Ad.getAi(input('>> ')))
+        print(Ad.getAi(input('>> '), '123'))
     # Ad.getAi(1)
     # while 1:
     #     content, messages = Ad.getHunYuanAi(input(), messages)

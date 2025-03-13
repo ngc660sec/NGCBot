@@ -39,12 +39,36 @@ class AiDrawPicture:
             'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
             'VolcenginePicModelVersion': configData['AiConfig']['VolcengineConfig']['VolcenginePicModelVersion']
         }
+        # 通义配置
+        self.QwenConfig = {
+            'QwenPicApi': configData['AiConfig']['QwenConfig']['QwenPicApi'],
+            'QwenPicModel': configData['AiConfig']['QwenConfig']['QwenPicModel'],
+            'QwenKey': configData['AiConfig']['QwenConfig']['QwenKey'],
+        }
 
         # 初始化消息列表
         self.userChatDicts = {}
 
         # AI画图优先级配置
         self.aiPicPriority = configData['AiConfig']['AiPicPriority']
+
+    def downloadFile(self, url, savePath):
+        """
+        通用下载文件函数
+        :param url:
+        :param savePath:
+        :return:
+        """
+        try:
+            content = requests.get(url, timeout=30, verify=True).content
+            if len(content) < 200:
+                return None
+            with open(savePath, mode='wb') as f:
+                f.write(content)
+            return savePath
+        except Exception as e:
+            op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
+            return None
 
     def getSparkPic(self, content):
         """
@@ -167,6 +191,74 @@ class AiDrawPicture:
             op(f'[-]: 火山引擎文生图模型出现错误, 错误信息: {e}')
             return None
 
+    def getQwenPic(self, content):
+        """
+        通义千问文生图
+        :param content:
+        :return:
+        """
+        op(f'[*]: 正在调用通义千问文生图模型... ...')
+        def getTaskStatus(taskId):
+            headers = {
+                'Authorization': self.QwenConfig.get('QwenKey')
+            }
+            taskApi = f'https://dashscope.aliyuncs.com/api/v1/tasks/{taskId}'
+            try:
+                resp = requests.get(taskApi, headers=headers)
+                jsonData = resp.json()
+                output = jsonData.get('output')
+                task_status = output.get('task_status')
+                if task_status == 'FAILED':
+                    return None
+                results = output.get('results')
+                actual_prompt = results[0].get('actual_prompt')
+                imgUrl = results[0].get('url')
+                if imgUrl:
+                    return imgUrl
+            except Exception:
+                return None
+        if not self.QwenConfig.get('QwenKey'):
+            op(f'[-]: 通义千问文生图模型未配置, 请检查相关配置!!!')
+            return None
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': self.QwenConfig.get('QwenKey'),
+            'X-DashScope-Async': 'enable'
+        }
+        data = {
+            'model': self.QwenConfig.get('QwenPicModel'),
+            'input': {
+                'prompt': content
+            },
+            'parameters': {
+                'size': '1024*1024',
+                'n': 1
+            }
+        }
+        try:
+            resp = requests.post(self.QwenConfig.get('QwenPicApi'), headers=headers, json=data)
+            jsonData = resp.json()
+            task_id = jsonData.get('output').get('task_id')
+            if not task_id:
+                return None
+            imgUrl = ''
+            for i in range(10):
+                imgUrl = getTaskStatus(task_id)
+                time.sleep(5)
+                if imgUrl:
+                    break
+            if not imgUrl:
+                return None
+            savePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+            imgPath = self.downloadFile(imgUrl, savePath)
+            if imgPath:
+                return imgPath
+            return None
+        except Exception as e:
+            op(f'[-]: 火山引擎文生图模型出现错误, 错误信息: {e}')
+            return None
+
+
     def getPicAi(self, content):
         """
         处理优先级
@@ -182,8 +274,14 @@ class AiDrawPicture:
                 picPath = self.getQianFanPic(content)
             if aiPicModule == 'volcengine':
                 picPath = self.getVolcenginePic(content)
+            if aiPicModule == 'qwen':
+                picPath = self.getQwenPic(content)
             if not picPath:
                 continue
             else:
                 break
         return picPath
+
+if __name__ == '__main__':
+    Adp = AiDrawPicture()
+    print(Adp.getPicAi('一只可爱的布尔猫'))

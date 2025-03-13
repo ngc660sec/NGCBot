@@ -36,13 +36,25 @@ AiConfig:
     8: 'openAi'
     9: 'sparkAi'
     10: 'qianFan'
+    11: 'qwen'
   # 画图Ai优先级
   AiPicPriority:
-    1: 'volcengine'
+    4: 'volcengine'
     2: 'qianFan'
     3: 'sparkAi'
+    1: 'qwen'
   # Ai角色配置
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
+  # 通义千问
+  QwenConfig:
+    QwenApi: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
+    QwenModel: 'qwen-plus'
+    QwenKey: 'Bearer {key填这里,大括号删了}'
+    # 通义AI画图配置
+    QwenPicApi: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis'
+    QwenPicModel: 'wanx2.1-t2i-turbo'
+    # 通义图文对话配置
+    QwenPicChatModel: 'qwen-vl-plus'
   # 火山引擎配置
   VolcengineConfig:
     # 文本对话设置 可以改为其它模型
@@ -189,11 +201,11 @@ JoinGroupConfig:
         # 卡片消息标题 最多两行
         title: '欢迎 ❤{}❤ 一起搞机'
         # 摘要 最多三行
-        digest: '【NGCBot V2.2】新版本来袭！全新功能！全新架构！自动化私域管理必备！'
+        digest: 'NGCBot 2.3震撼上线！新增游戏功能！优化游戏架构！新增多渠道Ai对话功能！'
         # 点击后跳转的URL
-        url: 'http://mp.weixin.qq.com/s?__biz=MzkyODMxODUwNQ==&amp;mid=2247493526&amp;idx=1&amp;sn=d0f7675929a314941ad3845769bafdcb&amp;chksm=c21832d0f56fbbc6c4451105df94e39283228e9f6bb69eae00888c4869f5b91e3703bd302e92&amp;mpshare=1&amp;scene=1&amp;srcid=0716KB1OiULdPNzLUXmMVVlV&amp;sharer_shareinfo=dd05c6b9c14d98dc6b745cbf673dabec&amp;sharer_shareinfo_first=24b3af78c3e815a698c81c03a49a0244#rd'
+        url: 'http://mp.weixin.qq.com/s?__biz=MzkyODMxODUwNQ==&amp;mid=2247494386&amp;idx=1&amp;sn=99f23a715f6274d9f96d5273cc54e1e7&amp;chksm=c37ae1446610337ae2964b99ff6c14f23b22f3dc7c196435eb10b9369ae6049c58811eb4eb8f&amp;scene=0&amp;xtrack=1#rd'
         # 缩略图的链接 到控制台输出拿
-        thumbUrl: 'https://mmbiz.qpic.cn/mmbiz_jpg/QABjQccnicQpAnrqNicQd9iaTIQg3TZia6nr3OaAJQS8bOMrdtFct30axbiaO3OTnULGjHpE0RQD0NmT76FWa5daiaZA/300?wxtype=jpeg&amp;wxfrom=401'
+        thumbUrl: 'https://mmbiz.qpic.cn/mmbiz_jpg/QABjQccnicQrEEJpHDTW1Js1zRtzAEnaPDhic0ew5HOTQM8aBlMTGAD3v0InogIwkY4S7ksHgHqrF4dt10v99Q2w/640?wxtype=jpeg&amp;wxfrom=0'
 
 # 功能配置
 FunctionConfig:

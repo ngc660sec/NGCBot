@@ -99,8 +99,6 @@ class RoomMsgHandle:
             self.AdminFunction(msg)
             # 娱乐功能 和 积分功能
             Thread(target=self.HappyFunction, args=(msg,)).start()
-            # 入群欢迎
-            Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
 
 
     def RoomMsgFunction(self, msg):
