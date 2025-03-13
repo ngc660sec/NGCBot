@@ -6,6 +6,26 @@ import time
 import os
 import re
 
+def getUserLabel(wcf, sender):
+    """
+    获取用户所属的标签列表
+    :param sender:
+    :return:
+    """
+    userInfo = wcf.query_sql("MicroMsg.db", f'SELECT * FROM Contact WHERE UserName ="{sender}"')[0]
+    labelLists = wcf.query_sql("MicroMsg.db", f"SELECT * FROM ContactLabel")
+    userLabelIds = userInfo.get('LabelIDList').split(',')
+    userLabels = []
+    for labelDict in labelLists:
+        labelId = labelDict.get('LabelId')
+        labelName = labelDict.get('LabelName')
+        for userLabelId in userLabelIds:
+            if not userLabelId:
+                continue
+            if int(userLabelId) == int(labelId):
+                userLabels.append(labelName)
+    return userLabelIds
+
 def getQuoteImageData(content):
     """
     提取引用图片消息的ID和 Type 以及 用户发送的内容
