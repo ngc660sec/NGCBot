@@ -336,8 +336,8 @@ class AiDialogue:
         }
         try:
             resp = requests.post(url=self.DeepSeekConfig.get('DeepSeekApi'), headers=headers, json=data, timeout=300)
-            json_data = resp.json()
-            assistant_content = json_data['choices'][0]['message']['content']
+            jsonData = resp.json()
+            assistant_content = jsonData['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
             if len(messages) == 21:
                 del messages[1]
