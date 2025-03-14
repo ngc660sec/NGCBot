@@ -11,14 +11,6 @@ class AiDrawPicture:
     def __init__(self):
         configData = Cs.returnConfigData()
         self.systemAiRole = configData['AiConfig']['SystemAiRule']
-        # 讯飞星火配置
-        self.SparkAiConfig = {
-            'SparkAiApi': configData['AiConfig']['SparkConfig']['SparkAiApi'],
-            'SparkAiAppid': configData['AiConfig']['SparkConfig']['SparkAiAppid'],
-            'SparkAiSecret': configData['AiConfig']['SparkConfig']['SparkAiSecret'],
-            'SparkAiKey': configData['AiConfig']['SparkConfig']['SparkAiKey'],
-            'SparkDomain': configData['AiConfig']['SparkConfig']['SparkDomain']
-        }
         # 百度千帆配置
         self.QianfanAiConfig = {
             'QfAccessKey': configData['AiConfig']['QianFanConfig']['QfAccessKey'],
@@ -73,22 +65,6 @@ class AiDrawPicture:
             return savePath
         except Exception as e:
             op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
-            return None
-
-    def getSparkPic(self, content):
-        """
-        星火大模型 图像生成
-        :param content:
-        :return:
-        """
-        op(f'[*]: 正在调用星火大模型图像生成接口... ...')
-        try:
-            res = sPa.main(content, self.SparkAiConfig.get('SparkAiAppid'), self.SparkAiConfig.get('SparkAiKey'),
-                           self.SparkAiConfig.get('SparkAiSecret'))
-            savePath = sPa.parser_Message(res)
-            return savePath
-        except Exception as e:
-            op(f'[-]: 星火大模型图像生成出现错误, 错误信息: {e}')
             return None
 
     def getQianFanPic(self, content):
@@ -302,10 +278,8 @@ class AiDrawPicture:
         :return:
         """
         picPath = ''
-        for i in range(1, 6):
+        for i in range(1, 5):
             aiPicModule = self.aiPicPriority.get(i)
-            if aiPicModule == 'sparkAi':
-                picPath = self.getSparkPic(content)
             if aiPicModule == 'qianFan':
                 picPath = self.getQianFanPic(content)
             if aiPicModule == 'volcengine':

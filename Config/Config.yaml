@@ -42,7 +42,6 @@ AiConfig:
     1: 'bigModel'
     2: 'volcengine'
     3: 'qianFan'
-    4: 'sparkAi'
     5: 'qwen'
   # Ai角色配置
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
