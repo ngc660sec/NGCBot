@@ -44,7 +44,7 @@ def getQuoteImageData(content):
                 return int(typeValue), int(srvId), titleValue
             return None, None, None
     except Exception:
-        return None, None, None
+        return 0, None, None
 
 
 def downloadQuoteImage(wcf, imageMsgId, extra):
