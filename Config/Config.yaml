@@ -222,8 +222,7 @@ FunctionConfig:
       PicApi:
         - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
         - 'https://cdn.seovx.com/?mom=302'
-        - 'https://api.mhimg.cn/api/girls_img/?type=img'
-        - 'https://api.mhimg.cn/api/Welfare_img/'
+        - 'https://api.s01s.cn/API/wsb/'
     # 视频功能配置
     VideoConfig:
       VideoKeyWords:
@@ -236,16 +235,9 @@ FunctionConfig:
         - 'http://api.yujn.cn/api/zzxjj.php'
         - 'https://api.yujn.cn/api/manzhan.php'
         - 'http://api.yujn.cn/api/rewu.php?type=video'
-        - 'http://api.ovoe.top/API/hbss.php'
-        - 'http://abc.gykj.asia/API/hbss.php'
-        - 'https://api.qtkj.love/api/hbss.php'
         - 'http://api.yujn.cn/api/hanfu.php?type=video'
-        - 'http://abc.gykj.asia/API/gzhf.php'
         - 'http://www.yujn.cn/api/heisis.php'
-        - 'http://api.yujn.cn/api/manyao.php?type=video'
-        - 'https://api.shenke.love/api/mnsp.php?msg=my&type=video'
         - 'http://api.yujn.cn/api/COS.php?type=video'
-        - 'http://abc.gykj.asia/API/ntCOS.php'
         - 'http://api.yujn.cn/api/jksp.php?type=video'
     # Kfc功能配置
     KfcConfig:
