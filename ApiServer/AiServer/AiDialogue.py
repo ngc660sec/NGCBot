@@ -156,9 +156,6 @@ class AiDialogue:
             op(f'[-]: 星火大模型接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
-
-
-
     def getQianFanAi(self, content, messages):
         """
         千帆模型 Ai对话
@@ -449,7 +446,8 @@ class AiDialogue:
         data = {
             "model": self.QwenConfig.get('QwenModel'),
             "messages": messages,
-            "stream": False
+            "stream": False,
+            "enable_search": True
         }
         try:
             resp = requests.post(self.QwenConfig.get('QwenApi'), headers=headers, json=data)
