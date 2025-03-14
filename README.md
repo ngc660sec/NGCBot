@@ -131,11 +131,11 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-安装完毕后你的 `WCF`版本应该是 `39.2.4.0`，请选择对应的微信进行下载
+安装完毕后你的 `WCF`版本应该是 `39.4.2.2`，请选择对应的微信进行下载
 
 - `wcferry==39.0.12.0`：[WeChatSetup-3.9.2.23.exe](https://github.com/ngc660sec/NGCBot/releases/download/V2.0-龙年贺岁版/WeChatSetup-3.9.2.23.exe)
 - `wcferry==39.2.4.0`：[WeChatSetup-3.9.10.27.exe](https://github.com/lich0821/WeChatFerry/releases/download/v39.2.4/WeChatSetup-3.9.10.27.exe)
-- `wcferry==39.4.2.1`：[WeChatSetup-3.9.12.17](https://github.com/lich0821/WeChatFerry/releases/download/v39.4.2/WeChatSetup-3.9.12.17.exe)
+- `wcferry==39.4.2.2`：[WeChatSetup-3.9.12.17](https://github.com/lich0821/WeChatFerry/releases/download/v39.4.2/WeChatSetup-3.9.12.17.exe)
 
 安装完毕后，启动`main.py`文件
 

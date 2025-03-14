@@ -12,7 +12,11 @@ def getUserLabel(wcf, sender):
     :param sender:
     :return:
     """
-    userInfo = wcf.query_sql("MicroMsg.db", f'SELECT * FROM Contact WHERE UserName ="{sender}"')[0]
+    userInfo = {}
+    userInfos = wcf.query_sql("MicroMsg.db", f'SELECT * FROM Contact WHERE UserName ="{sender}"')
+    if not userInfos:
+        return []
+    userInfo = userInfos[0]
     labelLists = wcf.query_sql("MicroMsg.db", f"SELECT * FROM ContactLabel")
     userLabelIds = userInfo.get('LabelIDList').split(',')
     userLabels = []
@@ -49,7 +53,7 @@ def getQuoteImageData(content):
 
 def downloadQuoteImage(wcf, imageMsgId, extra):
     """
-    下载图片
+    下载引用消息的图片
     :param wcf:
     :param imageMsgId:
     :param extra:
