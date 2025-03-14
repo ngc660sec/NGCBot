@@ -1,10 +1,3 @@
-from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
-from tencentcloud.common.profile.client_profile import ClientProfile
-from tencentcloud.hunyuan.v20230901 import hunyuan_client, models
-from tencentcloud.common.profile.http_profile import HttpProfile
-from sparkai.llm.llm import ChatSparkLLM, ChunkPrintHandler
-from sparkai.core.messages import ChatMessage
-from tencentcloud.common import credential
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 import requests
@@ -24,10 +17,8 @@ class AiDialogue:
         # 讯飞星火配置
         self.SparkAiConfig = {
             'SparkAiApi': configData['AiConfig']['SparkConfig']['SparkAiApi'],
-            'SparkAiAppid': configData['AiConfig']['SparkConfig']['SparkAiAppid'],
-            'SparkAiSecret': configData['AiConfig']['SparkConfig']['SparkAiSecret'],
             'SparkAiKey': configData['AiConfig']['SparkConfig']['SparkAiKey'],
-            'SparkDomain': configData['AiConfig']['SparkConfig']['SparkDomain']
+            'SparkModel': configData['AiConfig']['SparkConfig']['SparkModel'],
         }
         # 百度千帆配置
         self.QianfanAiConfig = {
@@ -79,10 +70,6 @@ class AiDialogue:
             'VolcengineApi': configData['AiConfig']['VolcengineConfig']['VolcengineApi'],
             'VolcengineKey': configData['AiConfig']['VolcengineConfig']['VolcengineKey'],
             'VolcengineModel': configData['AiConfig']['VolcengineConfig']['VolcengineModel'],
-            'VolcengineAk': configData['AiConfig']['VolcengineConfig']['VolcengineAk'],
-            'VolcengineSk': configData['AiConfig']['VolcengineConfig']['VolcengineSk'],
-            'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
-            'VolcenginePicModelVersion': configData['AiConfig']['VolcengineConfig']['VolcenginePicModelVersion']
         }
         # 通义配置
         self.QwenConfig = {
@@ -136,34 +123,41 @@ class AiDialogue:
         :return:
         """
         op(f'[*]: 正在调用星火大模型对话接口... ...')
-        SparkAppid = self.SparkAiConfig.get('SparkAiAppid')
-        SparkSecret = self.SparkAiConfig.get('SparkAiSecret')
-        SparkApiKey = self.SparkAiConfig.get('SparkAiKey')
-        SparkApi = self.SparkAiConfig.get('SparkAiApi')
-        SparkDomain = self.SparkAiConfig.get('SparkDomain')
+        if not self.SparkAiConfig.get('SparkAiApi'):
+            op(f'[-]: 星火大模型未配置, 请检查相关配置!!!')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+        messages.append({"role": "user", "content": f'{content}'})
+        data = {
+            "model": self.SparkAiConfig.get('SparkModel'),
+            "messages": messages,
+            "tools": [
+                {
+                    "type": "web_search",
+                    "web_search": {
+                        "enable": True
+                    }
+                }
+            ]
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"{self.SparkAiConfig.get('SparkAiKey')}",
+        }
         try:
-            spark = ChatSparkLLM(
-                spark_api_url=SparkApi,
-                spark_app_id=SparkAppid,
-                spark_api_key=SparkApiKey,
-                spark_api_secret=SparkSecret,
-                spark_llm_domain=SparkDomain,
-                streaming=False,
-            )
-            messages = [ChatMessage(
-                role='system',
-                content=self.systemAiRole
-            ), ChatMessage(
-                role="user",
-                content=content
-            )]
-            handler = ChunkPrintHandler()
-            sparkObject = spark.generate([messages], callbacks=[handler])
-            sparkContent = sparkObject.generations[0][0].text
-            return sparkContent
+            resp = requests.post(url=self.SparkAiConfig.get('SparkAiApi'), headers=headers, json=data, timeout=15)
+            json_data = resp.json()
+            assistant_content = json_data['choices'][0]['message']['content']
+            messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
+            return assistant_content, messages
         except Exception as e:
-            op(f'[-]: 星火大模型对话接口出现错误, 错误信息: {e}')
-            return None
+            op(f'[-]: 星火大模型接口出现错误, 错误信息: {e}')
+            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+
+
+
 
     def getQianFanAi(self, content, messages):
         """
@@ -199,12 +193,13 @@ class AiDialogue:
             try:
                 url = f'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-4.0-turbo-8k?access_token={access_token}'
                 data = {
-                    'messages': messages
+                    'messages': messages[1::],
+                    'system': self.systemAiRole,
                 }
                 resp = requests.post(url, json=data)
                 result = resp.json()['result']
                 messages.append({"role": "assistant", "content": result})
-                return result, [{"role": "system", "content": f'{self.systemAiRole}'}]
+                return result, messages
             except Exception as e:
                 op(f'[-]: 请求千帆模型AccessToken出现错误, 错误信息: {e}')
                 return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
@@ -214,7 +209,7 @@ class AiDialogue:
             op(f'[-]: 获取千帆模型AccessToken失败, 请检查千帆配置!!!')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
-        aiContent = getAiContent(access_token, messages)
+        aiContent, messages= getAiContent(access_token, messages)
         if len(messages) == 21:
             del messages[1]
             del messages[2]
@@ -336,8 +331,8 @@ class AiDialogue:
         }
         try:
             resp = requests.post(url=self.DeepSeekConfig.get('DeepSeekApi'), headers=headers, json=data, timeout=300)
-            jsonData = resp.json()
-            assistant_content = jsonData['choices'][0]['message']['content']
+            json_data = resp.json()
+            assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
             if len(messages) == 21:
                 del messages[1]
@@ -484,7 +479,7 @@ class AiDialogue:
             if aiModule == 'hunYuan':
                 result, self.userChatDicts[sender] = self.getHunYuanAi(content, self.userChatDicts[sender])
             if aiModule == 'sparkAi':
-                result = self.getSparkAi(content)
+                result, self.userChatDicts[sender] = self.getSparkAi(content)
             if aiModule == 'openAi':
                 result, self.userChatDicts[sender] = self.getOpenAi(content, self.userChatDicts[sender])
             if aiModule == 'qianFan':

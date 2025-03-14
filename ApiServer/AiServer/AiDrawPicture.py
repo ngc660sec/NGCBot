@@ -1,5 +1,4 @@
 from volcengine.visual.VisualService import VisualService
-import ApiServer.AiServer.sparkPicApi as sPa
 import FileCache.FileCacheServer as Fcs
 import Config.ConfigServer as Cs
 from OutPut.outPut import op

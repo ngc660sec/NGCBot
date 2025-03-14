@@ -60,8 +60,10 @@ AiConfig:
   VolcengineConfig:
     # 文本对话设置 可以改为其它模型
     VolcengineApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
-    VolcengineKey: 'Bearer {key填这里，前面的Bearer保留}'
+    VolcengineKey: 'Bearer {key填这里，前面的Bearer保留, 大括号删了}'
     VolcengineModel: 'ep-'
+    # 火山图文对话模型
+    VolcenginePicChatModel: 'doubao-1-5-vision-pro-32k-250115'
     # 文生图需要填写以下内容 不使用文生图不需要填写
     ## ReqKey以及ModelVersion需要根据火山文档填写
     VolcengineAk: '火山AK'
@@ -80,12 +82,12 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer sk-'
+    DeepSeekKey: 'Bearer {key填这里，前面的Bearer保留}'
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer '
+    BigModelKey: 'Bearer {key填这里，前面的Bearer保留}'
     BigModelModel: 'glm-4-plus'
     # 文生图配置
     BigModelPicApi: 'https://open.bigmodel.cn/api/paas/v4/images/generations'
@@ -93,12 +95,12 @@ AiConfig:
   # 月之暗面模型配置
   KiMiConfig:
     KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
-    KiMiKey: 'sk-'
+    KiMiKey: ''
     KiMiModel: 'moonshot-v1-8k'
   # 混元模型配置
   HunYuanConfig:
     HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
-    HunYuanKey: 'sk-'
+    HunYuanKey: ''
     HunYuanModel: 'hunyuan-pro'
   # 千帆模型配置
   QianFanConfig:
@@ -127,15 +129,11 @@ AiConfig:
   # 星火模型配置
   SparkConfig:
     # 模型Url
-    SparkAiApi: 'wss://spark-api.xf-yun.com/v4.0/chat'
-    # 模型Secret
-    SparkAiSecret: ''
-    # 模型版本
-    SparkDomain: '4.0Ultra'
+    SparkAiApi: 'https://spark-api-open.xf-yun.com/v1/chat/completions'
     # 模型Key
-    SparkAiKey: ''
-    # 模型Appid
-    SparkAiAppid: 'b1ea4bca'
+    SparkAiKey: 'Bearer {key填这里，前面的Bearer保留}'
+    # 模型名称
+    SparkModel: '4.0Ultra'
 
 # 所有Key配置 [不包含Ai Key配置]
 KeyConfig:
