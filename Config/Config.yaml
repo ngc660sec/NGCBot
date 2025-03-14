@@ -39,10 +39,11 @@ AiConfig:
     11: 'qwen'
   # 画图Ai优先级
   AiPicPriority:
-    4: 'volcengine'
-    2: 'qianFan'
-    3: 'sparkAi'
-    1: 'qwen'
+    1: 'bigModel'
+    2: 'volcengine'
+    3: 'qianFan'
+    4: 'sparkAi'
+    5: 'qwen'
   # Ai角色配置
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
   # 通义千问
@@ -86,6 +87,9 @@ AiConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
     BigModelKey: 'Bearer '
     BigModelModel: 'glm-4-plus'
+    # 文生图配置
+    BigModelPicApi: 'https://open.bigmodel.cn/api/paas/v4/images/generations'
+    BigModelPicModel: 'cogview-4-250304'
   # 月之暗面模型配置
   KiMiConfig:
     KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'

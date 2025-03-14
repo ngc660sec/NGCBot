@@ -45,6 +45,12 @@ class AiDrawPicture:
             'QwenPicModel': configData['AiConfig']['QwenConfig']['QwenPicModel'],
             'QwenKey': configData['AiConfig']['QwenConfig']['QwenKey'],
         }
+        # 智谱配置
+        self.BigModelConfig = {
+            'BigModelPicApi': configData['AiConfig']['BigModelConfig']['BigModelPicApi'],
+            'BigModelPicModel': configData['AiConfig']['BigModelConfig']['BigModelPicModel'],
+            'BigModelKey': configData['AiConfig']['BigModelConfig']['BigModelKey'],
+        }
 
         # 初始化消息列表
         self.userChatDicts = {}
@@ -198,6 +204,7 @@ class AiDrawPicture:
         :return:
         """
         op(f'[*]: 正在调用通义千问文生图模型... ...')
+
         def getTaskStatus(taskId):
             headers = {
                 'Authorization': self.QwenConfig.get('QwenKey')
@@ -217,6 +224,7 @@ class AiDrawPicture:
                     return imgUrl
             except Exception:
                 return None
+
         if not self.QwenConfig.get('QwenKey'):
             op(f'[-]: 通义千问文生图模型未配置, 请检查相关配置!!!')
             return None
@@ -258,6 +266,35 @@ class AiDrawPicture:
             op(f'[-]: 火山引擎文生图模型出现错误, 错误信息: {e}')
             return None
 
+    def getBigModelPic(self, content):
+        """
+        智谱文生图
+        :param content:
+        :return:
+        """
+        op(f'[*]: 正在调用智谱文生图模型... ...')
+        if not self.BigModelConfig.get('BigModelKey'):
+            op(f'[-]: 智谱文生图模型未配置, 请检查相关配置!!!')
+            return None
+        try:
+            headers = {
+                "Authorization": self.BigModelConfig.get('BigModelKey'),
+                "Content-Type": "application/json"
+            }
+            data = {
+                "model": self.BigModelConfig.get('BigModelPicModel'),
+                "prompt": content,
+            }
+            resp = requests.post(self.BigModelConfig.get('BigModelPicApi'), headers=headers, json=data)
+            ImgUrl = resp.json()['data'][0]['url']
+            savePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+            imgPath = self.downloadFile(ImgUrl, savePath)
+            if imgPath:
+                return imgPath
+            return None
+        except Exception as e:
+            op(f'[-]: 智谱文生图模型出现错误, 错误信息: {e}')
+            return None
 
     def getPicAi(self, content):
         """
@@ -266,7 +303,7 @@ class AiDrawPicture:
         :return:
         """
         picPath = ''
-        for i in range(1, 4):
+        for i in range(1, 6):
             aiPicModule = self.aiPicPriority.get(i)
             if aiPicModule == 'sparkAi':
                 picPath = self.getSparkPic(content)
@@ -276,11 +313,14 @@ class AiDrawPicture:
                 picPath = self.getVolcenginePic(content)
             if aiPicModule == 'qwen':
                 picPath = self.getQwenPic(content)
+            if aiPicModule == 'bigModel':
+                picPath = self.getBigModelPic(content)
             if not picPath:
                 continue
             else:
                 break
         return picPath
+
 
 if __name__ == '__main__':
     Adp = AiDrawPicture()
