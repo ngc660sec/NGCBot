@@ -116,10 +116,11 @@ class AiDialogue:
             op(f'[-]: Gpt对话接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
-    def getSparkAi(self, content):
+    def getSparkAi(self, content, messages):
         """
         星火大模型Ai 对话
         :param content: 对话内容
+        :param messages: 消息列表
         :return:
         """
         op(f'[*]: 正在调用星火大模型对话接口... ...')
@@ -477,7 +478,7 @@ class AiDialogue:
             if aiModule == 'hunYuan':
                 result, self.userChatDicts[sender] = self.getHunYuanAi(content, self.userChatDicts[sender])
             if aiModule == 'sparkAi':
-                result, self.userChatDicts[sender] = self.getSparkAi(content)
+                result, self.userChatDicts[sender] = self.getSparkAi(content, self.userChatDicts[sender])
             if aiModule == 'openAi':
                 result, self.userChatDicts[sender] = self.getOpenAi(content, self.userChatDicts[sender])
             if aiModule == 'qianFan':
