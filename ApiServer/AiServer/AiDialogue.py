@@ -24,10 +24,6 @@ class AiDialogue:
         self.QianfanAiConfig = {
             'QfAccessKey': configData['AiConfig']['QianFanConfig']['QfAccessKey'],
             'QfSecretKey': configData['AiConfig']['QianFanConfig']['QfSecretKey'],
-            'QfAppid': configData['AiConfig']['QianFanConfig']['QfAppid'],
-            'QfPicAccessKey': configData['AiConfig']['QianFanConfig']['QfPicAccessKey'],
-            'QfPicSecretKey': configData['AiConfig']['QianFanConfig']['QfPicSecretKey'],
-            'QfPicAppid': configData['AiConfig']['QianFanConfig']['QfPicAppid']
         }
         # 腾讯混元配置
         self.HunYuanAiConfig = {

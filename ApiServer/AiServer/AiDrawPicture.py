@@ -13,12 +13,8 @@ class AiDrawPicture:
         self.systemAiRole = configData['AiConfig']['SystemAiRule']
         # 百度千帆配置
         self.QianfanAiConfig = {
-            'QfAccessKey': configData['AiConfig']['QianFanConfig']['QfAccessKey'],
-            'QfSecretKey': configData['AiConfig']['QianFanConfig']['QfSecretKey'],
-            'QfAppid': configData['AiConfig']['QianFanConfig']['QfAppid'],
             'QfPicAccessKey': configData['AiConfig']['QianFanConfig']['QfPicAccessKey'],
             'QfPicSecretKey': configData['AiConfig']['QianFanConfig']['QfPicSecretKey'],
-            'QfPicAppid': configData['AiConfig']['QianFanConfig']['QfPicAppid']
         }
         # 豆包配置
         self.VolcengineConfig = {

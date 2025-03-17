@@ -10,6 +10,5 @@ urllib3==2.2.3
 PyYAML==6.0.2
 cprint==1.2.2
 lxml==5.2.2
-spark-ai-python
 volcengine
 lz4
