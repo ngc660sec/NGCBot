@@ -110,19 +110,22 @@ class FriendMsgHandle:
         同意好友申请处理
         :return:
         """
-        root_xml = ET.fromstring(msg.content.strip())
-        wxId = root_xml.attrib["fromusername"]
-        op(f'[*]: 接收到新的好友申请, 微信id为: {wxId}')
-        v3 = root_xml.attrib["encryptusername"]
-        v4 = root_xml.attrib["ticket"]
-        scene = int(root_xml.attrib["scene"])
-        ret = self.wcf.accept_new_friend(v3=v3, v4=v4, scene=scene)
-        acceptSendMsg = self.acceptFriendMsg.replace('\\n', '\n')
-        self.wcf.send_text(acceptSendMsg, receiver=wxId)
-        if ret:
-            op(f'[+]: 好友 {getIdName(self.wcf, wxId)} 已自动通过 !')
-        else:
-            op(f'[-]: 好友通过失败！！！')
+        try:
+            root_xml = ET.fromstring(msg.content.strip())
+            wxId = root_xml.attrib["fromusername"]
+            op(f'[*]: 接收到新的好友申请, 微信id为: {wxId}')
+            v3 = root_xml.attrib["encryptusername"]
+            v4 = root_xml.attrib["ticket"]
+            scene = int(root_xml.attrib["scene"])
+            ret = self.wcf.accept_new_friend(v3=v3, v4=v4, scene=scene)
+            acceptSendMsg = self.acceptFriendMsg.replace('\\n', '\n')
+            self.wcf.send_text(acceptSendMsg, receiver=wxId)
+            if ret:
+                op(f'[+]: 好友 {getIdName(self.wcf, wxId)} 已自动通过 !')
+            else:
+                op(f'[-]: 好友通过失败！！！')
+        except Exception as e:
+            op(f'[-]: 自动通过好友出现错误, 错误信息: {e}')
 
     def acceptMoney(self, msg):
         """
