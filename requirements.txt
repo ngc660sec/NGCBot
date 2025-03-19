@@ -1,5 +1,5 @@
-tencentcloud_sdk_python_common==3.0.1186
-tencentcloud_sdk_python_hunyuan==3.0.1186
+tencentcloud_sdk_python_common
+tencentcloud_sdk_python_hunyuan
 meme_generator==0.0.19.1
 feedparser==6.0.11
 wcferry==39.4.2.2

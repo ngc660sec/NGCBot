@@ -31,6 +31,7 @@ def getUserLabel(wcf, sender):
         return userLabelIds
     except Exception as e:
         op(f'[-]: 获取用户所属的标签列表出现错误, 错误信息: {e}')
+        return []
 
 def getQuoteImageData(content):
     """

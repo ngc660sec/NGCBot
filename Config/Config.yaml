@@ -3,7 +3,7 @@ SystemConfig:
   # 超级管理员配置
   Administrators:
     - 'wxid_7bizfilssbwi22'
-    - 'wxid2'
+    - 'wxid'
     - '.....'
   #系统版权信息
   SystemCopyright: 'NGC660安全实验室'
@@ -42,14 +42,21 @@ AiConfig:
     1: 'bigModel'
     2: 'volcengine'
     3: 'qianFan'
-    5: 'qwen'
+    4: 'qwen'
+    5: 'hunYuan'
+  # Ai图文对话优先级
+  AiPicDiaPriority:
+    1: 'qwen'
+    2: 'volcengine'
+    3: 'hunyuan'
+    4: 'kimi'
   # Ai角色配置
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
   # 通义千问
   QwenConfig:
     QwenApi: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
     QwenModel: 'qwen-plus'
-    QwenKey: 'Bearer {key填这里,大括号删了}'
+    QwenKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     # 通义AI画图配置
     QwenPicApi: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis'
     QwenPicModel: 'wanx2.1-t2i-turbo'
@@ -59,7 +66,7 @@ AiConfig:
   VolcengineConfig:
     # 文本对话设置 可以改为其它模型
     VolcengineApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
-    VolcengineKey: 'Bearer {key填这里，前面的Bearer保留, 大括号删了}'
+    VolcengineKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     VolcengineModel: 'ep-'
     # 火山图文对话模型
     VolcenginePicChatModel: 'doubao-1-5-vision-pro-32k-250115'
@@ -72,7 +79,7 @@ AiConfig:
   # 硅基流动配置
   SiliconFlowConfig:
     SiliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
-    SiliconFlowKey: 'Bearer {key填这里，前面的Bearer保留}'
+    SiliconFlowKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     SiliconFlowModel: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B'
   # Ollama本地模型配置
   OllamaConfig:
@@ -81,12 +88,12 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer {key填这里，前面的Bearer保留}'
+    DeepSeekKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer {key填这里，前面的Bearer保留}'
+    BigModelKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     BigModelModel: 'glm-4-plus'
     # 文生图配置
     BigModelPicApi: 'https://open.bigmodel.cn/api/paas/v4/images/generations'
@@ -96,33 +103,39 @@ AiConfig:
     KiMiApi: 'https://api.moonshot.cn/v1/chat/completions'
     KiMiKey: ''
     KiMiModel: 'moonshot-v1-8k'
+    # KiMi图文对话模型
+    KiMiPicModel: 'moonshot-v1-8k-vision-preview'
   # 混元模型配置
   HunYuanConfig:
     HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
-    HunYuanKey: ''
+    HunYuanKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     HunYuanModel: 'hunyuan-pro'
+    # 混元生文生图配置
+    HunYuanSecretId: ''
+    HunYuanSecretKey: ''
+    # 混元画图风格 https://cloud.tencent.com/document/product/1729/105846
+    HunYuanPicStyle: 'xieshi'
+    # 混元图文对话模型
+    HunYuanPicChatModel: 'hunyuan-vision'
+
   # 千帆模型配置
   QianFanConfig:
     # 应用中的Api Key
     QfAccessKey: ''
     # 应用中的Secret Key
     QfSecretKey: ''
-    # 应用中的应用ID
-    QfAppid: ''
     # 千帆Ai作画Api 两个key是不一样的 不能通用
     # https://console.bce.baidu.com/ai/#/ai/intelligentwriting/app/detail~appId=5507940
     # 应用中的Api Key
     QfPicAccessKey: ''
     # 应用中的Secret Key
     QfPicSecretKey: ''
-    # 应用中的应用ID
-    QfPicAppid: '92991265'
   # OpenAi模型配置
   OpenAiConfig:
     # Open_Ai接口
     OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
     # OpenAi Key
-    OpenAiKey: 'Bearer sk-'
+    OpenAiKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     # 模型版本
     OpenAiModel: 'gpt-3.5-turbo'
   # 星火模型配置
@@ -130,7 +143,7 @@ AiConfig:
     # 模型Url
     SparkAiApi: 'https://spark-api-open.xf-yun.com/v1/chat/completions'
     # 模型Key
-    SparkAiKey: 'Bearer {key填这里，前面的Bearer保留}'
+    SparkAiKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
     # 模型名称
     SparkModel: '4.0Ultra'
 
@@ -222,7 +235,8 @@ FunctionConfig:
       PicApi:
         - 'https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&method=mobile&lx=meizi'
         - 'https://cdn.seovx.com/?mom=302'
-        - 'https://api.s01s.cn/API/wsb/'
+        - 'https://api.mhimg.cn/api/girls_img/?type=img'
+        - 'https://api.mhimg.cn/api/Welfare_img/'
     # 视频功能配置
     VideoConfig:
       VideoKeyWords:
@@ -364,8 +378,7 @@ FunctionConfig:
       IdiomSolitaireApi: 'https://api.dudunas.top/api/chengyujielong/'
       StartGameKeyWord: '成语接龙'
       StopGameKeyWord: '结束接龙'
-      GameRound: 5
-
+      GameRound: 10
 
   # 群聊功能配置
   RoomConfig:

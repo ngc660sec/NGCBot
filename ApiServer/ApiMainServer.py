@@ -1,5 +1,6 @@
 from ApiServer.AiServer.AiDialogue import AiDialogue
 from ApiServer.AiServer.AiDrawPicture import AiDrawPicture
+from ApiServer.AiServer.AiGraphicDialogue import AiGraphicDialogue
 import ApiServer.pluginServer as Ps
 
 
@@ -12,6 +13,7 @@ class ApiMainServer:
         # Ai对象实例化
         self.Ad = AiDialogue()
         self.Adp = AiDrawPicture()
+        self.Agd = AiGraphicDialogue()
 
     def getMusic(self, musicName):
         """
@@ -126,6 +128,15 @@ class ApiMainServer:
         :return:
         """
         return Ps.Ha.getDog()
+
+    def getAiPicDia(self, content, imagePath):
+        """
+        Ai 图文回复
+        :param content:
+        :param imagePath:
+        :return:
+        """
+        return self.Agd.getAiPicDia(content, imagePath)
 
     def getAi(self, content, sender):
         """

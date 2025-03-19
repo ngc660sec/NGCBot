@@ -1,10 +1,16 @@
+from tencentcloud.common.profile.client_profile import ClientProfile
+from tencentcloud.hunyuan.v20230901 import hunyuan_client, models
+from tencentcloud.common.profile.http_profile import HttpProfile
 from volcengine.visual.VisualService import VisualService
+from tencentcloud.common import credential
 import FileCache.FileCacheServer as Fcs
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 import requests
 import base64
 import time
+import json
+
 
 
 class AiDrawPicture:
@@ -18,9 +24,6 @@ class AiDrawPicture:
         }
         # 豆包配置
         self.VolcengineConfig = {
-            'VolcengineApi': configData['AiConfig']['VolcengineConfig']['VolcengineApi'],
-            'VolcengineKey': configData['AiConfig']['VolcengineConfig']['VolcengineKey'],
-            'VolcengineModel': configData['AiConfig']['VolcengineConfig']['VolcengineModel'],
             'VolcengineAk': configData['AiConfig']['VolcengineConfig']['VolcengineAk'],
             'VolcengineSk': configData['AiConfig']['VolcengineConfig']['VolcengineSk'],
             'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
@@ -37,6 +40,12 @@ class AiDrawPicture:
             'BigModelPicApi': configData['AiConfig']['BigModelConfig']['BigModelPicApi'],
             'BigModelPicModel': configData['AiConfig']['BigModelConfig']['BigModelPicModel'],
             'BigModelKey': configData['AiConfig']['BigModelConfig']['BigModelKey'],
+        }
+        # 腾讯混元配置
+        self.HunYuanAiConfig = {
+            'HunYuanSecretId': configData['AiConfig']['HunYuanConfig']['HunYuanSecretId'],
+            'HunYuanSecretKey': configData['AiConfig']['HunYuanConfig']['HunYuanSecretKey'],
+            'HunYuanPicStyle': configData['AiConfig']['HunYuanConfig']['HunYuanPicStyle'],
         }
 
         # 初始化消息列表
@@ -267,6 +276,76 @@ class AiDrawPicture:
             op(f'[-]: 智谱文生图模型出现错误, 错误信息: {e}')
             return None
 
+    def getHunYuanPic(self, content):
+        """
+        混元文生图
+        :param content:
+        :return:
+        """
+
+        def getJobId(jobId, client):
+            """
+            查询Job ID
+            :param jobId:
+            :return:
+            """
+
+            try:
+                params = {
+                    "JobId": jobId
+                }
+                req = models.QueryHunyuanImageJobRequest()
+                req.from_json_string(json.dumps(params))
+                resp = client.QueryHunyuanImageJob(req)
+                jsonData = json.loads(resp.to_json_string())
+                resultImages = jsonData.get('ResultImage')
+                if not resultImages:
+                    return None
+                else:
+                    return resultImages[0]
+            except Exception as e:
+                op(f'[-]: 查询混元JobId出现错误, 错误信息: {e}')
+                return None
+        try:
+            op(f'[*]: 正在调用混元文生图模型... ...')
+            if not self.HunYuanAiConfig.get('HunYuanSecretId'):
+                op(f'[-]: 混元文生图模型未配置, 请检查相关配置!!!')
+                return None
+            cred = credential.Credential(self.HunYuanAiConfig.get('HunYuanSecretId'),
+                                         self.HunYuanAiConfig.get('HunYuanSecretKey'))
+            httpProfile = HttpProfile()
+            httpProfile.endpoint = "hunyuan.tencentcloudapi.com"
+            clientProfile = ClientProfile()
+            clientProfile.httpProfile = httpProfile
+            client = hunyuan_client.HunyuanClient(cred, "ap-guangzhou", clientProfile)
+            req = models.SubmitHunyuanImageJobRequest()
+            params = {
+                "Prompt": content,
+                "Style": self.HunYuanAiConfig.get('HunYuanPicStyle')
+            }
+            req.from_json_string(json.dumps(params))
+            resp = client.SubmitHunyuanImageJob(req)
+            jobId = json.loads(resp.to_json_string()).get('JobId')
+            imageUrl = ''
+            if jobId:
+                for i in range(5):
+                    imageUrl = getJobId(jobId, client)
+                    if not imageUrl:
+                        time.sleep(10)
+                        continue
+                    else:
+                        break
+            if not imageUrl:
+                return None
+            filePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
+            imgPath = self.downloadFile(imageUrl, filePath)
+            if imgPath:
+                return imgPath
+            return None
+        except Exception as e:
+            op(f'[-]: 混元文生图模型出现错误, 错误信息: {e}')
+            return None
+
     def getPicAi(self, content):
         """
         处理优先级
@@ -274,7 +353,7 @@ class AiDrawPicture:
         :return:
         """
         picPath = ''
-        for i in range(1, 5):
+        for i in range(1, 6):
             aiPicModule = self.aiPicPriority.get(i)
             if aiPicModule == 'qianFan':
                 picPath = self.getQianFanPic(content)
@@ -284,6 +363,8 @@ class AiDrawPicture:
                 picPath = self.getQwenPic(content)
             if aiPicModule == 'bigModel':
                 picPath = self.getBigModelPic(content)
+            if aiPicModule == 'hunYuan':
+                picPath = self.getHunYuanPic(content)
             if not picPath:
                 continue
             else:
@@ -293,4 +374,5 @@ class AiDrawPicture:
 
 if __name__ == '__main__':
     Adp = AiDrawPicture()
-    print(Adp.getPicAi('一只可爱的布尔猫'))
+    # print(Adp.getPicAi('一只可爱的布尔猫'))
+    print(Adp.getHunYuanPic('一个穿着超短裙的JK妹妹的全身照, 黑丝白袜小皮鞋'))

@@ -87,8 +87,7 @@ class PointFunction:
                     f'@{getIdName(self.wcf, sender, roomId)} 当前剩余积分: {self.Dms.searchPoint(sender, roomId)}',
                     receiver=roomId, aters=sender)
             # Ai对话
-            elif judgeAtMe(self.wcf.self_wxid, content, atUserLists) and not judgeOneEqualListWord(noAtMsg,
-                                                                                                   self.aiPicKeyWords):
+            elif judgeAtMe(self.wcf.self_wxid, content, atUserLists):
                 chatSender = f'room@{sender}'
                 aiMsg = self.Ams.getAi(noAtMsg, chatSender)
                 if aiMsg:
@@ -107,3 +106,18 @@ class PointFunction:
                 self.wcf.send_text(
                     f'@{getIdName(self.wcf, sender, roomId)} Ai画图接口出现错误, 请联系超管查看控制台输出日志',
                     receiver=roomId, aters=sender)
+        elif msgType == 49:
+            # Ai图文回复
+            if judgeAtMe(self.wcf.self_wxid, noAtMsg, atUserLists):
+                srvType, srvId, srvContent = getQuoteImageData(message.content)
+                if srvType == 3:
+                    srvImagePath = downloadQuoteImage(self.wcf, srvId, message.extra)
+                    if srvImagePath:
+                        aiMsg = self.Ams.getAiPicDia(noAtMsg, srvImagePath)
+                        if aiMsg:
+                            self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}', receiver=roomId,
+                                               aters=sender)
+                        else:
+                            self.wcf.send_text(
+                                f'@{getIdName(self.wcf, sender, roomId)} Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
+                                receiver=roomId, aters=sender)
