@@ -379,6 +379,9 @@ FunctionConfig:
       StartGameKeyWord: '成语接龙'
       StopGameKeyWord: '结束接龙'
       GameRound: 10
+    # 钓鱼游戏 [需要配置Dp Key]
+    FishingConfig:
+      FishingApi : 'http://ik.dudunas.top:9999/'
 
   # 群聊功能配置
   RoomConfig:
