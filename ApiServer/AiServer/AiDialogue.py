@@ -104,9 +104,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: Gpt对话接口出现错误, 错误信息: {e}')
@@ -145,9 +142,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: 星火大模型接口出现错误, 错误信息: {e}')
@@ -204,9 +198,6 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
 
         aiContent, messages= getAiContent(access_token, messages)
-        if len(messages) == 21:
-            del messages[1]
-            del messages[2]
         return aiContent, messages
 
     def getHunYuanAi(self, content, messages):
@@ -234,9 +225,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: 混元对话接口出现错误, 错误信息: {e}')
@@ -261,9 +249,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: KiMi对话接口出现错误, 错误信息: {e}')
@@ -295,9 +280,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: BigMode对话接口出现错误, 错误信息: {e}')
@@ -328,9 +310,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: DeepSeek对话接口出现错误, 错误信息: {e}')
@@ -382,9 +361,6 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: 硅基对话接口出现错误, 错误信息: {e}')
@@ -416,9 +392,6 @@ class AiDialogue:
             jsonData = resp.json()
             assistant_content = jsonData.get('choices')[0].get('message').get('content')
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: 火山引擎文本大模型接口出现错误, 错误信息: {e}')
