@@ -297,13 +297,15 @@ class AiLLMDialogue:
             message = getDifyMessage(content, userId, self.DifyUserSession.get(userId), picid)
         else:
             message = getDifyMessage(content, userId, self.DifyUserSession.get(userId))
+        if not message:
+            return None
         if ('##' in message and '![' in message) or '](http' in message:
             message = Ifa.textToCard(title=content, mdContent=message)
         return message
 
     def getFastgpt(self, content, userId):
         """
-        Dify对话接口
+        FastGpt对话接口
         :param content:
         :param userId:
         :return:
