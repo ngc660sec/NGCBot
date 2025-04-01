@@ -1,12 +1,13 @@
+from ApiServer.AiServer.AiLLMDialogue import AiLLMDialogue
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 import requests
-import json
 
 
 class AiDialogue:
     def __init__(self):
         configData = Cs.returnConfigData()
+        self.Ald = AiLLMDialogue()
         self.systemAiRole = configData['AiConfig']['SystemAiRule']
         # OpenAI配置
         self.OpenAiConfig = {
@@ -104,6 +105,9 @@ class AiDialogue:
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
+            if len(messages) == 21:
+                del messages[1]
+                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: Gpt对话接口出现错误, 错误信息: {e}')
@@ -424,9 +428,6 @@ class AiDialogue:
             jsonData = resp.json()
             assistant_content = jsonData.get('choices')[0].get('message').get('content')
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: 通义千问接口出现错误, 错误信息: {e}')
@@ -442,7 +443,7 @@ class AiDialogue:
         if sender not in self.userChatDicts:
             self.userChatDicts[sender] = [{"role": "system", "content": f'{self.systemAiRole}'}]
         result = ''
-        for i in range(1, 12):
+        for i in range(1, 15):
             aiModule = self.aiPriority.get(i)
             if aiModule == 'hunYuan':
                 result, self.userChatDicts[sender] = self.getHunYuanAi(content, self.userChatDicts[sender])
@@ -466,6 +467,12 @@ class AiDialogue:
                 result, self.userChatDicts[sender] = self.getVolcengine(content, self.userChatDicts[sender])
             if aiModule == 'qwen':
                 result, self.userChatDicts[sender] = self.getQwen(content, self.userChatDicts[sender])
+            if aiModule == 'coze':
+                result = self.Ald.getCoze(content, sender)
+            if aiModule == 'dify':
+                result = self.Ald.getDify(content, sender)
+            if aiModule == 'fastgpt':
+                result = self.Ald.getFastgpt(content, sender)
             if not result:
                 continue
             else:

@@ -90,6 +90,9 @@ class PointFunction:
             elif judgeAtMe(self.wcf.self_wxid, content, atUserLists):
                 chatSender = f'room@{sender}'
                 aiMsg = self.Ams.getAi(noAtMsg, chatSender)
+                if 'FileCache' in aiMsg:
+                    self.wcf.send_image(aiMsg, receiver=roomId)
+                    return
                 if aiMsg:
                     self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}',
                                        receiver=roomId, aters=sender)
@@ -113,7 +116,10 @@ class PointFunction:
                 if srvType == 3:
                     srvImagePath = downloadQuoteImage(self.wcf, srvId, message.extra)
                     if srvImagePath:
-                        aiMsg = self.Ams.getAiPicDia(noAtMsg, srvImagePath)
+                        aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath)
+                        if 'FileCache' in aiMsg:
+                            self.wcf.send_image(aiMsg, receiver=roomId)
+                            return
                         if aiMsg:
                             self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}', receiver=roomId,
                                                aters=sender)

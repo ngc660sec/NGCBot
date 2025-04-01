@@ -129,14 +129,14 @@ class ApiMainServer:
         """
         return Ps.Ha.getDog()
 
-    def getAiPicDia(self, content, imagePath):
+    def getAiPicDia(self, content, imagePath, sender=None):
         """
         Ai 图文回复
         :param content:
         :param imagePath:
         :return:
         """
-        return self.Agd.getAiPicDia(content, imagePath)
+        return self.Agd.getAiPicDia(content, imagePath, sender=sender)
 
     def getAi(self, content, sender):
         """

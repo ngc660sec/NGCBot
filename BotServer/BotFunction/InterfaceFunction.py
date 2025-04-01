@@ -173,7 +173,6 @@ def getIdName(wcf, Id=None, roomId=None, retry=0, max_retries=3):
     except Exception as e:
         op(f'[~]: 获取好友或者群聊昵称出现错误, 错误信息: {e}')
         if retry < max_retries:
-            # 如果发生异常且未达到最大重试次数，则等待一秒后重试
             time.sleep(1)
             return getIdName(wcf, Id, roomId, retry + 1, max_retries)
         else:

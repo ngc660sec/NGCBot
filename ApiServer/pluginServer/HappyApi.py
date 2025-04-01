@@ -1,5 +1,6 @@
 from meme_generator import get_meme, get_meme_keys
 import FileCache.FileCacheServer as Fcs
+from ApiServer.InterFaceServer import *
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 import lz4.block as lb
@@ -35,24 +36,6 @@ class HappyApi:
 
         # API密钥配置
         self.dpKey = configData['KeyConfig']['DpConfig']['DpKey']
-
-    def downloadFile(self, url, savePath):
-        """
-        通用下载文件函数
-        :param url:
-        :param savePath:
-        :return:
-        """
-        try:
-            content = requests.get(url, timeout=30, verify=True).content
-            if len(content) < 200:
-                return None
-            with open(savePath, mode='wb') as f:
-                f.write(content)
-            return savePath
-        except Exception as e:
-            op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
-            return None
 
     def getMusic(self, musicName):
         op(f'[*]: 正在调用点歌接口... ...')
@@ -129,7 +112,7 @@ class HappyApi:
                 Knowledge_expansion = result.get('Knowledge_expansion')
                 Card_meaning_extension = result.get('Card_meaning_extension')
                 e_image = result.get('e_image')
-                picPath = self.downloadFile(e_image, savePath)
+                picPath = Ifa.downloadFile(e_image, savePath)
                 content = f'描述: {Pai_Yi_deduction}\n\n建议: {core_prompt}\n\n描述: {Knowledge_expansion}\n\n建议: {Card_meaning_extension}'
                 return content, picPath
             return '', ''
@@ -151,10 +134,11 @@ class HappyApi:
             code = jsonData.get('code')
             if code == 200:
                 videoData = jsonData.get('data')
+                coverUrl = videoData.get('coverUrl')
                 description = videoData.get('description').replace("\n", "")
                 nickname = videoData.get('nickname')
                 videoUrl = videoData.get('url')
-                content = f'视频描述: {description}\n视频作者: {nickname}\n视频链接: {videoUrl}'
+                content = f'视频描述: {description}\n视频作者: {nickname}\n视频封面: {coverUrl}\n\n视频链接: {videoUrl}'
                 return content
             elif code == 202:
                 time.sleep(200)
@@ -179,7 +163,7 @@ class HappyApi:
                 videoData = jsonData.get('data')
                 videoUrl = videoData.get('video_url')
                 savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.mp4'
-                savePath = self.downloadFile(videoUrl, savePath)
+                savePath = Ifa.downloadFile(videoUrl, savePath)
                 if savePath:
                     return savePath
             return None
@@ -221,10 +205,10 @@ class HappyApi:
         op(f'[*]: 正在调用美女图片Api接口... ...')
         picUrl = random.choice(self.picUrlList)
         savePath = Fcs.returnPicCacheFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
-        picPath = self.downloadFile(picUrl, savePath)
+        picPath = Ifa.downloadFile(picUrl, savePath)
         if not picPath:
             for picUrl in self.picUrlList:
-                picPath = self.downloadFile(picUrl, savePath)
+                picPath = Ifa.downloadFile(picUrl, savePath)
                 if picPath:
                     break
                 continue
@@ -238,10 +222,10 @@ class HappyApi:
         op(f'[*]: 正在调用美女视频Api接口... ...')
         videoUrl = random.choice(self.videoUrlList)
         savePath = Fcs.returnVideoCacheFolder() + '/' + str(int(time.time() * 1000)) + '.mp4'
-        videoPath = self.downloadFile(videoUrl, savePath)
+        videoPath = Ifa.downloadFile(videoUrl, savePath)
         if not videoPath:
             for videoUrl in self.videoUrlList:
-                videoPath = self.downloadFile(videoUrl, savePath)
+                videoPath = Ifa.downloadFile(videoUrl, savePath)
                 if videoPath:
                     break
                 continue
@@ -257,10 +241,10 @@ class HappyApi:
         try:
             jsonData = requests.get(self.fishApi, timeout=30).json()
             fishUrl = jsonData.get('data')['url']
-            fishPath = self.downloadFile(url=fishUrl, savePath=savePath)
+            fishPath = Ifa.downloadFile(url=fishUrl, savePath=savePath)
             if not fishPath:
                 for i in range(2):
-                    fishPath = self.downloadFile(self.fishApi, savePath)
+                    fishPath = Ifa.downloadFile(self.fishApi, savePath)
                     if fishPath:
                         break
                     continue
@@ -342,7 +326,7 @@ class HappyApi:
 
 if __name__ == '__main__':
     Ha = HappyApi()
-    print(Ha.getDog())
+    # print(Ha.getDog())
     # print(Ha.getKfc())
     # Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
     # print(Ha.getShortPlay('霸道总裁爱上我'))
@@ -351,5 +335,5 @@ if __name__ == '__main__':
     #     '3.84 复制打开抖音，看看【SQ的小日常的作品】师傅：门可以让我踹吗 # 情侣 # 搞笑 # 反转... https://v.douyin.com/iydr37xU/ bAg:/ F@H.vS 01/06'))
     # print(Ha.getWechatVideo('14258814955767007275', '14776806611926650114_15_140_59_32_1735528000805808'))
     # print(Ha.getTaLuo())
-    # print(Ha.getFish())
+    print(Ha.getFish())
     # print(Ha.getMusic('晴天'))

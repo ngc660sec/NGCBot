@@ -1,9 +1,8 @@
-import FileCache.FileCacheServer as Fcs
+from ApiServer.AiServer.AiLLMDialogue import AiLLMDialogue
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
+from ApiServer.InterFaceServer import *
 import requests
-import base64
-import time
 
 class AiGraphicDialogue:
     def __init__(self):
@@ -13,6 +12,8 @@ class AiGraphicDialogue:
         configData = Cs.returnConfigData()
         self.systemAiRole = configData['AiConfig']['SystemAiRule']
         self.aiPicDiaPriority = configData['AiConfig']['AiPicDiaPriority']
+
+        self.Ald = AiLLMDialogue()
 
         # 通义配置
         self.QwenConfig = {
@@ -38,28 +39,6 @@ class AiGraphicDialogue:
             'KiMiKey': configData['AiConfig']['KiMiConfig']['KiMiKey'],
             'KiMiPicModel': configData['AiConfig']['KiMiConfig']['KiMiPicModel']
         }
-
-    def encodeImage(self, imagePath):
-        """
-        返回Base64编码的文件内容
-        :param imagePath:
-        :return:
-        """
-        try:
-            fileExt = imagePath.split('.')[-1]
-            with open(imagePath, 'rb') as f:
-                base64FileContent = base64.b64encode(f.read()).decode("utf-8")
-                if 'png' in fileExt:
-                    return f'data:image/png;base64,{base64FileContent}'
-                if 'jpg' in fileExt:
-                    return f'data:image/jpg;base64,{base64FileContent}'
-                if 'webp' in fileExt:
-                    return f'data:webp;base64,{base64FileContent}'
-                if 'gif' in fileExt:
-                    return f'data:image/png;base64,{base64FileContent}'
-        except Exception as e:
-            op(f'[-]: 返回Base64编码的文件内容出现错误, 错误信息: {e}')
-            return None
 
     def getQwenPicDia(self, content, base64FileContent):
         """
@@ -195,19 +174,19 @@ class AiGraphicDialogue:
             op(f'[-]: KiMi对话接口出现错误, 错误信息: {e}')
             return None
 
-    def getAiPicDia(self, content, imagePath):
+    def getAiPicDia(self, content, imagePath, sender=None):
         """
         AI图文对话回复
         :param content:
         :param imagePath:
         :return:
         """
-        base64FileContent = self.encodeImage(imagePath)
+        base64FileContent = Ifa.encodeImage(imagePath)
         if not base64FileContent:
             op(f'[-]: 图片不存在或图片编码错误!!!')
             return None
         result = ''
-        for i in range(1, 5):
+        for i in range(1, 7):
             aiPicDiaModel = self.aiPicDiaPriority.get(i)
             if aiPicDiaModel == 'qwen':
                 result = self.getQwenPicDia(content, base64FileContent)
@@ -217,6 +196,10 @@ class AiGraphicDialogue:
                 result = self.getHunYuanPicDia(content, base64FileContent)
             if aiPicDiaModel == 'kimi':
                 result = self.getKiMiPicDia(content, base64FileContent)
+            if aiPicDiaModel == 'coze':
+                result = self.Ald.getCoze(content=content, userId=sender, filePath=imagePath)
+            if aiPicDiaModel == 'dify':
+                result = self.Ald.getDify(content=content, userId=sender, filePath=imagePath)
             if not result:
                 continue
             else:
@@ -226,7 +209,7 @@ class AiGraphicDialogue:
 
 if __name__ == '__main__':
     Agd = AiGraphicDialogue()
-    base64FileContent = Agd.encodeImage('C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg')
+    # base64FileContent = Agd.encodeImage('C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg')
     print(Agd.getAiPicDia('这张照片描述了什么',
                             'C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg'))
 

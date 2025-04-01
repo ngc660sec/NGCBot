@@ -6,7 +6,7 @@ SystemConfig:
     - 'wxid'
     - '.....'
   #系统版权信息
-  SystemCopyright: 'NGC660安全实验室'
+  SystemCopyright: 'NGC660 Ai研究院'
   # 好友Ai开关 以下功能都是 1开/0关
   AiLock: 1
   # 自动接收转账
@@ -16,7 +16,7 @@ SystemConfig:
     # 自动同意好友
     AcceptFriendLock: 1
     # 加好友后回复
-    AcceptFriendMsg: '你好, 我是NGC660安全实验室开发的微信机器人, 你可以叫我NGCBot! 私聊我即可进行智能对话哦[爱心]~~~ ~~~'
+    AcceptFriendMsg: '你好, 我是NGC660 Ai研究院开发的微信机器人, 你可以叫我NGCBot! 私聊我即可进行智能对话哦[爱心]~~~ ~~~'
   #好友消息转发给管理员
   MsgForwardAdmin: 1
 
@@ -37,6 +37,9 @@ AiConfig:
     9: 'sparkAi'
     10: 'qianFan'
     11: 'qwen'
+    12: 'coze'
+    13: 'dify'
+    14: 'fastgpt'
   # 画图Ai优先级
   AiPicPriority:
     1: 'bigModel'
@@ -50,13 +53,29 @@ AiConfig:
     2: 'volcengine'
     3: 'hunyuan'
     4: 'kimi'
+    5: 'coze'
+    6: 'dify'
   # Ai角色配置
-  SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660安全实验室，是一名网络安全专家'
+  SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660 Ai研究院，是一名人工智能领域专家'
+  # 扣子配置
+  CozeConfig:
+    CozeToken: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    # 智能体ID
+    CozeBotId: ''
+  # Dify配置
+  DifyConfig:
+    DifyApi : "https://api.dify.ai/v1/chat-messages"
+    DifyKey: "Bearer {key填此处 大括号删了 前面的Bearer保留}"
+  # Fastgpt配置
+  FastgptConfig:
+    FastgptApi: "https://cloud.fastgpt.cn/api/v1/chat/completions"
+    FastgptKey: "Bearer {key填此处 大括号删了 前面的Bearer保留}"
+    FastAppid: ""
   # 通义千问
   QwenConfig:
     QwenApi: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
     QwenModel: 'qwen-plus'
-    QwenKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    QwenKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     # 通义AI画图配置
     QwenPicApi: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis'
     QwenPicModel: 'wanx2.1-t2i-turbo'
@@ -66,7 +85,7 @@ AiConfig:
   VolcengineConfig:
     # 文本对话设置 可以改为其它模型
     VolcengineApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
-    VolcengineKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    VolcengineKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     VolcengineModel: 'ep-'
     # 火山图文对话模型
     VolcenginePicChatModel: 'doubao-1-5-vision-pro-32k-250115'
@@ -79,7 +98,7 @@ AiConfig:
   # 硅基流动配置
   SiliconFlowConfig:
     SiliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
-    SiliconFlowKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    SiliconFlowKey: 'Bearer {key填这里，前面的Bearer保留}'
     SiliconFlowModel: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B'
   # Ollama本地模型配置
   OllamaConfig:
@@ -88,12 +107,12 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    DeepSeekKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    BigModelKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     BigModelModel: 'glm-4-plus'
     # 文生图配置
     BigModelPicApi: 'https://open.bigmodel.cn/api/paas/v4/images/generations'
@@ -108,7 +127,7 @@ AiConfig:
   # 混元模型配置
   HunYuanConfig:
     HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
-    HunYuanKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    HunYuanKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     HunYuanModel: 'hunyuan-pro'
     # 混元生文生图配置
     HunYuanSecretId: ''
@@ -135,7 +154,7 @@ AiConfig:
     # Open_Ai接口
     OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
     # OpenAi Key
-    OpenAiKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    OpenAiKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     # 模型版本
     OpenAiModel: 'gpt-3.5-turbo'
   # 星火模型配置
@@ -143,7 +162,7 @@ AiConfig:
     # 模型Url
     SparkAiApi: 'https://spark-api-open.xf-yun.com/v1/chat/completions'
     # 模型Key
-    SparkAiKey: 'Bearer {key填这里 大括号删了 Bearer保留}'
+    SparkAiKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
     # 模型名称
     SparkModel: '4.0Ultra'
 
@@ -223,6 +242,16 @@ JoinGroupConfig:
 
 # 功能配置
 FunctionConfig:
+  # 接口功能配置
+  InterFaceConfig:
+    # 流光卡片功能配置
+    FireFlyCardConfig:
+      FireFlyCardApi: 'https://fireflycard-api.302ai.cn/api/saveImg'
+      icon: 'https://mrxc-1300093961.cos.ap-shanghai.myqcloud.com/2025/3/25/1904363219582124034.png'
+      qrcodeImg: 'https://mrxc-1300093961.cos.ap-shanghai.myqcloud.com/2025/3/25/1904362081369653250.jpg'
+      qrCodeTitle: 'NGC660 Ai研究院'
+      qrCodeText: '扫描二维码关注更多资讯'
+
   # 娱乐功能配置
   HappyFunctionConfig:
     # 图片功能配置
@@ -381,7 +410,7 @@ FunctionConfig:
       GameRound: 10
     # 钓鱼游戏 [需要配置Dp Key]
     FishingConfig:
-      FishingApi : 'http://ik.dudunas.top:9999/'
+      FishingApi: 'http://ik.dudunas.top:9999'
 
   # 群聊功能配置
   RoomConfig:
