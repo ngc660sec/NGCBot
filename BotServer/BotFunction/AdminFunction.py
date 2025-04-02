@@ -13,7 +13,7 @@ class AdminFunction:
         self.wcf = wcf
         self.Dms = DbMainServer()
         configData = Cs.returnConfigData()
-        
+
         # 管理功能关键词配置
         self.addBlackRoomKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['AddBlackRoomKeyWords']
         self.delBlackRoomKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['DelBlackRoomKeyWords']
@@ -24,7 +24,7 @@ class AdminFunction:
         self.addBlackGhKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['AddBlackGhKeyWords']
         self.delBlackGhKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['DelBlackGhKeyWords']
         self.delUserKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['DelUserKeyWords']
-        
+
         # 积分功能关键词配置
         self.addPointKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['AddPointKeyWords']
         self.delPointKeyWords = configData['FunctionConfig']['AdminFunctionConfig']['DelPointKeyWords']
@@ -34,7 +34,7 @@ class AdminFunction:
         sender = message.sender
         roomId = message.roomid
         msgType = message.type
-        roomName = getIdName(self.wcf, sender, roomId)
+        roomName = getIdName(self.wcf, roomId)
         atUserLists, noAtMsg = getAtData(self.wcf, message)
         if msgType == 1:
             # 增加积分
