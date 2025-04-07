@@ -66,37 +66,48 @@ class AdminFunction:
             # 添加白名单群聊
             elif judgeEqualListWord(content, self.addWhiteRoomKeyWords):
                 if self.Dms.addWhiteRoom(roomId, roomName):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 添加白名单群聊成功 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 添加白名单群聊成功 !!!',
+                                       receiver=roomId, aters=sender)
                     return
-                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已在白名单中', receiver=roomId, aters=sender)
+                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已在白名单列表中', receiver=roomId,
+                                   aters=sender)
             # 移出白名单群聊
             elif judgeEqualListWord(content, self.delWhiteRoomKeyWords):
                 if self.Dms.delWhiteRoom(roomId):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 移出白名单群聊成功 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 移出白名单群聊成功 !!!',
+                                       receiver=roomId, aters=sender)
                     return
-                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已移出白名单 !!!', receiver=roomId, aters=sender)
+                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已不在白名单列表中 !!!',
+                                   receiver=roomId, aters=sender)
             # 添加黑名单群聊
             elif judgeEqualListWord(content, self.addBlackRoomKeyWords):
                 if self.Dms.addBlackRoom(roomId, roomName):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已拉黑 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已拉黑 !!!', receiver=roomId,
+                                       aters=sender)
                     return
-                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已在黑名单中 !!!', receiver=roomId, aters=sender)
+                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已在黑名单列表中 !!!', receiver=roomId,
+                                   aters=sender)
             # 移出黑名单群聊
             elif judgeEqualListWord(content, self.delBlackRoomKeyWords):
                 if self.Dms.delBlackRoom(roomId):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 移出黑名单成功 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 移出黑名单成功 !!!', receiver=roomId,
+                                       aters=sender)
                     return
-                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已移出黑名单 !!!', receiver=roomId, aters=sender)
+                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已不在黑名单列表中 !!!',
+                                   receiver=roomId, aters=sender)
             # 添加推送群聊
             elif judgeEqualListWord(content, self.addPushRoomKeyWords):
                 if self.Dms.addPushRoom(roomId, roomName):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 开启推送服务成功 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 开启推送服务成功 !!!', receiver=roomId,
+                                       aters=sender)
                     return
-                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已开启推送服务 !!!', receiver=roomId, aters=sender)
+                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已在推送群聊列表中 !!!',
+                                   receiver=roomId, aters=sender)
             # 移出推送群聊
             elif judgeEqualListWord(content, self.delPushRoomKeyWords):
                 if self.Dms.delPushRoom(roomId):
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已关闭推送服务 !!!', receiver=roomId, aters=sender)
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 此群已关闭推送服务 !!!',
+                                       receiver=roomId, aters=sender)
             # 踢人
             elif judgeEqualListWord(noAtMsg, self.delUserKeyWords):
                 for atWxId in atUserLists:

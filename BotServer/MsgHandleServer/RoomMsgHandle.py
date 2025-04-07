@@ -103,13 +103,6 @@ class RoomMsgHandle:
             # 入群欢迎
             Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
 
-    def RoomMsgFunction(self, msg):
-        """
-        群聊消息服务
-        :param msg:
-        :return:
-        """
-
     def JoinRoomWelcome(self, msg):
         """
         进群欢迎
@@ -212,18 +205,13 @@ class RoomMsgHandle:
             if judgePointFunction(senderPoint, self.md5Point):
                 self.Dms.reducePoint(sender, roomId, self.md5Point)
                 lock = 1
-        # Ai对话
+        # Ai对话 & 图文对话
         elif judgeAtMe(self.wcf.self_wxid, content, atUserLists):
             pointLock = 1
             if judgePointFunction(senderPoint, self.aiMsgPoint):
                 self.Dms.reducePoint(sender, roomId, self.aiMsgPoint)
                 lock = 1
-        # 图文对话
-        elif judgeAtMe(self.wcf.self_wxid, noAtMsg, atUserLists):
-            pointLock = 1
-            if judgePointFunction(senderPoint, self.aiMsgPoint):
-                self.Dms.reducePoint(sender, roomId, self.aiMsgPoint)
-                lock = 1
+
         # Ai画图
         elif judgeSplitAllEqualWord(content, self.aiPicKeyWords):
             pointLock = 1

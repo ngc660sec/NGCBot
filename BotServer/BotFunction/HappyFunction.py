@@ -139,6 +139,10 @@ class HappyFunction:
                                        receiver=roomId, aters=sender)
                     return
                 result = self.wcf.query_sql('MSG0.db', "SELECT * FROM MSG where type = 49  limit 1")
+                if not result:
+                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 点歌接口出现错误, 请稍后再试 ~~~',
+                                       receiver=roomId, aters=sender)
+                    return
                 local_id = result[0].get("localId") if result else None
                 if not local_id:
                     self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} 点歌接口出现错误, 请稍后再试 ~~~',
@@ -229,10 +233,10 @@ class HappyFunction:
                 helpMsg += '【二、娱乐功能】\n2.1、美女图片(图片)\n2.2、美女视频(视频)\n2.3、摸鱼日历(摸鱼日历)\n2.4、舔狗日记(舔我)\n2.5、早报(早报)\n2.6、晚报(晚报)\n2.6、表情列表(表情列表)\n2.7、随机表情(随机表情, 有几率报错)\n'
                 helpMsg += '[爱心]=== NGCBot菜单 ===[爱心]\n'
                 self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)}\n{helpMsg}', receiver=roomId, aters=sender)
-        elif msgType == 49:
-            # 视频号解析
-            objectId, objectNonceId = getWechatVideoData(content)
-            if objectId and objectNonceId:
-                msg = self.Ams.getWechatVideo(objectId, objectNonceId)
-                if msg:
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)}\n{msg}', receiver=roomId, aters=sender)
+        # elif msgType == 49:
+        #     # 视频号解析
+        #     objectId, objectNonceId = getWechatVideoData(content)
+        #     if objectId and objectNonceId:
+        #         msg = self.Ams.getWechatVideo(objectId, objectNonceId)
+        #         if msg:
+        #             self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)}\n{msg}', receiver=roomId, aters=sender)

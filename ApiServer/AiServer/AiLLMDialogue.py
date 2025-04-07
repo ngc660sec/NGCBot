@@ -40,7 +40,7 @@ class AiLLMDialogue:
         else:
             op(f'[*]: 正在调用扣子图文对话接口... ...')
         headers = {
-            'Authorization': self.CozeConfig['CozeToken'],
+            'Authorization': f"Bearer {self.CozeConfig['CozeToken']}",
             'Content-Type': 'application/json'
         }
         if not self.CozeConfig.get('CozeBotId'):
@@ -71,7 +71,7 @@ class AiLLMDialogue:
             """
             uploadFileApi = 'https://api.coze.cn/v1/files/upload'
             headers = {
-                'Authorization': self.CozeConfig['CozeToken'],
+                'Authorization': f"Bearer {self.CozeConfig['CozeToken']}",
             }
             try:
                 with open(filePath, mode='rb') as f:
@@ -216,13 +216,13 @@ class AiLLMDialogue:
             op(f'[-]: Dify接口未配置')
             return None
         headers = {
-            'Authorization': self.DifyConfig['DifyKey'],
+            'Authorization': f"Bearer {self.DifyConfig['DifyKey']}",
             'Content-Type': 'application/json'
         }
 
         def uploadFile(filePath):
             headers = {
-                "Authorization": f"{self.DifyConfig.get('DifyKey')}",
+                "Authorization": f"Bearer {self.DifyConfig['DifyKey']}",
             }
             file_name = filePath.split('/')[-1]
             file_extension = file_name.split('.')[-1].lower()
@@ -305,7 +305,7 @@ class AiLLMDialogue:
 
     def getFastgpt(self, content, userId):
         """
-        FastGpt对话接口
+        Dify对话接口
         :param content:
         :param userId:
         :return:
@@ -313,7 +313,7 @@ class AiLLMDialogue:
         op(f'[*]: 正在调用Fastgpt会话接口... ...')
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.FastgptConfig.get('FastgptKey')}",
+            "Authorization": f"Bearer {self.FastgptConfig.get('FastgptKey')}",
         }
         if not self.FastgptConfig.get('FastgptKey'):
             op(f'[-]: Fastgpt模型未配置, 请检查相关配置!!!')

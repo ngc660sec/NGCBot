@@ -1,6 +1,7 @@
 from ApiServer.AiServer.AiDialogue import AiDialogue
 from ApiServer.AiServer.AiDrawPicture import AiDrawPicture
 from ApiServer.AiServer.AiGraphicDialogue import AiGraphicDialogue
+from ApiServer.InterFaceServer.InterFaceApi import InterFaceApi
 import ApiServer.pluginServer as Ps
 
 
@@ -14,6 +15,15 @@ class ApiMainServer:
         self.Ad = AiDialogue()
         self.Adp = AiDrawPicture()
         self.Agd = AiGraphicDialogue()
+        self.Ifa = InterFaceApi()
+
+    def getAudioMsg(self, audioPath):
+        """
+        获取语音文本
+        :param audioPath:
+        :return:
+        """
+        return self.Ifa.getAudioMsg(audioPath)
 
     def getMusic(self, musicName):
         """

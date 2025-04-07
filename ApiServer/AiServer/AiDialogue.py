@@ -98,16 +98,13 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.OpenAiConfig.get('OpenAiKey')}",
+            "Authorization": f"Bearer {self.OpenAiConfig.get('OpenAiKey')}",
         }
         try:
             resp = requests.post(url=self.OpenAiConfig.get('OpenAiApi'), headers=headers, json=data, timeout=15)
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             messages.append({"role": "assistant", "content": f"{assistant_content}"})
-            if len(messages) == 21:
-                del messages[1]
-                del messages[2]
             return assistant_content, messages
         except Exception as e:
             op(f'[-]: Gpt对话接口出现错误, 错误信息: {e}')
@@ -139,7 +136,7 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.SparkAiConfig.get('SparkAiKey')}",
+            "Authorization": f"Bearer {self.SparkAiConfig.get('SparkAiKey')}",
         }
         try:
             resp = requests.post(url=self.SparkAiConfig.get('SparkAiApi'), headers=headers, json=data, timeout=15)
@@ -222,7 +219,7 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.HunYuanAiConfig.get('HunYuanKey')}",
+            "Authorization": f"Bearer {self.HunYuanAiConfig.get('HunYuanKey')}",
         }
         try:
             resp = requests.post(url=self.HunYuanAiConfig.get('HunYuanApi'), headers=headers, json=data, timeout=15)
@@ -277,7 +274,7 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.BigModelConfig.get('BigModelKey')}",
+            "Authorization": f"Bearer {self.BigModelConfig.get('BigModelKey')}",
         }
         try:
             resp = requests.post(url=self.BigModelConfig.get('BigModelApi'), headers=headers, json=data, timeout=15)
@@ -307,7 +304,7 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.DeepSeekConfig.get('DeepSeekKey')}",
+            "Authorization": f"Bearer {self.DeepSeekConfig.get('DeepSeekKey')}",
         }
         try:
             resp = requests.post(url=self.DeepSeekConfig.get('DeepSeekApi'), headers=headers, json=data, timeout=300)
@@ -357,7 +354,7 @@ class AiDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.SiliconFlowConfig.get('SiliconFlowKey')}",
+            "Authorization": f"Bearer {self.SiliconFlowConfig.get('SiliconFlowKey')}",
         }
         try:
             resp = requests.post(url=self.SiliconFlowConfig.get('SiliconFlowApi'), headers=headers, json=data,
@@ -383,7 +380,7 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         headers = {
-            "Authorization": f"{self.VolcengineConfig.get('VolcengineKey')}",
+            "Authorization": f"Bearer {self.VolcengineConfig.get('VolcengineKey')}",
             "Content-Type": "application/json"
         }
         data = {
@@ -414,7 +411,7 @@ class AiDialogue:
             return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
         messages.append({"role": "user", "content": f'{content}'})
         headers = {
-            "Authorization": f"{self.QwenConfig.get('QwenKey')}",
+            "Authorization": f"Bearer {self.QwenConfig.get('QwenKey')}",
             "Content-Type": "application/json"
         }
         data = {

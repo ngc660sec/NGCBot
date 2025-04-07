@@ -1,9 +1,100 @@
-import zlib
+import webview
 
-compressed_data = b'\xf2K<?xml version="1.0"?>\n<msg>\n\t<appmsg appid="" sdkver="0">\n\t\t<title>\xe7\xbe\xa4\xe8\x81\x8a\xe7\x9a\x84\xe8\x81\x8a\xe5\xa4\xa9\xe8\xae\xb0\xe5\xbd\x95</\x1d\x00\x00\'\x00\xf0\x01des>1\xe5\xbc\xa0\xe5\x9b\xbe\xe7\x89\x87</\x10\x00\x00\x18\x00\x82action /L\x00\x81ype>19</\t\x00\x00\x1f\x00Ashow\r\x0050</\x0c\x00\x00\x19\x00\xc3mediatagname>\x00ymessageR\x00scontent"\x00\xf3\x1durl>https://support.weixin.qq.com/cgi-bin/mm \x00\x01\x0e\x00\xf3\x1areadtemplate?t=page/favorite_record__w_un5\x00 </j\x00\x00\xa7\x00clowurl\x7f\x00Fdata\x0e\x00:low\x11\x00\x90appattach\x0c\x01\xe5\t<totallen>0</\x0c\x00\x01\x1a\x00\x02&\x00"idW\x00\xd4\t<emoticonmd5\x13\x00cfileex\xf8\x00\x82\t<aeskey\x1d\x00)</i\x00\x83<extinfo\x1d\x00\xa7sourceuserZ\x01\x02\x15\x00wdisplay\x18\x00vcomment\xd4\x00Vthumb\x0f\x00\x02\x1b\x01\xe4item><![CDATA[\x15\x00\xf6\x03nfo><fromscene>3</\r\x00D<fav\x83\x00\xf0\x06>wxid_7bizfilssbwi22<~\x01\x05!\x00\x00.\x00\xf1\x06createtime>1742971584\'\x00\x07\x1a\x00\xf7\x00<isChatRoom>1</\x0e\x00\x0f\xc6\x02\x11\xf2\x03<desc>\xe5\xb0\x8f\xe6\x82\x9f\xe7\xa9\xba: [\xcc\x02\']\n\x14\x00\xf3\x06@Vcnnn8h\xe2\x80\x85\xe8\xaf\x95\xe8\xaf\x95\xef\xbc\x9f\n\x14\x00\xe1: \xe5\xbe\x85\xe4\xbc\x9a\xe7\x9c\x8b\xe7\x9c\x8b\x03\x030c><|\x01\x0fV\x009\x01P\x00\x10<Z\x02\xf2\x01list count = "3"\x16\x00\x00\x8e\x01\x10 \x1f\x00\x00W\x03A="2"\r\x00\x00\xdb\x03\xff\x1762270739aafb41d57ea5fb5c08601ede" html*\x00\x12\x02k\x00\x90fmt>jpg</o\x00\x00\r\x00\x03I\x02\x00B\x02\x06\xf3\x00\'</\x16\x00\x03"\x00\x01\xc9\x01\xf4\x002025-3-26 14:45(\x00\x01\x1c\x00\x03(\x00@headk\x03\x04\xd5\x03\xa0wx.qlogo.c\xc3\x03\x00\x1e\x00\xf4\x82/ver_1/yxcyicicQlYhXP8QAMH8tFb3Kv5DBOTXQUhO3XIHvlib7n2Zz83Jy6WiagrXKKh74wcndrv5JUfT3Z4Dmu7MxBibaXOylKvspfeEYsNpIE73JwPx3jKRSDnX6zoGPAbH6iaU7V/132\xef\x00\x00\x9d\x00\x00\xbb\x00\x024\x03\x02\x03\x01rpath>/M\xc8\x04\xf0\x19Temp/ce9b96761f4730d5bacaadadb8807f02/Im\x8d\x044141\xf7\x02\x8140_.pic_W\x00\x11.\x7f\x01\x01\x0b\x00\x07b\x00\x03s\x00\x84ize>4854!\x00\x00\x10\x00@<cdn\xae\x01\x00\x9a\x00\xf3\x033057020100044b3049\x0e\x00\xf0\x12204bd48390602032e6c6302044fab016f\x0c\x00\xf0+67e3a2c1042463653561383231632d616635352d343934642d38646631\x1e\x00\xf2\x0539396434353330633166d\x00\x8305942001\x8c\x00\xf7\x00405004c556b00</\xbf\x00\x04\xcb\x00\xf0\x02key>1c565e1a99582\xcf\x02\xf5\x0063a35899e700a329\x00\x00-\x00\x009\x00\x013\x01\x0f\x05\x01#-84\x05\x01\x100\x05\x01\xf0\x0432643062623736392d6\x13\x010136\x05\x01\x106\xe0\x00\x01\xfb\x00`613338\x0f\x010376\xff\x00\x02\x1c\x00@0666I\x01\x01i\x01\x0f\x05\x01\x05#07\x05\x01\x05\xc0\x00\x05\xcd\x00\x00\xda\x00\x0f\x07\x01\x12\x01;\x00\x00.\x00\x01/\x04\x077\x02\x0f\x99\x023\x02\x93\x02\x00d\x02\x07[\x00\xf4\x1c<fullmd5>65efed1b761937b7c8a0835811938a2b</*\x00\x02\xc5\x02\x04\x0e\x00\xf3\x11379f3dfc5baa650d284b542f9ab4c29f\xe4\x02\x04/\x00\x02=\x00\x00\x83\x030256x\x00\xf4\x103e4d7d29940b315f6e62ad59c7fb443@\x00\x072\x00\x02\x1e\x01\x004\x03c870805\xd4\x00\x00\x11\x00\x00t\x01\x80encryveri\x06\x08\x0f\x00@<src\x85\x06\x01\x04\x05\xf8\x0745928006129@chatroom</"\x00\x00/\x00\xe1MsgLocalid>141 \x00\x07\x13\x00\x03"\x00\x11C\x01\x07\x18T\x01\x07\x1044\t\x01,\x00\x07\x1d\x00\x04&\t\xf8\x19uuid>c6acc3ee52d19d6ce4237252d0f32ac4_<//\x00\x01\xaf\x07\xf2\rnewmsgid>3260879865948873717\xc4\x07\x05"\x00\x01#\x01\x00p\x06\x02\xea\x01e><hash\xb7\x07\xf93e66f88c1f5ae8cc2f39d5906932b733fc4a9560b6e78e6ba3a14b8506d145abf</O\x00\x02\x80\x01\x08n\x00\x01w\x06\x00\x11\x00\x02\x8e\x06\x00\n\x00\x01\xec\x06\x02\xf9\x06\x161\xf9\x06\xf6\x11935fb74c6c518e26f7ac1cc676d3c934\xf9\x06\x0f*\x00\x0e\x04\x99\x06\x01\xdf\x01\x05\x18\x08\x04\xbb\x06\x01\x16\x00\x03"\x00\x01\xc7\x06\x0f\xe3\x06\xd4\x00\xee\x03\x01>\t\x0f\x1f\t\x01\x02\xb9\x01\x01\x1f\x00\x0f9\x03I\x00y\x07\x01\r\x03\x04L\x03\x0f9\x03\x08\x144e\x03\x089\x03\x00\xc5\x00\x00D\x02\x0f\xcd\x02\x8c\xf6\x118d7ed15615c69a23be1dde22636b35d6\xcd\x02\x0f*\x00\x0e\t\xcd\x02\x03\xc5\n\x0f\xcb\x02\x14\x146(\x00\x01\xe7\x02\x03\xf3\x02\x00>\x05\x00T\x07\x0f\xae\t\x0e\xf0\x8fPo7LLCAb1Pv0BMgiaXOibNvuLYStOhbg4QUK6XjXC1y9icgXnzC7W7ExpctQ7OkLEzLcf0VwYajMvX5p1pPNK7vicpibzzpZIRzE4XOpKqEonfFBxV66g2ib3sUjAE0guHmZmTlEKKylhySnlPMGTlQnpXsw/1/\x08\x02\x05\x02\x04\xd1\x00\x01\xe9\x04\x01\xc2\x02\x0b\xe2\x0b\x04\x17\x00\x0f\xd9\x02I\x143\xad\x02\x0f\xd9\x02\x0f\x157\x05\x03\x0f\xd9\x02\x16\xff1425dd3386dddbfe3a51c4c829a4067398b1fb595e38e2168663874d607e614de\xa6\x05\x19\x010\x01wlist></&\x0e&]]\x10\x00\x00K\x0e\x12\n\xc3\x0e\x03\x9f\x10\x006\x0e\x05T\x06\x0f,\x0e\x03\x08"\x002\n\t<q\x0e\x00\x1d\x07\x01z\x0e\x02\xe3\x10\x017\r\x00\xb2\x0f\x03\x07\x11\x00\xb8\x07\x04\x0b\x00\x00\x17\x002app\xbe\x05\x14/\n\x00\x03\x87\x00\x039\x00\x07\x0c\x0f7></\r\x00\x90\n</msg>\n\x00'  # 你的完整数据
-try:
-    # 尝试去掉前 2 字节并使用 zlib 解压
-    decompressed = zlib.decompress(compressed_data[2:], -zlib.MAX_WBITS)
-    print(decompressed.decode('utf-8'))
-except Exception as e:
-    print("解压失败:", e)
+
+def init_webview():
+    """
+    初始化 WebView 并加载解密相关 WASM 代码
+    返回 webview 窗口实例和 JavaScript 执行接口
+    """
+    window = webview.create_window(
+        title='WASM Decryptor',
+        html='''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>WASM Decryptor</title>
+            <script>
+                // 配置 WASM 路径和内存大小
+                window.VTS_WASM_URL = "https://aladin.wxqcloud.qq.com/aladin/ffmepeg/video-decode/1.2.50/wasm_video_decode.wasm";
+                window.MAX_HEAP_SIZE = 33554432;
+
+                // 全局解密器数组
+                var decryptor_array;
+
+                // Uint8Array 转 Base64
+                function Uint8ArrayToBase64(bytes) {
+                    let binary = '';
+                    const len = bytes.byteLength;
+                    for (let i = 0; i < len; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    return window.btoa(binary);
+                }
+
+                // Base64 转 Uint8Array
+                function base64ToUint8Array(base64) {
+                    const binaryString = window.atob(base64);
+                    const len = binaryString.length;
+                    const bytes = new Uint8Array(len);
+                    for (let i = 0; i < len; i++) {
+                        bytes[i] = binaryString.charCodeAt(i);
+                    }
+                    return bytes;
+                }
+
+                // WASM 生成的 ISAAC 解密器
+                function wasm_isaac_generate(t, e) {
+                    decryptor_array = new Uint8Array(e);
+                    var r = new Uint8Array(Module.HEAPU8.buffer, t, e);
+                    decryptor_array.set(r.reverse());
+                }
+
+                // 获取解密器数组（Base64 编码）
+                function get_decryptor_array(seed) {
+                    let decryptor = new Module.WxIsaac64(seed);
+                    decryptor.generate(131072);
+                    return Uint8ArrayToBase64(decryptor_array);
+                }
+            </script>
+            <!-- 加载 WASM 解密库 -->
+            <script src="https://aladin.wxqcloud.qq.com/aladin/ffmepeg/video-decode/1.2.50/wasm_video_decode.js"></script>
+        </head>
+        <body>
+            <!-- 空页面，所有操作通过 JavaScript 完成 -->
+        </body>
+        </html>
+        ''',
+        js_api=None,
+        width=0,  # 最小化窗口
+        height=0,
+        resizable=False
+    )
+
+    # 启动 WebView（非阻塞模式）
+    webview.start()
+    return window
+
+
+def get_decryptor(seed):
+    """
+    获取解密器数组
+    :param seed: 解密种子
+    :return: Base64 编码的解密器数组
+    """
+    window = init_webview()
+
+    # 等待 WASM 加载完成（实际使用时需要更完善的等待机制）
+    import time
+    time.sleep(3)
+
+    # 执行 JavaScript 获取解密器
+    result = window.evaluate_js(f'get_decryptor_array({seed})')
+    return result
+
+
+if __name__ == '__main__':
+    # 示例用法
+    test_seed = 123456
+    decryptor_data = get_decryptor(test_seed)
+    print(f"获取到的解密器数据（Base64）:\n{decryptor_data}")

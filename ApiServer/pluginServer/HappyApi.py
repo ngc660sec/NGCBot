@@ -3,7 +3,6 @@ import FileCache.FileCacheServer as Fcs
 from ApiServer.InterFaceServer import *
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
-import lz4.block as lb
 import requests
 import asyncio
 import random
@@ -33,63 +32,27 @@ class HappyApi:
         self.wechatVideoApi = configData['FunctionConfig']['HappyFunctionConfig']['WechatVideoConfig']['WechatVideoApi']
         self.taLuoApi = configData['FunctionConfig']['HappyFunctionConfig']['TaLuoConfig']['TaLuoApi']
         self.musicApi = configData['FunctionConfig']['HappyFunctionConfig']['MusicConfig']['MusicApi']
-
+        self.OnePicEmo = configData['EmoConfig']['OnePicEmo']
         # API密钥配置
         self.dpKey = configData['KeyConfig']['DpConfig']['DpKey']
 
     def getMusic(self, musicName):
         op(f'[*]: 正在调用点歌接口... ...')
-        musicApi = self.musicApi[0]
         try:
-            jsonData = requests.get(musicApi.format(musicName), verify=True, timeout=30).json()
-            songName = jsonData.get('title')
-            singerName = jsonData.get('singer')
-            songPic = jsonData.get('cover')
-            dataUrl = jsonData.get('link')
-            playUrl = jsonData.get('music_url')
-            xml_message = f"""<msg>
-            <appmsg appid="wx485a97c844086dc9" sdkver="0">
-                <title>{songName}</title>
-                <des>{singerName}</des>
-                <action></action>
-                <type>3</type>
-                <showtype>0</showtype>
-                <mediatagname></mediatagname>
-                <messageext></messageext>
-                <messageaction></messageaction>
-                <content></content>
-                <contentattr>0</contentattr>
-                <url>{dataUrl}</url>
-                <lowurl>{playUrl}</lowurl>
-                <dataurl>{playUrl}</dataurl>
-                <lowdataurl>{playUrl}</lowdataurl>
-                <appattach>
-                    <totallen>0</totallen>
-                    <attachid></attachid>
-                    <emoticonmd5></emoticonmd5>
-                    <fileext></fileext>
-                </appattach>
-                <extinfo></extinfo>
-                <sourceusername></sourceusername>
-                <sourcedisplayname></sourcedisplayname>
-                <commenturl></commenturl>
-                <songalbumurl>{songPic}</songalbumurl>
-                <md5></md5>
-            </appmsg>
-            <fromusername>wxid_hqdtktnqvw8e21</fromusername>
-            <scene>0</scene>
-            <appinfo>
-                <version>29</version>
-                <appname>摇一摇搜歌</appname>
-            </appinfo>
-            <commenturl></commenturl>
-        </msg>\x00"""
-            # 将文本编码成字节
-            text_bytes = xml_message.encode('utf-8')
-            # 使用 lz4 压缩
-            compressed_data = lb.compress(text_bytes, store_size=False, mode="high_compression")
-            # 将压缩后的数据转为十六进制字符串，以便存储到数据库
-            compressed_data_hex = compressed_data.hex()
+            params = {
+                'AppSecret': self.dpKey,
+                'songname': musicName,
+                'type': 'netease',
+                'num': '1'
+            }
+            jsonData = requests.get(self.musicApi, params=params, verify=True, timeout=30).json()
+            songData = jsonData.get('data')
+            songName = songData.get('title')
+            singerName = songData.get('author')
+            songPic = songData.get('pic')
+            dataUrl = songData.get('link')
+            playUrl = songData.get('url')
+            compressed_data_hex = Ifa.returnMusicXml(songName, singerName, dataUrl, playUrl, songPic)
             return compressed_data_hex
         except Exception as e:
             op(f'[-]: 点歌API出现错误, 错误信息: {e}')
@@ -298,34 +261,41 @@ class HappyApi:
         op(f'[*]: 正在调用表情包Api接口... ...')
         if not avatarPathList:
             op(f'[-]: 表情包Api接口出现错误, 错误信息: avatarPathList不能为空')
-            return
-        if not avatarPathList:
-            raise 'avatarPathList None'
-        if not memeKey:
-            memeKey = random.choices(get_meme_keys())[0]
-
-        savePath = Fcs.returnPicCacheFolder() + '/' + str(int(time.time() * 1000)) + '.gif'
-        try:
-            async def makeEmo():
-                meme = get_meme(memeKey)
-                result = await meme(images=avatarPathList, texts=[], args={"circle": False})
-                with open(savePath, "wb") as f:
-                    f.write(result.getvalue())
-
-            loop = asyncio.new_event_loop()
-            loop.run_until_complete(makeEmo())
-            # 图片大小判断 如果大于1mb 就以图片形式发送
-            file_size_bytes = os.path.getsize(savePath)
-            size_limit_bytes = 1024 * 1024
-            sizeBool = file_size_bytes <= size_limit_bytes
-            return savePath, sizeBool
-        except Exception as e:
-            op(f'[-]: 表情包Api接口出现错误, 错误信息: {e}')
             return None, None
+        savePath = Fcs.returnPicCacheFolder() + '/' + str(int(time.time() * 1000)) + '.gif'
+        retry_count = 0
+        while retry_count < 3:  # 失败则重试 最多3次
+            try:
+                if memeKey is None:
+                    memeKey = random.choice(list(self.OnePicEmo.values()))
+
+                async def makeEmo():
+                    meme = get_meme(memeKey)
+                    params = {
+                        "images": avatarPathList,
+                        "texts": [],
+                        "args": {"circle": False}
+                    }
+                    result = await meme(**params)
+                    with open(savePath, "wb") as f:
+                        f.write(result.getvalue())
+
+                loop = asyncio.new_event_loop()
+                loop.run_until_complete(makeEmo())
+                file_size_bytes = os.path.getsize(savePath)
+                sizeBool = file_size_bytes <= (1024 * 1024)  # 1MB
+                return savePath, sizeBool
+            except Exception as e:
+                op(f'[-]: 表情包Api接口第 {retry_count + 1} 次尝试失败, 错误信息: {e}')
+                retry_count += 1
+                memeKey = None
+        op(f'[-]: 表情包Api接口失败3次, 不再生成！')
+        return None, None
 
 
 if __name__ == '__main__':
     Ha = HappyApi()
+    print(Ha.getMusic('晴天'))
     # print(Ha.getDog())
     # print(Ha.getKfc())
     # Ha.getEmoticon('C:/Users/Administrator/Desktop/NGCBot V2.2/avatar.jpg')
@@ -335,5 +305,5 @@ if __name__ == '__main__':
     #     '3.84 复制打开抖音，看看【SQ的小日常的作品】师傅：门可以让我踹吗 # 情侣 # 搞笑 # 反转... https://v.douyin.com/iydr37xU/ bAg:/ F@H.vS 01/06'))
     # print(Ha.getWechatVideo('14258814955767007275', '14776806611926650114_15_140_59_32_1735528000805808'))
     # print(Ha.getTaLuo())
-    print(Ha.getFish())
+    # print(Ha.getFish())
     # print(Ha.getMusic('晴天'))

@@ -31,7 +31,6 @@ def getUserLabel(wcf, sender):
         return userLabelIds
     except Exception as e:
         op(f'[-]: 获取用户所属的标签列表出现错误, 错误信息: {e}')
-        return []
 
 def getQuoteImageData(content):
     """
@@ -53,6 +52,26 @@ def getQuoteImageData(content):
     except Exception:
         return 0, None, None
 
+def getQuoteMsgData(content):
+    """
+    提取引用消息 内容 引用内容 Type
+    :param content:
+    :return:
+    """
+    try:
+        root = ET.fromstring(content)
+        refermsg = root.find('.//refermsg')
+        title = root.find('.//title')
+        if refermsg is not None:
+            # 提取type和引用Content
+            typeValue = refermsg.find('type').text
+            srvContent = refermsg.find('content').text
+            titleValue = title.text
+            if typeValue and srvContent:
+                return int(typeValue), srvContent, titleValue
+            return None, None, None
+    except Exception:
+        return 0, None, None
 
 def downloadQuoteImage(wcf, imageMsgId, extra):
     """
@@ -173,6 +192,7 @@ def getIdName(wcf, Id=None, roomId=None, retry=0, max_retries=3):
     except Exception as e:
         op(f'[~]: 获取好友或者群聊昵称出现错误, 错误信息: {e}')
         if retry < max_retries:
+            # 如果发生异常且未达到最大重试次数，则等待一秒后重试
             time.sleep(1)
             return getIdName(wcf, Id, roomId, retry + 1, max_retries)
         else:

@@ -1,6 +1,7 @@
 import FileCache.FileCacheServer as Fcs
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
+import lz4.block as lb
 import requests
 import datetime
 import urllib3
@@ -17,6 +18,9 @@ class InterFaceApi:
         # 读取系统版权设置
         self.systemCopyright = configData['SystemConfig']['SystemCopyright']
         self.FireFlyCardConfig = configData['FunctionConfig']['InterFaceConfig']['FireFlyCardConfig']
+        self.CozeConfig = {
+            'CozeToken': configData['AiConfig']['CozeConfig']['CozeToken'],
+        }
 
     def getMdContentCode(self, mdContent):
         """
@@ -28,7 +32,8 @@ class InterFaceApi:
     def textToCard(self, title, mdContent):
         """
         流光卡片生成
-        :param content:
+        :param title:
+        :param mdContent
         :return:
         """
         print(int(len(mdContent)))
@@ -140,3 +145,84 @@ class InterFaceApi:
         except Exception as e:
             op(f'[-]: 返回Base64编码的文件内容出现错误, 错误信息: {e}')
             return None
+
+    def getAudioMsg(self, audioPath):
+        """
+        获取语音的文本内容，使用扣子接口
+        :param audioPath:
+        :return:
+        """
+        audioApi = 'https://api.coze.cn/v1/audio/transcriptions'
+        headers = {
+            'Authorization': self.CozeConfig.get("CozeToken"),
+        }
+        try:
+            with open(audioPath, mode='rb') as f:
+                files = {
+                    'file': (audioPath, f, 'audio/mpeg')
+                }
+                resp = requests.post(audioApi, headers=headers, files=files)
+                jsonData = resp.json()
+                data = jsonData.get('data')
+                text = data.get('text')
+                if text:
+                    return text
+                return None
+        except Exception as e:
+            op(f'[-]: AI语音回复出现错误, 错误信息: {e}')
+            return None
+
+    def returnMusicXml(self, songName, singerName, dataUrl, playUrl, songPic):
+        """
+        返回音乐卡片XML数据
+        :param songName:  音乐名字
+        :param singerName: 歌手名字
+        :param dataUrl: 音乐数据链接
+        :param playUrl: 音乐播放链接
+        :param songPic: 音乐背景图
+        :return:
+        """
+        xml_message = f"""<msg>
+                    <appmsg appid="wx485a97c844086dc9" sdkver="0">
+                        <title>{songName}</title>
+                        <des>{singerName}</des>
+                        <action></action>
+                        <type>3</type>
+                        <showtype>0</showtype>
+                        <mediatagname></mediatagname>
+                        <messageext></messageext>
+                        <messageaction></messageaction>
+                        <content></content>
+                        <contentattr>0</contentattr>
+                        <url>{dataUrl}</url>
+                        <lowurl>{playUrl}</lowurl>
+                        <dataurl>{playUrl}</dataurl>
+                        <lowdataurl>{playUrl}</lowdataurl>
+                        <appattach>
+                            <totallen>0</totallen>
+                            <attachid></attachid>
+                            <emoticonmd5></emoticonmd5>
+                            <fileext></fileext>
+                        </appattach>
+                        <extinfo></extinfo>
+                        <sourceusername></sourceusername>
+                        <sourcedisplayname></sourcedisplayname>
+                        <commenturl></commenturl>
+                        <songalbumurl>{songPic}</songalbumurl>
+                        <md5></md5>
+                    </appmsg>
+                    <fromusername>wxid_hqdtktnqvw8e21</fromusername>
+                    <scene>0</scene>
+                    <appinfo>
+                        <version>29</version>
+                        <appname>摇一摇搜歌</appname>
+                    </appinfo>
+                    <commenturl></commenturl>
+                </msg>\x00"""
+        # 将文本编码成字节
+        text_bytes = xml_message.encode('utf-8')
+        # 使用 lz4 压缩
+        compressed_data = lb.compress(text_bytes, store_size=False, mode="high_compression")
+        # 将压缩后的数据转为十六进制字符串，以便存储到数据库
+        compressed_data_hex = compressed_data.hex()
+        return compressed_data_hex

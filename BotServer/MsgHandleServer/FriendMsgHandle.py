@@ -1,6 +1,6 @@
 from BotServer.BotFunction.InterfaceFunction import *
-from ApiServer.AiServer.AiDialogue import AiDialogue
 from BotServer.BotFunction.JudgeFuncion import *
+from ApiServer.ApiMainServer import ApiMainServer
 from DbServer.DbMainServer import DbMainServer
 import xml.etree.ElementTree as ET
 import Config.ConfigServer as Cs
@@ -25,8 +25,8 @@ class FriendMsgHandle:
         :param wcf:
         """
         self.wcf = wcf
-        self.Ad = AiDialogue()
         self.Dms = DbMainServer()
+        self.Ams = ApiMainServer()
         configData = Cs.returnConfigData()
 
         # 超级管理员列表
@@ -56,6 +56,7 @@ class FriendMsgHandle:
         content = msg.content.strip()
         sender = msg.sender
         msgType = msg.type
+        print(msgType)
 
         if msgType == 1:
             # 关键词进群
@@ -91,19 +92,61 @@ class FriendMsgHandle:
             # 好友消息转发给超级管理员 超级管理员不触发
             if sender not in self.Administrators and self.msgForwardAdmin:
                 Thread(target=self.forwardMsgToAdministrators, args=(sender, content)).start()
+        elif msgType == 34 and self.aiLock or (sender in self.Administrators and msgType == 34):
+            # 语音Ai回复
+            Thread(target=self.getAudioAiMsg, args=(msg.id, sender)).start()
         # 转发公众号消息到推送群聊 超管有效
         if msg.type == 49:
+            # 公众号卡片转发给推送群聊
             if msg.sender in self.Administrators and 'gh_' in msg.content:
                 Thread(target=self.forwardGhMsg, args=(msg.id,)).start()
+            # 图文Ai对话
+            elif 'cdnmidimgurl' in content:
+                Thread(target=self.getAiPicDia, args=(msg, )).start()
             # 暂时没用 等Hook作者更新 老版本微信有用
             elif '转账' in msg.content and self.acceptMoneyLock:
                 Thread(target=self.acceptMoney, args=(msg,)).start()
+            # 引用Ai对话
+            else:
+                Thread(target=self.getQuoteAi, args=(content, sender)).start()
         # 红包消息处理 转发红包消息给主人
         if msgType == 10000 and '请在手机上查看' in msg.content:
             Thread(target=self.forwardRedPacketMsg, args=(sender,)).start()
         # 好友自动同意处理 暂时没用 老版本微信有用
         if msgType == 37 and self.acceptFriendLock:
             Thread(target=self.acceptFriend, args=(msg,)).start()
+
+    def getQuoteAi(self, content, sender):
+        """
+        引用Ai回复
+        :param content:
+        :return:
+        """
+        srvType, srvContent, srvTitle = getQuoteMsgData(content)
+        if srvType == 1:
+            content = f'用户描述的内容: {srvContent}\n以上是用户描述的内容, 请根据用户描述的内容和用户提问的内容给我回复！\n用户提问的内容: {srvTitle}'
+            self.getAiMsg(content=content, sender=sender)
+
+    def getAiPicDia(self, msg):
+        """
+        图文对话
+        :param msg:
+        :return:
+        """
+        srvType, srvId, srvContent = getQuoteImageData(msg.content)
+        if srvType == 3:
+            srvImagePath = downloadQuoteImage(self.wcf, srvId, msg.extra)
+            if srvImagePath:
+                aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath, msg.sender)
+                if 'FileCache' in aiMsg:
+                    self.wcf.send_image(aiMsg, receiver=msg.sender)
+                    return
+                if aiMsg:
+                    self.wcf.send_text(aiMsg, receiver=msg.sender)
+                else:
+                    self.wcf.send_text(
+                        f'Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
+                        receiver=msg.sender)
 
     def acceptFriend(self, msg):
         """
@@ -263,6 +306,23 @@ class FriendMsgHandle:
         sendMsg = f'==== [爱心]来自超管的消息[爱心] ====\n\n{content.split(" ")[-1]}\n\n====== [爱心]NGCBot[爱心] ======'
         self.wcf.send_text(sendMsg, receiver=wxId)
 
+    def getAudioAiMsg(self, msgId, sender):
+        """
+        好友语音AI回复
+        :param msgId
+        :param sender:
+        :return:
+        """
+        audioPath = self.wcf.get_audio_msg(msgId, Fcs.returnAudioFolder())
+        if not audioPath:
+            op(f'[-]: 语音Ai回复出现错误, 获取不到语音文件路径！')
+            return
+        audioMsg = self.Ams.getAudioMsg(audioPath)
+        if not audioMsg:
+            op(f'[-]: 语音Ai回复出现错误, 语音文本返回为空！')
+            return
+        self.getAiMsg(content=audioMsg, sender=sender)
+
     def getAiMsg(self, content, sender):
         """
         好友Ai对话
@@ -270,11 +330,15 @@ class FriendMsgHandle:
         :param sender:
         :return:
         """
-        aiMsg = self.Ad.getAi(content, sender)
+        aiMsg = self.Ams.getAi(content, sender)
+        if 'FileCache' in aiMsg:
+            self.wcf.send_image(aiMsg, receiver=sender)
+            return
         if aiMsg:
             self.wcf.send_text(aiMsg, receiver=sender)
-            return
-        self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~', receiver=sender)
+        else:
+            self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~', receiver=sender)
+
 
     def forwardMsgToAdministrators(self, wxId, content):
         """

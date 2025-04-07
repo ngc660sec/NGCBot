@@ -52,7 +52,7 @@ class AiGraphicDialogue:
             op(f'[-]: 通义千问接口未配置')
             return None
         headers = {
-            "Authorization": f"{self.QwenConfig.get('QwenKey')}",
+            "Authorization": f"Bearer {self.QwenConfig.get('QwenKey')}",
             "Content-Type": "application/json"
         }
         messages = [
@@ -88,7 +88,7 @@ class AiGraphicDialogue:
             op(f'[-]: 火山接口未配置')
             return None
         headers = {
-            "Authorization": f"{self.VolcengineConfig.get('VolcengineKey')}",
+            "Authorization": f"Bearer {self.VolcengineConfig.get('VolcengineKey')}",
             "Content-Type": "application/json"
         }
         messages = [
@@ -126,7 +126,7 @@ class AiGraphicDialogue:
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.HunYuanAiConfig.get('HunYuanKey')}",
+            "Authorization": f"Bearer {self.HunYuanAiConfig.get('HunYuanKey')}",
         }
         try:
             resp = requests.post(url=self.HunYuanAiConfig.get('HunYuanApi'), headers=headers, json=data, timeout=15)

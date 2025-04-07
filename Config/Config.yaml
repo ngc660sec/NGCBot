@@ -3,7 +3,7 @@ SystemConfig:
   # 超级管理员配置
   Administrators:
     - 'wxid_7bizfilssbwi22'
-    - 'wxid'
+    - 'wxid_qf4n12ncewxe22'
     - '.....'
   #系统版权信息
   SystemCopyright: 'NGC660 Ai研究院'
@@ -59,23 +59,23 @@ AiConfig:
   SystemAiRule: '你叫NGCBot, 你的主人是云山, 你隶属于NGC660 Ai研究院，是一名人工智能领域专家'
   # 扣子配置
   CozeConfig:
-    CozeToken: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    CozeToken: 'Key填这里 所有Key都不需要加Bearer'
     # 智能体ID
     CozeBotId: ''
   # Dify配置
   DifyConfig:
     DifyApi : "https://api.dify.ai/v1/chat-messages"
-    DifyKey: "Bearer {key填此处 大括号删了 前面的Bearer保留}"
+    DifyKey: ""
   # Fastgpt配置
   FastgptConfig:
     FastgptApi: "https://cloud.fastgpt.cn/api/v1/chat/completions"
-    FastgptKey: "Bearer {key填此处 大括号删了 前面的Bearer保留}"
+    FastgptKey: ""
     FastAppid: ""
   # 通义千问
   QwenConfig:
     QwenApi: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
     QwenModel: 'qwen-plus'
-    QwenKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    QwenKey: ''
     # 通义AI画图配置
     QwenPicApi: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis'
     QwenPicModel: 'wanx2.1-t2i-turbo'
@@ -85,7 +85,7 @@ AiConfig:
   VolcengineConfig:
     # 文本对话设置 可以改为其它模型
     VolcengineApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
-    VolcengineKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    VolcengineKey: ''
     VolcengineModel: 'ep-'
     # 火山图文对话模型
     VolcenginePicChatModel: 'doubao-1-5-vision-pro-32k-250115'
@@ -98,7 +98,7 @@ AiConfig:
   # 硅基流动配置
   SiliconFlowConfig:
     SiliconFlowApi: 'https://api.siliconflow.cn/v1/chat/completions'
-    SiliconFlowKey: 'Bearer {key填这里，前面的Bearer保留}'
+    SiliconFlowKey: ''
     SiliconFlowModel: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B'
   # Ollama本地模型配置
   OllamaConfig:
@@ -107,12 +107,12 @@ AiConfig:
   # DeepSeek官网模型配置
   DeepSeekConfig:
     DeepSeekApi: 'https://api.deepseek.com/chat/completions'
-    DeepSeekKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    DeepSeekKey: ''
     DeepSeekModel: 'deepseek-chat'
   # 智谱模型配置
   BigModelConfig:
     BigModelApi: 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
-    BigModelKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    BigModelKey: ''
     BigModelModel: 'glm-4-plus'
     # 文生图配置
     BigModelPicApi: 'https://open.bigmodel.cn/api/paas/v4/images/generations'
@@ -127,7 +127,7 @@ AiConfig:
   # 混元模型配置
   HunYuanConfig:
     HunYuanApi: 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions'
-    HunYuanKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    HunYuanKey: ''
     HunYuanModel: 'hunyuan-pro'
     # 混元生文生图配置
     HunYuanSecretId: ''
@@ -154,7 +154,7 @@ AiConfig:
     # Open_Ai接口
     OpenAiApi: 'https://api.xiaoai.plus/v1/chat/completions'
     # OpenAi Key
-    OpenAiKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    OpenAiKey: ''
     # 模型版本
     OpenAiModel: 'gpt-3.5-turbo'
   # 星火模型配置
@@ -162,7 +162,7 @@ AiConfig:
     # 模型Url
     SparkAiApi: 'https://spark-api-open.xf-yun.com/v1/chat/completions'
     # 模型Key
-    SparkAiKey: 'Bearer {key填此处 大括号删了 前面的Bearer保留}'
+    SparkAiKey: ''
     # 模型名称
     SparkModel: '4.0Ultra'
 
@@ -279,8 +279,12 @@ FunctionConfig:
         - 'https://api.yujn.cn/api/manzhan.php'
         - 'http://api.yujn.cn/api/rewu.php?type=video'
         - 'http://api.yujn.cn/api/hanfu.php?type=video'
+        - 'http://abc.gykj.asia/API/gzhf.php'
         - 'http://www.yujn.cn/api/heisis.php'
+        - 'http://api.yujn.cn/api/manyao.php?type=video'
+        - 'https://api.shenke.love/api/mnsp.php?msg=my&type=video'
         - 'http://api.yujn.cn/api/COS.php?type=video'
+        - 'http://abc.gykj.asia/API/ntCOS.php'
         - 'http://api.yujn.cn/api/jksp.php?type=video'
     # Kfc功能配置
     KfcConfig:
@@ -333,10 +337,7 @@ FunctionConfig:
       MusicKeyWords:
         - '点歌'
         - '点'
-      MusicApi:
-        - 'https://www.hhlqilongzhu.cn/api/dg_kugouSQ.php?msg={}&n=1&type=json'
-        - 'https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm={}&n=1&num=1&type=json'
-        - 'https://qqmusic.qqovo.cn/getSearchByKey?key={}&page=1&limit=1'
+      MusicApi: 'https://api.dudunas.top/api/searchsong'
     # 早报配置
     MorningPageConfig:
       MorningPageKeyWords:
@@ -521,7 +522,6 @@ EmoConfig:
     '添乱': 'add_chaos'
     '上瘾': 'addiction'
     '一样': 'alike'
-    '永远喜欢': 'always_like'
     '诱拐': 'anti_kidnap'
     '阿尼亚喜欢': 'anya_suki'
     '鼓掌': 'applaud'
@@ -546,7 +546,6 @@ EmoConfig:
     '捂脸': 'cover_face'
     '爬': 'crawl'
     '亲亲': 'decent_kiss'
-    '典': 'dianzhongdian'
     '恐龙': 'dinosaur'
     '涣散': 'distracted'
     '离婚协议': 'divorce'
@@ -574,7 +573,6 @@ EmoConfig:
     '采访': 'interview'
     '急急国王': 'jiji_king'
     '啾啾': 'jiujiu'
-    '跳': 'jump'
     '万花筒': 'kaleidoscope'
     '指': 'karyl_point'
     '远离': 'keep_away'
@@ -583,21 +581,16 @@ EmoConfig:
     '可莉吃': 'klee_eat'
     '敲': 'knock'
     '偷学': 'learn'
-    '横跳': 'left_right_jump'
-    '让我进去': 'let_me_in'
     '无穷小': 'lim_x_0'
     '听音乐': 'listen_music'
     '小天使': 'little_angel'
     '加载中': 'loading'
     '看扁': 'look_flat'
     '看图标': 'look_this_icon'
-    '循环': 'loop'
     '寻狗启示': 'lost_dog'
     '永远爱你': 'love_you'
-    '交个朋友': 'make_friend'
     '结婚申请': 'marriage'
     '上香': 'mourning'
-    '我朋友说': 'my_friend'
     '我老婆': 'my_wife'
     '需要': 'need'
     '无响应': 'no_response'
@@ -612,7 +605,6 @@ EmoConfig:
     '捏': 'pinch'
     '顶': 'play'
     '玩游戏': 'play_game'
-    '一起玩': 'play_together'
     '出警': 'police'
     '警察': 'police1'
     '搞': 'pound'
@@ -625,19 +617,16 @@ EmoConfig:
     '诈尸': 'rise_dead'
     '滚': 'roll'
     '三维旋转': 'rotate_3d'
-    '快逃': 'run_away'
     '安全感': 'safe_sense'
     '挠头': 'scratch_head'
-    '刮刮乐': 'scratchcard'
     '震惊': 'shock'
-    '坐的住': 'sit_still`'
+    '坐的住': 'sit_still'
     '砸': 'smash'
     '踩': 'step_on'
     '炖': 'stew'
     '科目三': 'subject3'
     '吸': 'suck'
     '精神支柱': 'support'
-    '回旋转': 'swirl_turn'
     '嘲讽': 'taunt'
     '唐可可举牌': 'tankuku_raisesign'
     '讲课': 'teach'
@@ -665,11 +654,9 @@ EmoConfig:
     '我想上的': 'what_I_want_to_do'
     '最想要的东西': 'what_he_wants'
     '为什么@我': 'why_at_me'
-    '为什么要有手': 'why_have_hands'
     '风车转': 'windmill_turn'
     '木鱼': 'wooden_fish'
     '膜拜': 'worship'
-    '致电': 'you_should_call'
   TwoPicEwo:
     '揍': 'beat_up'
     '击剑': 'fencing'

@@ -4,6 +4,7 @@ from tencentcloud.common.profile.http_profile import HttpProfile
 from volcengine.visual.VisualService import VisualService
 from tencentcloud.common import credential
 import FileCache.FileCacheServer as Fcs
+from ApiServer.InterFaceServer import *
 import Config.ConfigServer as Cs
 from OutPut.outPut import op
 import requests
@@ -53,24 +54,6 @@ class AiDrawPicture:
 
         # AI画图优先级配置
         self.aiPicPriority = configData['AiConfig']['AiPicPriority']
-
-    def downloadFile(self, url, savePath):
-        """
-        通用下载文件函数
-        :param url:
-        :param savePath:
-        :return:
-        """
-        try:
-            content = requests.get(url, timeout=30, verify=True).content
-            if len(content) < 200:
-                return None
-            with open(savePath, mode='wb') as f:
-                f.write(content)
-            return savePath
-        except Exception as e:
-            op(f'[-]: 通用下载文件函数出现错误, 错误信息: {e}')
-            return None
 
     def getQianFanPic(self, content):
         """
@@ -187,7 +170,7 @@ class AiDrawPicture:
 
         def getTaskStatus(taskId):
             headers = {
-                'Authorization': self.QwenConfig.get('QwenKey')
+                'Authorization': f"Bearer {self.QwenConfig.get('QwenKey')}"
             }
             taskApi = f'https://dashscope.aliyuncs.com/api/v1/tasks/{taskId}'
             try:
@@ -210,7 +193,7 @@ class AiDrawPicture:
             return None
         headers = {
             'Content-Type': 'application/json',
-            'Authorization': self.QwenConfig.get('QwenKey'),
+            'Authorization': f"Bearer {self.QwenConfig.get('QwenKey')}",
             'X-DashScope-Async': 'enable'
         }
         data = {
@@ -238,7 +221,7 @@ class AiDrawPicture:
             if not imgUrl:
                 return None
             savePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
-            imgPath = self.downloadFile(imgUrl, savePath)
+            imgPath = Ifa.downloadFile(imgUrl, savePath)
             if imgPath:
                 return imgPath
             return None
@@ -258,7 +241,7 @@ class AiDrawPicture:
             return None
         try:
             headers = {
-                "Authorization": self.BigModelConfig.get('BigModelKey'),
+                "Authorization": f"Bearer {self.BigModelConfig.get('BigModelKey')}",
                 "Content-Type": "application/json"
             }
             data = {
@@ -268,7 +251,7 @@ class AiDrawPicture:
             resp = requests.post(self.BigModelConfig.get('BigModelPicApi'), headers=headers, json=data)
             ImgUrl = resp.json()['data'][0]['url']
             savePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
-            imgPath = self.downloadFile(ImgUrl, savePath)
+            imgPath = Ifa.downloadFile(ImgUrl, savePath)
             if imgPath:
                 return imgPath
             return None
@@ -338,7 +321,7 @@ class AiDrawPicture:
             if not imageUrl:
                 return None
             filePath = Fcs.returnAiPicFolder() + '/' + str(int(time.time() * 1000)) + '.jpg'
-            imgPath = self.downloadFile(imageUrl, filePath)
+            imgPath = Ifa.downloadFile(imageUrl, filePath)
             if imgPath:
                 return imgPath
             return None

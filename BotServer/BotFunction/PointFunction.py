@@ -88,18 +88,9 @@ class PointFunction:
                     receiver=roomId, aters=sender)
             # Ai对话
             elif judgeAtMe(self.wcf.self_wxid, content, atUserLists):
-                chatSender = f'room@{sender}'
-                aiMsg = self.Ams.getAi(noAtMsg, chatSender)
-                if 'FileCache' in aiMsg:
-                    self.wcf.send_image(aiMsg, receiver=roomId)
+                if not noAtMsg:
                     return
-                if aiMsg:
-                    self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}',
-                                       receiver=roomId, aters=sender)
-                    return
-                self.wcf.send_text(
-                    f'@{getIdName(self.wcf, sender, roomId)} Ai对话接口出现错误, 请联系超管查看控制台输出日志',
-                    receiver=roomId, aters=sender)
+                self.getAiMsg(noAtMsg, sender, roomId)
             # Ai画图
             elif judgeSplitAllEqualWord(content, self.aiPicKeyWords):
                 aiPicPath = self.Ams.getAiPic(content.split(' ')[-1])
@@ -112,18 +103,45 @@ class PointFunction:
         elif msgType == 49:
             # Ai图文回复
             if judgeAtMe(self.wcf.self_wxid, noAtMsg, atUserLists):
-                srvType, srvId, srvContent = getQuoteImageData(message.content)
-                if srvType == 3:
-                    srvImagePath = downloadQuoteImage(self.wcf, srvId, message.extra)
-                    if srvImagePath:
-                        aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath)
-                        if 'FileCache' in aiMsg:
-                            self.wcf.send_image(aiMsg, receiver=roomId)
-                            return
-                        if aiMsg:
-                            self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}', receiver=roomId,
-                                               aters=sender)
-                        else:
-                            self.wcf.send_text(
-                                f'@{getIdName(self.wcf, sender, roomId)} Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
-                                receiver=roomId, aters=sender)
+                if 'cdnmidimgurl' in content:
+                    srvType, srvId, srvContent = getQuoteImageData(message.content)
+                    if srvType == 3:
+                        srvImagePath = downloadQuoteImage(self.wcf, srvId, message.extra)
+                        if srvImagePath:
+                            aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath, sender)
+                            if 'FileCache' in aiMsg:
+                                self.wcf.send_image(aiMsg, receiver=roomId)
+                                return
+                            if aiMsg:
+                                self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}', receiver=roomId,
+                                                   aters=sender)
+                            else:
+                                self.wcf.send_text(
+                                    f'@{getIdName(self.wcf, sender, roomId)} Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
+                                    receiver=roomId, aters=sender)
+                else:
+                    srvType, srvContent, srvTitle = getQuoteMsgData(content)
+                    if srvType == 1:
+                        content = f'用户描述的内容: {srvContent}\n以上是用户描述的内容, 请根据用户描述的内容和用户提问的内容给我回复！\n用户提问的内容: {srvTitle}'
+                        self.getAiMsg(noAtMsg=content, sender=sender, roomId=roomId)
+
+    def getAiMsg(self, noAtMsg, sender, roomId):
+        """
+        群聊Ai回复
+        :param noAtMsg:
+        :param sender:
+        :param roomId:
+        :return:
+        """
+        chatSender = f'room@{sender}'
+        aiMsg = self.Ams.getAi(noAtMsg, chatSender)
+        if 'FileCache' in aiMsg:
+            self.wcf.send_image(aiMsg, receiver=roomId)
+            return
+        if aiMsg:
+            self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}',
+                               receiver=roomId, aters=sender)
+            return
+        self.wcf.send_text(
+            f'@{getIdName(self.wcf, sender, roomId)} Ai对话接口出现错误, 请联系超管查看控制台输出日志',
+            receiver=roomId, aters=sender)

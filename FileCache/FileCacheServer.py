@@ -68,6 +68,13 @@ def returnGameFolder():
     """
     return returnCachePath() + '/gameCacheFolder'
 
+def returnAudioFolder():
+    """
+    返回语音缓存文件夹
+    :return:
+    """
+    return returnCachePath() + '/audioCacheFolder'
+
 def clearCacheFolder():
     """
     清空缓存文件夹所有文件
@@ -82,6 +89,7 @@ def clearCacheFolder():
         file_lists += [returnAiPicFolder() + '/' + file for file in os.listdir(returnAiPicFolder())]
         file_lists += [returnAvatarFolder() + '/' + file for file in os.listdir(returnAvatarFolder())]
         file_lists += [returnGameFolder() + '/' + file for file in os.listdir(returnGameFolder())]
+        file_lists += [returnAudioFolder() + '/' + file for file in os.listdir(returnAudioFolder())]
         for rm_file in file_lists:
             os.remove(rm_file)
         return True
@@ -109,10 +117,12 @@ def initCacheFolder():
         os.mkdir(returnAvatarFolder())
     if not os.path.exists(returnGameFolder()):
         os.mkdir(returnGameFolder())
+    if not os.path.exists(returnAudioFolder()):
+        os.mkdir(returnAudioFolder())
         op(f'[+]: 初始化缓存文件夹成功!!!')
 
 
 if __name__ == '__main__':
-    # initCacheFolder()
+    initCacheFolder()
     # print(returnCachePath())
     clearCacheFolder()
