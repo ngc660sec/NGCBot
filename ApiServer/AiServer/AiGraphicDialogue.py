@@ -1,44 +1,16 @@
 from ApiServer.AiServer.AiLLMDialogue import AiLLMDialogue
-import Config.ConfigServer as Cs
-from OutPut.outPut import op
 from ApiServer.InterFaceServer import *
+from Config.ConfigData import *
+from OutPut.outPut import op
 import requests
+
 
 class AiGraphicDialogue:
     def __init__(self):
         """
         AI 图文对话
         """
-        configData = Cs.returnConfigData()
-        self.systemAiRole = configData['AiConfig']['SystemAiRule']
-        self.aiPicDiaPriority = configData['AiConfig']['AiPicDiaPriority']
-
         self.Ald = AiLLMDialogue()
-
-        # 通义配置
-        self.QwenConfig = {
-            'QwenApi': configData['AiConfig']['QwenConfig']['QwenApi'],
-            'QwenPicChatModel': configData['AiConfig']['QwenConfig']['QwenPicChatModel'],
-            'QwenKey': configData['AiConfig']['QwenConfig']['QwenKey'],
-        }
-        # 火山配置
-        self.VolcengineConfig = {
-            'VolcengineApi': configData['AiConfig']['VolcengineConfig']['VolcengineApi'],
-            'VolcengineKey': configData['AiConfig']['VolcengineConfig']['VolcengineKey'],
-            'VolcenginePicChatModel': configData['AiConfig']['VolcengineConfig']['VolcenginePicChatModel'],
-        }
-        # 腾讯混元配置
-        self.HunYuanAiConfig = {
-            'HunYuanApi': configData['AiConfig']['HunYuanConfig']['HunYuanApi'],
-            'HunYuanKey': configData['AiConfig']['HunYuanConfig']['HunYuanKey'],
-            'HunYuanPicChatModel': configData['AiConfig']['HunYuanConfig']['HunYuanPicChatModel']
-        }
-        # KiMi配置
-        self.KiMiConfig = {
-            'KiMiApi': configData['AiConfig']['KiMiConfig']['KiMiApi'],
-            'KiMiKey': configData['AiConfig']['KiMiConfig']['KiMiKey'],
-            'KiMiPicModel': configData['AiConfig']['KiMiConfig']['KiMiPicModel']
-        }
 
     def getQwenPicDia(self, content, base64FileContent):
         """
@@ -48,27 +20,28 @@ class AiGraphicDialogue:
         :return:
         """
         op(f'[*]: 正在调用通义千问图文对话接口... ...')
-        if not self.QwenConfig.get('QwenKey'):
+        if not getQwenConfig().get('QwenKey'):
             op(f'[-]: 通义千问接口未配置')
             return None
         headers = {
-            "Authorization": f"Bearer {self.QwenConfig.get('QwenKey')}",
+            "Authorization": f"Bearer {getQwenConfig().get('QwenKey')}",
             "Content-Type": "application/json"
         }
         messages = [
             {
-                'role': 'system', 'content': [{'type': 'text', 'text': self.systemAiRole}]
+                'role': 'system', 'content': [{'type': 'text', 'text': getSystemAiRole()}]
             },
             {
-                'role': 'user', 'content': [{'type': 'image_url', 'image_url': {'url': base64FileContent},}, {'type': 'text', 'text': content}]
+                'role': 'user', 'content': [{'type': 'image_url', 'image_url': {'url': base64FileContent}, },
+                                            {'type': 'text', 'text': content}]
             }
         ]
         data = {
-            'model': self.QwenConfig.get('QwenPicChatModel'),
+            'model': getQwenConfig().get('QwenPicChatModel'),
             'messages': messages
         }
         try:
-            resp = requests.post(self.QwenConfig.get('QwenApi'), headers=headers, json=data)
+            resp = requests.post(getQwenConfig().get('QwenApi'), headers=headers, json=data)
             jsonData = resp.json()
             content = jsonData['choices'][0]['message']['content']
             return content
@@ -84,28 +57,30 @@ class AiGraphicDialogue:
         :return:
         """
         op(f'[*]: 正在调用火山图文对话接口... ...')
-        if not self.VolcengineConfig.get('VolcengineKey'):
+        if not getVolcengineConfig().get('VolcengineKey'):
             op(f'[-]: 火山接口未配置')
             return None
         headers = {
-            "Authorization": f"Bearer {self.VolcengineConfig.get('VolcengineKey')}",
+            "Authorization": f"Bearer {getVolcengineConfig().get('VolcengineKey')}",
             "Content-Type": "application/json"
         }
         messages = [
-            {'role': 'user', 'content': [{'type': 'text', 'text': content}, {'type': 'image_url', 'image_url': {'url': base64FileContent}}]},
+            {'role': 'user', 'content': [{'type': 'text', 'text': content},
+                                         {'type': 'image_url', 'image_url': {'url': base64FileContent}}]},
         ]
         data = {
-            'model': self.VolcengineConfig.get('VolcenginePicChatModel'),
+            'model': getVolcengineConfig().get('VolcenginePicChatModel'),
             'messages': messages
         }
         try:
-            resp = requests.post(self.VolcengineConfig.get('VolcengineApi'), headers=headers, json=data)
+            resp = requests.post(getVolcengineConfig().get('VolcengineApi'), headers=headers, json=data)
             jsonData = resp.json()
             content = jsonData['choices'][0]['message']['content']
             return content
         except Exception as e:
             op(f'[-]: 火山图文对话接口出现错误, 错误信息: {e}')
             return None
+
     def getHunYuanPicDia(self, content, base64FileContent):
         """
         混元图文对话
@@ -114,22 +89,23 @@ class AiGraphicDialogue:
         :return:
         """
         op(f'[*]: 正在调用混元图文对话接口... ...')
-        if not self.HunYuanAiConfig.get('HunYuanKey'):
+        if not getHunYuanConfig().get('HunYuanKey'):
             op(f'[-]: 混元模型未配置, 请检查相关配置!!!')
             return None
         messages = [
-            {'role': 'user', 'content': [{'type': 'text', 'text': content}, {'type': 'image_url', 'image_url': {'url': base64FileContent}}]},
+            {'role': 'user', 'content': [{'type': 'text', 'text': content},
+                                         {'type': 'image_url', 'image_url': {'url': base64FileContent}}]},
         ]
         data = {
-            "model": self.HunYuanAiConfig.get('HunYuanPicChatModel'),
+            "model": getHunYuanConfig().get('HunYuanPicChatModel'),
             "messages": messages
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.HunYuanAiConfig.get('HunYuanKey')}",
+            "Authorization": f"Bearer {getHunYuanConfig().get('HunYuanKey')}",
         }
         try:
-            resp = requests.post(url=self.HunYuanAiConfig.get('HunYuanApi'), headers=headers, json=data, timeout=15)
+            resp = requests.post(url=getHunYuanConfig().get('HunYuanApi'), headers=headers, json=data, timeout=15)
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             if assistant_content:
@@ -147,24 +123,25 @@ class AiGraphicDialogue:
         :return:
         """
         op(f'[*]: 正在调用KiMi图文对话对话接口... ...')
-        if not self.KiMiConfig.get('KiMiKey'):
+        if not getKiMiConfig().get('KiMiKey'):
             op(f'[-]: KiMi模型未配置, 请检查相关配置!!!')
             return None
         messages = [
-            {'role': 'system', 'content': self.systemAiRole},
-            {'role': 'user', 'content': [{'type': 'image_url', 'image_url': {'url': base64FileContent}}, {'type': 'text', 'text': content}]},
+            {'role': 'system', 'content': getSystemAiRole()},
+            {'role': 'user', 'content': [{'type': 'image_url', 'image_url': {'url': base64FileContent}},
+                                         {'type': 'text', 'text': content}]},
         ]
         data = {
-            "model": self.KiMiConfig.get('KiMiPicModel'),
+            "model": getKiMiConfig().get('KiMiPicModel'),
             "messages": messages,
             'temperature': 0.3
         }
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"{self.KiMiConfig.get('KiMiKey')}",
+            "Authorization": f"{getKiMiConfig().get('KiMiKey')}",
         }
         try:
-            resp = requests.post(url=self.KiMiConfig.get('KiMiApi'), headers=headers, json=data, timeout=15)
+            resp = requests.post(url=getKiMiConfig().get('KiMiApi'), headers=headers, json=data, timeout=15)
             json_data = resp.json()
             assistant_content = json_data['choices'][0]['message']['content']
             if assistant_content:
@@ -187,7 +164,7 @@ class AiGraphicDialogue:
             return None
         result = ''
         for i in range(1, 7):
-            aiPicDiaModel = self.aiPicDiaPriority.get(i)
+            aiPicDiaModel = getaiPicDiaPriority().get(i)
             if aiPicDiaModel == 'qwen':
                 result = self.getQwenPicDia(content, base64FileContent)
             if aiPicDiaModel == 'volcengine':
@@ -211,6 +188,4 @@ if __name__ == '__main__':
     Agd = AiGraphicDialogue()
     # base64FileContent = Agd.encodeImage('C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg')
     print(Agd.getAiPicDia('这张照片描述了什么',
-                            'C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg'))
-
-
+                          'C:/Users/admin/Desktop/NGCBot-Beta/FileCache/aiPicCacheFolder/1741946224356.jpg'))

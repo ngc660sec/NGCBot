@@ -20,7 +20,7 @@ SystemConfig:
   #好友消息转发给管理员
   MsgForwardAdmin: 1
 
-# Ai相关配置 [包含AiKey Ai模型 Ai调用顺序]
+# Ai相关配置 [包含AiKey Ai模型 Ai调用顺序] 修改后不需要重启程序
 AiConfig:
   # Ai优先级
   # 修改序号即可修改优先对话模型

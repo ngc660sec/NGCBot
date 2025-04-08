@@ -1,5 +1,5 @@
 from ApiServer.InterFaceServer import *
-import Config.ConfigServer as Cs
+from Config.ConfigData import *
 from OutPut.outPut import op
 import requests
 import time
@@ -7,26 +7,9 @@ import json
 
 class AiLLMDialogue:
     def __init__(self):
-        configData = Cs.returnConfigData()
-        self.systemAiRole = configData['AiConfig']['SystemAiRule']
         self.CozeUserSession = {}
         self.DifyUserSession = {}
-        # Coze配置
-        self.CozeConfig = {
-            'CozeToken': configData['AiConfig']['CozeConfig']['CozeToken'],
-            'CozeBotId': configData['AiConfig']['CozeConfig']['CozeBotId'],
-        }
-        # Dify配置
-        self.DifyConfig = {
-            'DifyApi': configData['AiConfig']['DifyConfig']['DifyApi'],
-            'DifyKey': configData['AiConfig']['DifyConfig']['DifyKey'],
-        }
-        # Fastgpt配置
-        self.FastgptConfig = {
-            'FastgptApi': configData['AiConfig']['FastgptConfig']['FastgptApi'],
-            'FastgptKey': configData['AiConfig']['FastgptConfig']['FastgptKey'],
-            'FastgptAppid': configData['AiConfig']['FastgptConfig']['FastAppid']
-        }
+
 
     def getCoze(self, content, userId, filePath=None):
         """
@@ -40,10 +23,10 @@ class AiLLMDialogue:
         else:
             op(f'[*]: 正在调用扣子图文对话接口... ...')
         headers = {
-            'Authorization': f"Bearer {self.CozeConfig['CozeToken']}",
+            'Authorization': f"Bearer {getCozeConfig()['CozeToken']}",
             'Content-Type': 'application/json'
         }
-        if not self.CozeConfig.get('CozeBotId'):
+        if not getCozeConfig().get('CozeBotId'):
             op(f'[-]: Coze接口未配置, 请检查相关配置！')
             return None
         def createChat():
@@ -71,7 +54,7 @@ class AiLLMDialogue:
             """
             uploadFileApi = 'https://api.coze.cn/v1/files/upload'
             headers = {
-                'Authorization': f"Bearer {self.CozeConfig['CozeToken']}",
+                'Authorization': f"Bearer {getCozeConfig()['CozeToken']}",
             }
             try:
                 with open(filePath, mode='rb') as f:
@@ -121,7 +104,7 @@ class AiLLMDialogue:
                     'type': 'answer'
                 }]
             data = {
-                'bot_id': self.CozeConfig['CozeBotId'],
+                'bot_id': getCozeConfig()['CozeBotId'],
                 'user_id': userId,
                 'stream': False,
                 'additional_messages': additional_messages
@@ -212,17 +195,17 @@ class AiLLMDialogue:
             op(f'[*]: 正在调用Dify会话接口... ...')
         else:
             op(f'[*]: 正在调用Dify图文对话接口... ...')
-        if not self.DifyConfig.get('DifyKey'):
+        if not getDifyConfig().get('DifyKey'):
             op(f'[-]: Dify接口未配置')
             return None
         headers = {
-            'Authorization': f"Bearer {self.DifyConfig['DifyKey']}",
+            'Authorization': f"Bearer {getDifyConfig()['DifyKey']}",
             'Content-Type': 'application/json'
         }
 
         def uploadFile(filePath):
             headers = {
-                "Authorization": f"Bearer {self.DifyConfig['DifyKey']}",
+                "Authorization": f"Bearer {getDifyConfig()['DifyKey']}",
             }
             file_name = filePath.split('/')[-1]
             file_extension = file_name.split('.')[-1].lower()
@@ -280,7 +263,7 @@ class AiLLMDialogue:
                     ]
                 }
             try:
-                resp = requests.post(url=self.DifyConfig.get('DifyApi'), headers=headers, json=data, timeout=60)
+                resp = requests.post(url=getDifyConfig().get('DifyApi'), headers=headers, json=data, timeout=60)
                 json_data = resp.json()
                 assistant_content = json_data['answer']
                 if not conversation_id:
@@ -303,7 +286,7 @@ class AiLLMDialogue:
             message = Ifa.textToCard(title=content, mdContent=message)
         return message
 
-    def getFastgpt(self, content, userId):
+    def getFastGpt(self, content, userId):
         """
         Dify对话接口
         :param content:
@@ -313,9 +296,9 @@ class AiLLMDialogue:
         op(f'[*]: 正在调用Fastgpt会话接口... ...')
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.FastgptConfig.get('FastgptKey')}",
+            "Authorization": f"Bearer {getFastGptConfig().get('FastgptKey')}",
         }
-        if not self.FastgptConfig.get('FastgptKey'):
+        if not getFastGptConfig().get('FastgptKey'):
             op(f'[-]: Fastgpt模型未配置, 请检查相关配置!!!')
             return None
         data = {
@@ -329,13 +312,13 @@ class AiLLMDialogue:
                 }]
         }
         try:
-            resp = requests.post(url=self.FastgptConfig.get('FastgptApi'), headers=headers, json=data, timeout=15)
+            resp = requests.post(url=getFastGptConfig().get('FastgptApi'), headers=headers, json=data, timeout=15)
             json_data = resp.json()
             assistant_content = json_data.get('choices')[0].get('message').get('content')
             return assistant_content
         except Exception as e:
             op(f'[-]: Fastgpt对话接口出现错误, 错误信息: {e}')
-            return None, [{"role": "system", "content": f'{self.systemAiRole}'}]
+            return None
 
 if __name__ == '__main__':
     AlD = AiLLMDialogue()
