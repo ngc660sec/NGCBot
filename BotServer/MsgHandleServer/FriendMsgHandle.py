@@ -138,15 +138,17 @@ class FriendMsgHandle:
             srvImagePath = downloadQuoteImage(self.wcf, srvId, msg.extra)
             if srvImagePath:
                 aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath, msg.sender)
+                if not aiMsg:
+                    self.wcf.send_text(
+                        f'Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
+                        receiver=msg.sender)
+                    return
                 if 'FileCache' in aiMsg:
                     self.wcf.send_image(aiMsg, receiver=msg.sender)
                     return
                 if aiMsg:
                     self.wcf.send_text(aiMsg, receiver=msg.sender)
-                else:
-                    self.wcf.send_text(
-                        f'Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
-                        receiver=msg.sender)
+
 
     def acceptFriend(self, msg):
         """

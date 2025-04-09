@@ -109,16 +109,18 @@ class PointFunction:
                         srvImagePath = downloadQuoteImage(self.wcf, srvId, message.extra)
                         if srvImagePath:
                             aiMsg = self.Ams.getAiPicDia(srvContent, srvImagePath, sender)
+                            if not aiMsg:
+                                self.wcf.send_text(
+                                    f'@{getIdName(self.wcf, sender, roomId)} Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
+                                    receiver=roomId, aters=sender)
+                                return 
                             if 'FileCache' in aiMsg:
                                 self.wcf.send_image(aiMsg, receiver=roomId)
                                 return
                             if aiMsg:
                                 self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}', receiver=roomId,
                                                    aters=sender)
-                            else:
-                                self.wcf.send_text(
-                                    f'@{getIdName(self.wcf, sender, roomId)} Ai图文对话接口出现错误, 请联系超管查看控制台输出日志',
-                                    receiver=roomId, aters=sender)
+                                
                 else:
                     srvType, srvContent, srvTitle = getQuoteMsgData(content)
                     if srvType == 1:
