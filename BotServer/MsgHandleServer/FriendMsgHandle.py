@@ -331,13 +331,14 @@ class FriendMsgHandle:
         :return:
         """
         aiMsg = self.Ams.getAi(content, sender)
+        if not aiMsg:
+            self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~', receiver=sender)
+            return
         if 'FileCache' in aiMsg:
             self.wcf.send_image(aiMsg, receiver=sender)
             return
         if aiMsg:
             self.wcf.send_text(aiMsg, receiver=sender)
-        else:
-            self.wcf.send_text(f'Ai对话接口出现错误, 请稍后再试 ~~~', receiver=sender)
 
 
     def forwardMsgToAdministrators(self, wxId, content):

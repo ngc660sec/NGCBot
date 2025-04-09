@@ -135,6 +135,11 @@ class PointFunction:
         """
         chatSender = f'room@{sender}'
         aiMsg = self.Ams.getAi(noAtMsg, chatSender)
+        if not aiMsg:
+            self.wcf.send_text(
+                f'@{getIdName(self.wcf, sender, roomId)} Ai对话接口出现错误, 请联系超管查看控制台输出日志',
+                receiver=roomId, aters=sender)
+            return
         if 'FileCache' in aiMsg:
             self.wcf.send_image(aiMsg, receiver=roomId)
             return
@@ -142,6 +147,4 @@ class PointFunction:
             self.wcf.send_text(f'@{getIdName(self.wcf, sender, roomId)} {aiMsg}',
                                receiver=roomId, aters=sender)
             return
-        self.wcf.send_text(
-            f'@{getIdName(self.wcf, sender, roomId)} Ai对话接口出现错误, 请联系超管查看控制台输出日志',
-            receiver=roomId, aters=sender)
+
