@@ -13,7 +13,6 @@ import time
 import json
 
 
-
 class AiDrawPicture:
     def __init__(self):
         pass
@@ -199,7 +198,7 @@ class AiDrawPicture:
         :return:
         """
         op(f'[*]: 正在调用智谱文生图模型... ...')
-        if not getBigModelConfig()().get('BigModelKey'):
+        if not getBigModelConfig().get('BigModelKey'):
             op(f'[-]: 智谱文生图模型未配置, 请检查相关配置!!!')
             return None
         try:
@@ -252,6 +251,7 @@ class AiDrawPicture:
             except Exception as e:
                 op(f'[-]: 查询混元JobId出现错误, 错误信息: {e}')
                 return None
+
         try:
             op(f'[*]: 正在调用混元文生图模型... ...')
             if not getHunYuanConfig().get('HunYuanSecretId'):

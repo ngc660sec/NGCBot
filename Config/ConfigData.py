@@ -230,3 +230,12 @@ def getaiPicDiaPriority():
     """
     configData = Cs.returnConfigData()
     return configData['AiConfig']['AiPicDiaPriority']
+
+
+def getBotKey():
+    """
+    获取WebServer的Key
+    :return:
+    """
+    configData = Cs.returnConfigData()
+    return configData['WebServerConfig']['APIKey']

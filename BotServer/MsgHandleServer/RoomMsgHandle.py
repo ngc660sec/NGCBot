@@ -205,13 +205,12 @@ class RoomMsgHandle:
             if judgePointFunction(senderPoint, self.md5Point):
                 self.Dms.reducePoint(sender, roomId, self.md5Point)
                 lock = 1
-        # Ai对话 & 图文对话
+        # Ai对话 & 图文对话 & 引用Ai回复
         elif judgeAtMe(self.wcf.self_wxid, content, atUserLists):
             pointLock = 1
             if judgePointFunction(senderPoint, self.aiMsgPoint):
                 self.Dms.reducePoint(sender, roomId, self.aiMsgPoint)
                 lock = 1
-
         # Ai画图
         elif judgeSplitAllEqualWord(content, self.aiPicKeyWords):
             pointLock = 1

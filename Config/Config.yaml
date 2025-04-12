@@ -20,6 +20,16 @@ SystemConfig:
   #好友消息转发给管理员
   MsgForwardAdmin: 1
 
+# HTTP接口服务配置
+WebServerConfig:
+  # HTTP接口服务配置 不填就是不启动HTTP服务
+  WebServerHost: ''
+  WebServerPort: ''
+  # APIKey 用于访问API接口
+  APIKey: ''
+  # 回调接口配置
+  cbApi: ''
+
 # Ai相关配置 [包含AiKey Ai模型 Ai调用顺序] 修改后不需要重启程序
 AiConfig:
   # Ai优先级

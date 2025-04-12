@@ -56,7 +56,7 @@ class FriendMsgHandle:
         content = msg.content.strip()
         sender = msg.sender
         msgType = msg.type
-        print(msgType)
+        # print(msgType)
 
         if msgType == 1:
             # 关键词进群
@@ -122,10 +122,13 @@ class FriendMsgHandle:
         :param content:
         :return:
         """
-        srvType, srvContent, srvTitle = getQuoteMsgData(content)
-        if srvType == 1:
-            content = f'用户描述的内容: {srvContent}\n以上是用户描述的内容, 请根据用户描述的内容和用户提问的内容给我回复！\n用户提问的内容: {srvTitle}'
-            self.getAiMsg(content=content, sender=sender)
+        try:
+            srvType, srvContent, srvTitle = getQuoteMsgData(content)
+            if srvType == 1:
+                content = f'用户描述的内容: {srvContent}\n以上是用户描述的内容, 请根据用户描述的内容和用户提问的内容给我回复！\n用户提问的内容: {srvTitle}'
+                self.getAiMsg(content=content, sender=sender)
+        except Exception as e:
+            pass
 
     def getAiPicDia(self, msg):
         """

@@ -5,11 +5,11 @@ import requests
 import time
 import json
 
+
 class AiLLMDialogue:
     def __init__(self):
         self.CozeUserSession = {}
         self.DifyUserSession = {}
-
 
     def getCoze(self, content, userId, filePath=None):
         """
@@ -29,6 +29,7 @@ class AiLLMDialogue:
         if not getCozeConfig().get('CozeBotId'):
             op(f'[-]: Coze接口未配置, 请检查相关配置！')
             return None
+
         def createChat():
             """
             创建扣子会话
@@ -139,7 +140,6 @@ class AiLLMDialogue:
                 op(f'[-]: 查看扣子对话详情状态出现错误, 错误信息: {e}')
                 return False
 
-
         def showChatMessage(conversationId, chatId):
             """
             查看扣子对话内容
@@ -162,6 +162,7 @@ class AiLLMDialogue:
             except Exception as e:
                 op(f'[-]: 查看扣子对话内容出现错误, 错误信息: {e}')
                 return None
+
         if userId not in self.CozeUserSession.keys():
             conversationId = createChat()
             if not conversationId:
@@ -180,7 +181,7 @@ class AiLLMDialogue:
         if not messageState:
             return None
         message = showChatMessage(conversationId=self.CozeUserSession[userId], chatId=chatId)
-        if ('##' in message and '![' in message) or '](http' in message:
+        if ('##' in message and '![' in message) or '](http' in message or '```' in message:
             message = Ifa.textToCard(title=content, mdContent=message)
         return message
 
@@ -282,7 +283,7 @@ class AiLLMDialogue:
             message = getDifyMessage(content, userId, self.DifyUserSession.get(userId))
         if not message:
             return None
-        if ('##' in message and '![' in message) or '](http' in message:
+        if ('##' in message and '![' in message) or '](http' in message or '```' in message:
             message = Ifa.textToCard(title=content, mdContent=message)
         return message
 
@@ -320,8 +321,10 @@ class AiLLMDialogue:
             op(f'[-]: Fastgpt对话接口出现错误, 错误信息: {e}')
             return None
 
+
 if __name__ == '__main__':
     AlD = AiLLMDialogue()
-    print(AlD.getCoze('这张图描述了什么', 'wxid_123', filePath='C:\\Users\\admin\\Desktop\\NGCBot-Beta\\FileCache\\picCacheFolder\\1742899976449.jpg'))
+    print(AlD.getCoze('这张图描述了什么', 'wxid_123',
+                      filePath='C:\\Users\\admin\\Desktop\\NGCBot-Beta\\FileCache\\picCacheFolder\\1742899976449.jpg'))
     # print(AlD.getDify('用友U8有什么漏洞', 'wxid_333'))
     # print(AlD.getFastgpt('你好', 'wxid_333'))
