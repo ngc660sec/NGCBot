@@ -155,7 +155,9 @@ python main.py
 
 视频已经上传至B站，Github放不了，要看的话大家去B站看即可，此教程为快速上手+开发指南
 
-https://www.bilibili.com/video/BV1voqwYAEWs/
+先看完视频再使用！
+
+NGCBot V2.3食用指南：https://www.bilibili.com/video/BV1GTdeYaEsE/
 
 ### 3.3、配置文件快速配置
 
