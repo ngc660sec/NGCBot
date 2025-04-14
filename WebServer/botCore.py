@@ -1,5 +1,6 @@
-from DbServer.DbMainServer import DbMainServer
+from ApiServer.InterFaceServer.InterFaceApi import InterFaceApi
 from fastapi import Body, FastAPI, Query, File, UploadFile
+from DbServer.DbMainServer import DbMainServer
 import FileCache.FileCacheServer as Fcs
 import base64
 import time
@@ -17,6 +18,7 @@ class botCore(FastAPI):
         super().__init__(**extra)
         self.wcf = wcf
         self.Dms = DbMainServer()
+        self.Ifa = InterFaceApi()
 
     """
     批量给群聊或好友发消息
@@ -80,7 +82,8 @@ class botCore(FastAPI):
         except Exception as e:
             return {"status": -1, "message": str(e)}
 
-    def send_file(self, filePath: str = Body('c:/123.zip', description='通过上传文件接口返回的文件路径'),
+    def send_file(self, filePath: str = Body('`c:/123.zip` 或者 `http://baidu.com/robots.txt` ',
+                                             description='通过上传文件接口返回的文件路径'),
                   receiver: str = Body("wxid_123", description="接收者")):
         """ 发送文件
 
@@ -91,6 +94,9 @@ class botCore(FastAPI):
         Returns:
             int: 0成功 其它为失败
         """
+        if 'http://' in filePath or 'https://' in filePath:
+            savePath = f'{Fcs.returnWebServerFolder()}/{int(time.time())}.{filePath.split(".")[-1]}'
+            filePath = self.Ifa.downloadFile(filePath, savePath)
         ret = self.wcf.send_file(path=filePath, receiver=receiver)
         return {"status": ret, "message": "成功" if ret == 0 else "失败"}
 

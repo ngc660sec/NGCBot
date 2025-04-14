@@ -73,7 +73,7 @@ class AiGraphicDialogue:
             'messages': messages
         }
         try:
-            resp = requests.post(getVolcengineConfig().get('VolcengineApi'), headers=headers, json=data)
+            resp = requests.post(getVolcengineConfig().get('VolcenginePicChatApi'), headers=headers, json=data)
             jsonData = resp.json()
             content = jsonData['choices'][0]['message']['content']
             return content

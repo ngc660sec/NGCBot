@@ -413,7 +413,7 @@ class AiDialogue:
         if len(self.userChatDicts[sender]) == 21:
             del self.userChatDicts[sender][1]
             del self.userChatDicts[sender][2]
-        return result
+        return result.strip()
 
 
 

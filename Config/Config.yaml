@@ -98,6 +98,7 @@ AiConfig:
     VolcengineKey: ''
     VolcengineModel: 'ep-'
     # 火山图文对话模型
+    VolcenginePicChatApi: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
     VolcenginePicChatModel: 'doubao-1-5-vision-pro-32k-250115'
     # 文生图需要填写以下内容 不使用文生图不需要填写
     ## ReqKey以及ModelVersion需要根据火山文档填写

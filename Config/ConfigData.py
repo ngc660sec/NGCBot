@@ -140,6 +140,7 @@ def getVolcengineConfig():
         'VolcengineReqKey': configData['AiConfig']['VolcengineConfig']['VolcengineReqKey'],
         'VolcenginePicModelVersion': configData['AiConfig']['VolcengineConfig']['VolcenginePicModelVersion'],
         'VolcenginePicChatModel': configData['AiConfig']['VolcengineConfig']['VolcenginePicChatModel'],
+        'VolcenginePicChatApi': configData['AiConfig']['VolcengineConfig']['VolcenginePicChatApi']
     }
 
 
