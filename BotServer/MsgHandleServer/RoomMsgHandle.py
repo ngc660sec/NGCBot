@@ -80,10 +80,13 @@ class RoomMsgHandle:
         elif judgeBlackRoom(roomId):
             # 超管功能以及管理功能
             self.AdminFunction(msg)
+            # 入群欢迎
+            Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
             # 超管和管理才能使用娱乐和积分功能
             if sender in self.Administrators or judgeAdmin(sender, roomId):
                 Thread(target=self.Asf.mainHandle, args=(msg,)).start()
                 Thread(target=self.Af.mainHandle, args=(msg,)).start()
+
         # 推送群聊功能
         elif judgePushRoom(roomId):
             # 超管功能以及管理功能
@@ -100,8 +103,7 @@ class RoomMsgHandle:
             self.AdminFunction(msg)
             # 娱乐功能 和 积分功能
             Thread(target=self.HappyFunction, args=(msg,)).start()
-            # 入群欢迎
-            Thread(target=self.JoinRoomWelcome, args=(msg,)).start()
+
 
     def JoinRoomWelcome(self, msg):
         """
