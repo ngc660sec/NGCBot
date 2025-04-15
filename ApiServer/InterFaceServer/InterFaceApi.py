@@ -154,7 +154,7 @@ class InterFaceApi:
         """
         audioApi = 'https://api.coze.cn/v1/audio/transcriptions'
         headers = {
-            'Authorization': self.CozeConfig.get("CozeToken"),
+            'Authorization': f'Bearer {self.CozeConfig.get("CozeToken")}',
         }
         try:
             with open(audioPath, mode='rb') as f:
