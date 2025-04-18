@@ -129,7 +129,7 @@ class AiDialogue:
             op(f'[-]: 获取千帆模型AccessToken失败, 请检查千帆配置!!!')
             return None, [{"role": "system", "content": f'{getSystemAiRole()}'}]
 
-        aiContent, messages= getAiContent(access_token, messages)
+        aiContent, messages = getAiContent(access_token, messages)
         return aiContent, messages
 
     def getHunYuanAi(self, content, messages):
@@ -366,15 +366,19 @@ class AiDialogue:
             op(f'[-]: 通义千问接口出现错误, 错误信息: {e}')
             return None, [{"role": "system", "content": f'{getSystemAiRole()}'}]
 
-    def getAi(self, content, sender):
+    def getAi(self, content, sender, systemMessage=None):
         """
         处理优先级
+        :param system_messages:
+        :param sender:
         :param content:
         :return:
         """
         # 处理会话
         if sender not in self.userChatDicts:
             self.userChatDicts[sender] = [{"role": "system", "content": f'{getSystemAiRole()}'}]
+            if systemMessage:
+                self.userChatDicts[sender] = systemMessage
         result = ''
         for i in range(1, 15):
             aiModule = getaiPriority().get(i)
@@ -414,8 +418,6 @@ class AiDialogue:
             del self.userChatDicts[sender][1]
             del self.userChatDicts[sender][2]
         return result.strip()
-
-
 
 
 if __name__ == '__main__':

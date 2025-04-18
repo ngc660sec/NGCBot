@@ -69,7 +69,7 @@ def getQuoteMsgData(content):
             titleValue = title.text
             if typeValue and srvContent:
                 return int(typeValue), srvContent, titleValue
-            return None, None, None
+            return 0, None, None
     except Exception:
         return 0, None, None
 
