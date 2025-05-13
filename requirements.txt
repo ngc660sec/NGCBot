@@ -2,7 +2,6 @@ tencentcloud_sdk_python_common
 tencentcloud_sdk_python_hunyuan
 meme_generator==0.0.19.1
 feedparser==6.0.11
-wcferry==39.4.2.2
 Requests==2.32.3
 schedule==1.2.2
 Pillow==10.4.0
@@ -11,5 +10,6 @@ PyYAML==6.0.2
 cprint==1.2.2
 lxml==5.2.2
 volcengine
+wcferry
 fastapi
 lz4
