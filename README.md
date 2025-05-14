@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/ngc660sec-ngcbot-badge.png)](https://mseep.ai/app/ngc660sec-ngcbot)
+
 <h3 align="center">
 NGCBot V2.3
 </h3>
