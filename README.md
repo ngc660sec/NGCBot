@@ -37,10 +37,9 @@ NGCBot V2.3
 
 **官方公众号：NGC660安全实验室**
 
-**如果你觉得此项目不错，可以给个Star或给个赞赏 关注一下公众号**
+**如果你觉得此项目不错，可以关注一下公众号**
 
 <div style="display: flex;">
-  <img src="./README.assets/赞赏码.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
   <img src="./README.assets/公众号.jpg" alt="Image 2" style="width: 400px; height: auto; margin: 5px;">
 </div>
 
@@ -590,39 +589,11 @@ meme download
 
 ### ❌ 5.1、Bug提交处
 
-关注微信公众号，后台留言（不做回复，请进群交流），添加机器人回复 `Bot交流群` 拉你进群！（机器人不常开，看到会拉群）
-
-<div style="display: flex;">
-  <img src="./README.assets/%E5%85%B3%E6%B3%A8-4177997.gif" alt="Image 1" style="width: 800px; height: auto; margin: 5px;">
-   <img src="./README.assets/113191704454837_.pic.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
-</div>
+请直接提交在Iessus
 
 
 
-### 💰 5.2、会员群聊处
-
-**前言**：在项目更新的过程中发现许许多多的同学不会配置项目，也有许多的同学想要接入自己的API但又没学过 `Python` 。所以今天（2024,12,04）宣布建立会员交流群，主要解决以下几个问题：
-
-1. 不会配置项目，不会启动项目
-2. 接入API问题，不会接入自己的API
-3. 想要实现自己的功能，比如（客服）
-4. 等等... ...
-
-进入付费群聊后会在群内进行指导必要时可提供远程协助，另外会开设特定课程如：Python基础课程，机器人使用教程（视屏），API接入课程（指南），等等(还没想好)
-
-另外还会发布机器人+其它大模型的结合使用教程
-
-价格暂定：（**99**）
-
-付费时效：**终生**
-
-联系方式：
-
-<div style="display: flex;">
-  <img src="./README.assets/img_v3_02h8_a1c2e430-6fe2-4af9-a0fc-22a0af86c41g.jpg" alt="Image 1" style="width: 400px; height: auto; margin: 5px;">
-</div>
-
-### ❗️  5.3、谨防诈骗
+### ❗️  5.2、谨防诈骗
 
 如下：
 
